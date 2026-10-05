@@ -1,13 +1,13 @@
-package com.malb.gimnacio;
+package com.malb.gimnasio;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GimnacioApplication {
+public class GimnasioApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GimnacioApplication.class, args);
+		SpringApplication.run(GimnasioApplication.class, args);
 	}
 
 }
