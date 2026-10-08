@@ -1,55 +1,82 @@
-import React from 'react';
-import { SCHEDULE_DATA, DAYS, type ClassType } from '../data/scheduleData.ts'; 
+import { useNavigate } from 'react-router-dom';
+import { SCHEDULE_DATA, DAYS, type ScheduleCell } from '../data/scheduleData.ts';
+import './Schedule.css';
 
-const getActivityBadgeClass = (activity: ClassType | null): string => {
-  if (!activity) return '';
-  
-  switch (activity) {
-    case 'Funcional': return 'badge bg-primary';
-    case 'Fitcombat': return 'badge bg-warning text-dark';
-    case 'Zumba': return 'badge bg-danger';
-    case 'Yoga': return 'badge bg-success';
-    case 'Stretching': return 'badge bg-success';
-    case 'Full local': return 'badge bg-warning text-dark';
-    case 'Gap': return 'badge bg-success';
-    default: return 'badge bg-secondary';
+const getActivityBadgeClass = (status: ScheduleCell['status']): string => {
+  if (!status) return 'class-pill';
+
+  switch (status) {
+    case 'Activa': return 'class-pill pill-active';
+    case 'Borrador': return 'class-pill pill-draft';
+    case 'Cancelada': return 'class-pill pill-cancelled';
+    case 'Finalizada': return 'class-pill pill-finished';
+    default: return 'class-pill';
   }
 };
 
-export const Schedule: React.FC = () => {
+export const Schedule = () => {
+  const navigate = useNavigate();
+
+  const handleClassClick = () => {
+    navigate('/clases/id_clase');
+  };
+
+  const legendItems: { status: ScheduleCell['status']; label: string }[] = [
+    { status: 'Activa', label: 'Activa' },
+    { status: 'Borrador', label: 'Borrador' },
+    { status: 'Cancelada', label: 'Cancelada' },
+    { status: 'Finalizada', label: 'Finalizada' }
+  ];
+
   return (
-    <div className="container mt-4">
-      <div className="table-responsive">
-        <table className="table table-dark table-bordered text-center align-middle">
-          <thead>
-            <tr>
-              <th scope="col">Hora</th>
-              {DAYS.map((day) => (
-                <th key={day} scope="col">{day}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {SCHEDULE_DATA.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                <td className="fw-bold">{row[0].time}</td>
-                
-                {row.map((cell, colIndex) => (
-                  <td key={`${rowIndex}-${colIndex}`}>
-                    {cell.activity ? (
-                      <span className={getActivityBadgeClass(cell.activity)}>
-                        {cell.activity}
-                      </span>
-                    ) : (
-                      <span className="text-muted">-</span>
-                    )}
-                  </td>
+      <div className="schedule-container">
+        <div className="schedule-content">
+
+          <div className="schedule-legend">
+            {legendItems.map((item) => (
+                <div key={item.status} className="legend-item">
+                <span className={getActivityBadgeClass(item.status)}>
+                  {item.label}
+                </span>
+                </div>
+            ))}
+          </div>
+
+          <div className="table-responsive">
+            <table className="custom-table">
+              <thead>
+              <tr>
+                <th>Hora</th>
+                {DAYS.map((day) => (
+                    <th key={day}>{day}</th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+              {SCHEDULE_DATA.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    <td className="time-col">{row[0].time}</td>
+
+                    {row.map((cell, colIndex) => (
+                        <td key={`${rowIndex}-${colIndex}`}>
+                          {cell.activity ? (
+                              <span
+                                  className={getActivityBadgeClass(cell.status)}
+                                  onClick={handleClassClick}
+                              >
+                                {cell.activity}
+                              </span>
+                          ) : (
+                              <span className="empty-slot">–</span>
+                          )}
+                        </td>
+                    ))}
+                  </tr>
+              ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </div>
   );
 };
