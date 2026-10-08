@@ -2,6 +2,7 @@ package com.malb.gimnacio.controller.REST;
 
 import com.malb.gimnacio.controller.DTO.InscripcionDTO;
 import com.malb.gimnacio.modelo.Inscripcion;
+import com.malb.gimnacio.service.InscripcionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +41,7 @@ final public class InscripcionREST {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Long id){
-        inscripcionService.eliminar(dni);
+        inscripcionService.eliminar(id);
         return ResponseEntity.ok("Tu actividad ha sido eliminada correctamente.");
     }
 }

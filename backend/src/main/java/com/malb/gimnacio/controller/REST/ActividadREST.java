@@ -2,6 +2,7 @@ package com.malb.gimnacio.controller.REST;
 
 import com.malb.gimnacio.controller.DTO.ActividadDTO;
 import com.malb.gimnacio.modelo.Actividad;
+import com.malb.gimnacio.service.ActividadService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

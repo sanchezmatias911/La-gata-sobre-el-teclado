@@ -1,6 +1,7 @@
 package com.malb.gimnacio.controller.REST;
 import com.malb.gimnacio.controller.DTO.ProfesorDTO;
 import com.malb.gimnacio.modelo.usuario.Profesor;
+import com.malb.gimnacio.service.ProfesorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

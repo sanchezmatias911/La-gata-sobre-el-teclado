@@ -2,6 +2,10 @@ package com.malb.gimnacio.controller.REST;
 
 import com.malb.gimnacio.controller.DTO.ClaseProgramadaDTO;
 import com.malb.gimnacio.modelo.ClaseProgramada;
+import com.malb.gimnacio.service.ActividadService;
+import com.malb.gimnacio.service.ClaseProgramadaService;
+import com.malb.gimnacio.service.InscripcionService;
+import com.malb.gimnacio.service.ProfesorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

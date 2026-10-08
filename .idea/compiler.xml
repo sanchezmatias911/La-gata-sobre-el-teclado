@@ -11,6 +11,11 @@
         <module name="com.malb.gimnasio.test" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="com.malb.gimnacio" target="21" />
+      <module name="com.malb.gimnacio.main" target="21" />
+      <module name="com.malb.gimnacio.test" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
