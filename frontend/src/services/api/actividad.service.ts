@@ -1,7 +1,7 @@
 import axiosInstance from "./axios";
 import type { ActividadBody } from "../types/types";
 
-export const getActividad = async () => {
+export const getAllActivities = async () => {
     try {  
         const respuesta = await axiosInstance.get('/actividades')      
         return respuesta.data; 
@@ -11,7 +11,7 @@ export const getActividad = async () => {
     }
 };
 
-export const crearActividad = async (nuevaActividad: ActividadBody) => {
+export const createActivity = async (nuevaActividad: ActividadBody) => {
     try {      
         const respuesta = await axiosInstance.post('/actividades', nuevaActividad);       
         return respuesta.data;
@@ -21,9 +21,14 @@ export const crearActividad = async (nuevaActividad: ActividadBody) => {
     }
 };
 
-export const getById = async (id:number) => {
-    const respuesta = await axiosInstance.get(`/actividades/${id}`);
-    return respuesta.data;
+export const getActivityById = async (id:number) => {
+    try {
+        const respuesta = await axiosInstance.get(`/actividades/${id}`);
+        return respuesta.data;
+    } catch (error) {
+        console.error("Error al obtener la actividad:", error);
+        throw error;
+    }
 };
 
 
