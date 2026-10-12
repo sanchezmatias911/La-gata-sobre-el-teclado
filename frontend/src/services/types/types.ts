@@ -11,14 +11,33 @@ export interface ClaseProgramadaBody {
   horaInicio: LocalTime;
   horaFin: LocalTime;
   estado: string; 
-  profesor: Profesor; 
+  profesor: SimpleProfesor; 
   actividad: Actividad;
-  inscripciones: Inscripcion[]; 
+  inscripciones: SimpleInscipciones[]; 
 }
 
-export interface Profesor {}
-export interface Inscripcion {}
-export interface Actividad {}
+export interface ProfesorBody {
+    dni: number;
+  email: string;
+  password?: string;
+  nombre: string;
+  telefono: string;
+  biografia: string;
+  especialidades: string;
+  misClases: SimpleClaseProgramada[];
+}
+
+export interface InscripcionBody {
+    id: number,
+    fechaDeInscripcion : string,
+    cliente: SimpleCliente,
+    claseProgramada: SimpleClaseProgramada
+}
+export interface SimpleInscipciones {id: number}
+export interface Actividad {id:number}            //provisional
+export interface SimpleCliente {id:number}        //provisional
+export interface SimpleProfesor{id:number}        //provisional
+export interface SimpleClaseProgramada{id:number} //provisional
 
 export interface ClienteBody {
   dni: number;
@@ -50,16 +69,7 @@ export interface Actividad {
 
 
 
-export interface Profesor {
-  dni: number;
-  email: string;
-  password?: string;
-  nombre: string;
-  telefono: string;
-  biografia: string;
-  especialidades: string;
-  misClases: ClaseProgramadaResumen[];
-}
+
 
 
 export interface Inscripcion {
