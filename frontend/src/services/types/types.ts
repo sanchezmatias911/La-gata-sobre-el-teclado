@@ -46,7 +46,7 @@ export interface ClienteBody {
   nombre: string;
   telefono: string;
   fechaDeRegistro: string; 
-  misInscripciones: Inscripcion []
+  misInscripciones: SimpleInscipciones []
 }
 
 
