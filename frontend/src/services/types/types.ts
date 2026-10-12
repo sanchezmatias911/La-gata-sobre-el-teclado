@@ -20,6 +20,16 @@ export interface Profesor {}
 export interface Inscripcion {}
 export interface Actividad {}
 
+export interface ClienteBody {
+  dni: number;
+  email: string;
+  password:string
+  nombre: string;
+  telefono: string;
+  fechaDeRegistro: string; 
+  misInscripciones: Inscripcion []
+}
+
 
 export interface LocalTime {
   hour: number;
@@ -36,14 +46,6 @@ export interface Actividad {
   cupo: number;
 }
 
-export interface Cliente {
-  dni: number;
-  email: string;
-  password?: string; // Es buena práctica hacer opcional el password en el front
-  nombre: string;
-  telefono: string;
-  fechaDeRegistro: string; // Viene como string ISO ("2026-10-12T...")
-}
 
 
 
