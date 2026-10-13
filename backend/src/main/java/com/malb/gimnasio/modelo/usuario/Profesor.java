@@ -4,6 +4,7 @@ import com.malb.gimnasio.modelo.ClaseProgramada;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,10 +17,10 @@ public class Profesor extends Usuario {
     @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER) @EqualsAndHashCode.Exclude
     private List<ClaseProgramada> misClases;
 
-    public Profesor (@NonNull Long dni, @NonNull String email, @NonNull String password, @NonNull String nombre,
-                     @NonNull String telefono, String biografia, String especialidades){
+    public Profesor (@NonNull Long dni, @NonNull String email, @NonNull String password, @NonNull String nombre, @NonNull String telefono, String biografia, String especialidades){
         super(dni, email, password, nombre, telefono);
         this.biografia = biografia;
         this.especialidades = especialidades;
+        this.misClases = new ArrayList<>();
     }
 }

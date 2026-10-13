@@ -20,6 +20,7 @@ public class ClaseProgramadaServiceImpl implements ClaseProgramadaService {
 
     @Override
     public void crear(ClaseProgramada claseProgramada) {
+
         claseProgramadaDAO.save(claseProgramada);
     }
 
