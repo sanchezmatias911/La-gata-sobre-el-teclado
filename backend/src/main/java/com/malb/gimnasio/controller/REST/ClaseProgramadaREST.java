@@ -6,6 +6,7 @@ import com.malb.gimnasio.service.ActividadService;
 import com.malb.gimnasio.service.ClaseProgramadaService;
 import com.malb.gimnasio.service.InscripcionService;
 import com.malb.gimnasio.service.ProfesorService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ final public class ClaseProgramadaREST {
     }
 
     @PostMapping()
-    public ResponseEntity<ClaseProgramadaDTO> crear(@RequestBody ClaseProgramadaDTO dto) {
+    public ResponseEntity<ClaseProgramadaDTO> crear(@Valid @RequestBody ClaseProgramadaDTO dto) {
         ClaseProgramada clase = dto.aModelo();
         claseProgramadaService.crear(clase);
         return ResponseEntity.ok(ClaseProgramadaDTO.desdeModelo(clase));
