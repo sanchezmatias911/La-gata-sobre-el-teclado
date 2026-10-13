@@ -3,6 +3,7 @@ package com.malb.gimnasio.service.impl;
 import com.malb.gimnasio.dao.InscripcionDAO;
 import com.malb.gimnasio.modelo.Inscripcion;
 import com.malb.gimnasio.service.InscripcionService;
+import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,7 @@ public class InscripcionServiceImpl implements InscripcionService {
     @Override
     public Inscripcion recuperar(Long id) {
         return inscripcionDAO.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Inscripcion not found with id: " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Inscripcion", id));
     }
 
     @Override

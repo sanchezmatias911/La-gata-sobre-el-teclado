@@ -16,39 +16,38 @@ import java.util.NoSuchElementException;
 public class GlobalExceptionHandler {
 
     //404
-    @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<ApiError> manejarNoEncontrado(NoSuchElementException ex, HttpServletRequest request) {
+    @ExceptionHandler(NoSuchElementException.class) //para colecciones, ahora no se usa
+    public ResponseEntity<ApiError> manejarNoEncontrado(NoSuchElementException ex) {
         ApiError error = new ApiError(404, ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
     //400
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiError> manejarValidacion(MethodArgumentNotValidException ex, HttpServletRequest request) {
+    @ExceptionHandler(MethodArgumentNotValidException.class) //para los dtos
+    public ResponseEntity<ApiError> manejarValidacion(MethodArgumentNotValidException ex) {
         ApiError error = new ApiError(400, "Los datos enviados no son válidos.");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler({
-            ConstraintViolationException.class,
             HorarioInvalido.class
     })
-    public ResponseEntity<ApiError> manejarRestricciones(ConstraintViolationException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiError> manejarRestricciones(HorarioInvalido ex) {
         ApiError error = new ApiError(400, "Uno o más parámetros no cumplen las restricciones.");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ApiError> manejarJsonInvalido(HttpMessageNotReadableException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiError> manejarJsonInvalido(HttpMessageNotReadableException ex) {
         ApiError error = new ApiError(400, "El cuerpo de la solicitud está vacío, mal formado o contiene valores inválidos.");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ApiError> manejarArgumentoInvalido(IllegalArgumentException ex, HttpServletRequest request) {
+    @ExceptionHandler(IllegalArgumentException.class) //ver si se usa luego, por ahora no
+    public ResponseEntity<ApiError> manejarArgumentoInvalido(IllegalArgumentException ex) {
         ApiError error = new ApiError(400,
                 ex.getMessage() != null
                         ? ex.getMessage()
@@ -59,8 +58,8 @@ public class GlobalExceptionHandler {
     }
 
     //409
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ApiError> manejarIntegridad(DataIntegrityViolationException ex, HttpServletRequest request) {
+    @ExceptionHandler(DataIntegrityViolationException.class) //Puede corresponder, pero no todo error de integridad es un conflicto recuperable. Ver por cual cambiarlo
+    public ResponseEntity<ApiError> manejarIntegridad(DataIntegrityViolationException ex) {
         ApiError error = new ApiError(409, "La operación entra en conflicto con los datos existentes o sus relaciones.");
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
@@ -68,7 +67,7 @@ public class GlobalExceptionHandler {
 
     // 500
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiError> manejarErrorInterno(Exception ex, HttpServletRequest request) {
+    public ResponseEntity<ApiError> manejarErrorInterno(Exception ex) {
         ApiError error = new ApiError(500, "Ocurrió un error interno. Intentá nuevamente más tarde.");
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);

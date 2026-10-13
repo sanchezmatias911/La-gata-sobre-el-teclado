@@ -3,6 +3,7 @@ package com.malb.gimnasio.service.impl;
 import com.malb.gimnasio.dao.ClienteDAO;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.service.ClienteService;
+import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +26,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente recuperar(Long dni) {
-        return clienteDAO.findById(dni)
-                .orElseThrow(() -> new NoSuchElementException("Cliente not found with dni: " + dni));
+        return clienteDAO.findByDni(dni).orElseThrow(() -> new RecursoNoEncontradoException("Cliente", dni));
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.malb.gimnasio.service.impl;
 import com.malb.gimnasio.dao.ActividadDAO;
 import com.malb.gimnasio.modelo.Actividad;
 import com.malb.gimnasio.service.ActividadService;
+import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class ActividadServiceImpl implements ActividadService {
     @Override
     public Actividad recuperar(Long id) {
         return actividadDAO.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Actividad not found with id: " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Actividad", id));
     }
 
     @Override

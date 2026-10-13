@@ -3,6 +3,7 @@ package com.malb.gimnasio.service.impl;
 import com.malb.gimnasio.dao.ClaseProgramadaDAO;
 import com.malb.gimnasio.modelo.ClaseProgramada;
 import com.malb.gimnasio.service.ClaseProgramadaService;
+import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,7 @@ public class ClaseProgramadaServiceImpl implements ClaseProgramadaService {
     @Override
     public ClaseProgramada recuperar(Long id) {
         return claseProgramadaDAO.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("ClaseProgramada not found with id: " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Clase", id));
     }
 
     @Override

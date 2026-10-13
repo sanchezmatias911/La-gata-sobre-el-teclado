@@ -3,6 +3,7 @@ package com.malb.gimnasio.service.impl;
 import com.malb.gimnasio.dao.ProfesorDAO;
 import com.malb.gimnasio.modelo.usuario.Profesor;
 import com.malb.gimnasio.service.ProfesorService;
+import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,7 @@ public class ProfesorServiceImpl implements ProfesorService {
     @Override
     public Profesor recuperar(Long dni) {
         return profesorDAO.findById(dni)
-                .orElseThrow(() -> new NoSuchElementException("Profesor not found with dni: " + dni));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Profesor", dni));
     }
 
     @Override
