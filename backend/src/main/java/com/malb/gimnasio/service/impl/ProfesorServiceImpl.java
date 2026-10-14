@@ -3,6 +3,7 @@ package com.malb.gimnasio.service.impl;
 import com.malb.gimnasio.dao.ProfesorDAO;
 import com.malb.gimnasio.modelo.usuario.Profesor;
 import com.malb.gimnasio.service.ProfesorService;
+import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +21,17 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public void crear(Profesor profesor) {
+        if (profesor == null) { throw new IllegalArgumentException("no se puede crear algo nulo"); }
+
         profesorDAO.save(profesor);
     }
 
     @Override
     public Profesor recuperar(Long dni) {
-        return profesorDAO.findById(dni)
-                .orElseThrow(() -> new NoSuchElementException("Profesor not found with dni: " + dni));
+        if (dni == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
+
+        return profesorDAO.findByDni(dni)
+                .orElseThrow(() -> new RecursoNoEncontradoException("profesor con ese dni"));
     }
 
     @Override
@@ -36,6 +41,13 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public void eliminar(Long dni) {
+        if (dni == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
+
+        /* todavia no se sabe si se debe de lanzar un error o borrar sus cursos. Se verá en US
+        if (tieneCursos) {
+            throw new RecuersoEnConlicto("No se puede eliminar el profesor"); //CONFLICT
+        }*/
+
         Profesor profesor = recuperar(dni);
         profesorDAO.delete(profesor);
     }
