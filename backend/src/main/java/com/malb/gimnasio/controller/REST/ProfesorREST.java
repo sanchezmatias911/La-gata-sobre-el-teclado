@@ -2,6 +2,7 @@ package com.malb.gimnasio.controller.REST;
 import com.malb.gimnasio.controller.DTO.ProfesorDTO;
 import com.malb.gimnasio.modelo.usuario.Profesor;
 import com.malb.gimnasio.service.ProfesorService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ final public class ProfesorREST {
     }
 
     @PostMapping()
-    public ResponseEntity<ProfesorDTO> crear(@RequestBody ProfesorDTO dto) {
+    public ResponseEntity<ProfesorDTO> crear(@Valid @RequestBody ProfesorDTO dto) {
         Profesor profesor = dto.aModelo();
         profesorService.crear(profesor);
         return ResponseEntity.ok(ProfesorDTO.desdeModelo(profesor));

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ClaseProgramadaDAO extends JpaRepository<ClaseProgramada, Long> {
+    boolean existsByActividad_Id(Long actividadId); //comprueba si existe al menos una clase programada cuya actividad tenga ese ID.
 }
