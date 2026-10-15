@@ -1,0 +1,79 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { createActivity } from '../../services/api/actividad.service';
+import type { ActividadBody } from '../../services/types/types';
+import '../ClaseForm/ClaseForm.css';
+
+export const ActividadForm = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    nombre: '',
+    descripcion: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.nombre) {
+      toast.warning("El nombre de la actividad es obligatorio.");
+      return;
+    }
+
+    try {
+      await createActivity(formData as ActividadBody);
+      toast.success("¡Actividad registrada exitosamente!");
+      setTimeout(() => navigate('/clases'), 1500);
+    } catch (error) {
+      toast.error("Hubo un error al registrar la actividad.");
+    }
+  };
+
+  return (
+    <div className="form-page-container">
+      <div className="form-content">
+        <h2 className="form-title">Registrar Nueva Actividad</h2>
+        
+        <form onSubmit={handleSubmit} className="custom-form">
+          <div className="form-group">
+            <label>Nombre de la Actividad *</label>
+            <input 
+              type="text" 
+              name="nombre" 
+              value={formData.nombre} 
+              onChange={handleChange} 
+              placeholder="Ej: Yoga, Crossfit..."
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Descripción</label>
+            <input 
+              type="text" 
+              name="descripcion" 
+              value={formData.descripcion} 
+              onChange={handleChange} 
+              placeholder="Breve descripción de la actividad"
+            />
+          </div>
+
+          <div className="form-actions">
+            <button type="button" className="btn-cancelar" onClick={() => navigate('/clases')}>
+              Cancelar
+            </button>
+            <button type="submit" className="btn-guardar">
+              Guardar Actividad
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};

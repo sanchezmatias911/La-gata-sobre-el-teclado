@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getAllActivities } from '../services/actividad.service';
-import { getAllProfesores } from '../services/profesor.service';
-import { createClass } from '../services/clase.services';
-import type { ClaseProgramadaBody, LocalTime } from '../types/types';
+import { getAllActivities } from '../../services/api/actividad.service';
+import { getAllProfesores } from '../../services/api/profesor.service';
+import { createClass } from '../../services/api/clase.services';
+import type { ClaseProgramadaBody,LocalTime } from '../../services/types/types';
 import './ClaseForm.css';
 
 const parseLocalTime = (timeString: string): LocalTime => {
