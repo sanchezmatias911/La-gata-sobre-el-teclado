@@ -12,7 +12,7 @@ export const mockData: ClaseProgramadaBody[] = [
         horaInicio: { hour: 8, minute: 0, second: 0, nano: 0 },
         horaFin: { hour: 9, minute: 0, second: 0, nano: 0 },
         estado: "Activa",
-        profesor: { id: 11111111 },
+        profesor: { id: 11111111, nombre: "Jorge" },
         actividad: { id: 10, nombre: "Funcional", descripcion: "Entrenamiento funcional", cupo: 30 },
         inscripciones: []
     },
@@ -22,7 +22,7 @@ export const mockData: ClaseProgramadaBody[] = [
         horaInicio: { hour: 18, minute: 0, second: 0, nano: 0 },
         horaFin: { hour: 20, minute: 0, second: 0, nano: 0 },
         estado: "Activa",
-        profesor: { id: 22222222 },
+        profesor: { id: 22222222, nombre: "Jorge" },
         actividad: { id: 11, nombre: "Zumba", descripcion: "Clase de baile", cupo: 40 },
         inscripciones: []
     },
@@ -32,7 +32,7 @@ export const mockData: ClaseProgramadaBody[] = [
         horaInicio: { hour: 10, minute: 0, second: 0, nano: 0 },
         horaFin: { hour: 12, minute: 0, second: 0, nano: 0 },
         estado: "Cancelada",
-        profesor: { id: 33333333 },
+        profesor: { id: 33333333, nombre: "Jorge" },
         actividad: { id: 12, nombre: "Fitcombat", descripcion: "Boxeo y cardio", cupo: 25 },
         inscripciones: []
     },
@@ -42,7 +42,7 @@ export const mockData: ClaseProgramadaBody[] = [
         horaInicio: { hour: 16, minute: 0, second: 0, nano: 0 },
         horaFin: { hour: 17, minute: 0, second: 0, nano: 0 },
         estado: "Activa",
-        profesor: { id: 44444444 },
+        profesor: { id: 44444444, nombre: "Jorge" },
         actividad: { id: 13, nombre: "Stretching", descripcion: "Estiramiento", cupo: 20 },
         inscripciones: []
     },
@@ -52,7 +52,7 @@ export const mockData: ClaseProgramadaBody[] = [
         horaInicio: { hour: 19, minute: 0, second: 0, nano: 0 },
         horaFin: { hour: 20, minute: 0, second: 0, nano: 0 },
         estado: "Cancelada",
-        profesor: { id: 11111111 },
+        profesor: { id: 11111111, nombre: "Marcelo" },
         actividad: { id: 14, nombre: "Gap", descripcion: "Glúteos, abdomen y piernas", cupo: 30 },
         inscripciones: []
     },
@@ -62,7 +62,7 @@ export const mockData: ClaseProgramadaBody[] = [
         horaInicio: { hour: 10, minute: 0, second: 0, nano: 0 },
         horaFin: { hour: 12, minute: 0, second: 0, nano: 0 },
         estado: "Activa",
-        profesor: { id: 55555555 },
+        profesor: { id: 55555555, nombre: "Marcelo" },
         actividad: { id: 15, nombre: "Yoga", descripcion: "Hatha Yoga", cupo: 20 },
         inscripciones: []
     },
@@ -72,7 +72,7 @@ export const mockData: ClaseProgramadaBody[] = [
         horaInicio: { hour: 9, minute: 0, second: 0, nano: 0 },
         horaFin: { hour: 12, minute: 0, second: 0, nano: 0 },
         estado: "Cancelada",
-        profesor: { id: 11111111 },
+        profesor: { id: 11111111, nombre: "Marcelo" },
         actividad: { id: 16, nombre: "Yoga", descripcion: "Hatha Yoga", cupo: 30 },
         inscripciones: []
     },
@@ -82,7 +82,7 @@ export const mockData: ClaseProgramadaBody[] = [
         horaInicio: { hour: 12, minute: 0, second: 0, nano: 0 },
         horaFin: { hour: 13, minute: 30, second: 0, nano: 0 },
         estado: "Activa",
-        profesor: { id: 11111111 },
+        profesor: { id: 11111111, nombre: "Marcelo" },
         actividad: { id: 17, nombre: "Fitcombat", descripcion: "Entrenamiento funcional", cupo: 30 },
         inscripciones: []
     },
@@ -92,7 +92,7 @@ export const mockData: ClaseProgramadaBody[] = [
         horaInicio: { hour: 13, minute: 30, second: 0, nano: 0 },
         horaFin: { hour: 17, minute: 30, second: 0, nano: 0 },
         estado: "Cancelada",
-        profesor: { id: 11111111 },
+        profesor: { id: 11111111, nombre: "Marcelo" },
         actividad: { id: 18, nombre: "Stretching", descripcion: "Glúteos, abdomen y piernas", cupo: 30 },
         inscripciones: []
     },
@@ -102,7 +102,7 @@ export const mockData: ClaseProgramadaBody[] = [
         horaInicio: { hour: 12, minute: 0, second: 0, nano: 0 },
         horaFin: { hour: 13, minute: 30, second: 0, nano: 0 },
         estado: "Cancelada",
-        profesor: { id: 11111111 },
+        profesor: { id: 11111111, nombre: "Marcelo" },
         actividad: { id: 17, nombre: "Funcional", descripcion: "Entrenamiento funcional", cupo: 30 },
         inscripciones: []
     }

@@ -34,10 +34,14 @@ export interface InscripcionBody {
     claseProgramada: SimpleClaseProgramada
 }
 
+export interface SimpleProfesor{
+    id:number,
+    nombre: string
+} //provisional
+
 export interface SimpleInscipciones {id: number}
 export interface Actividad {id:number}            //provisional
 export interface SimpleCliente {id:number}        //provisional
-export interface SimpleProfesor{id:number}        //provisional
 export interface SimpleClaseProgramada{id:number} //provisional
 
 export interface ClienteBody {
