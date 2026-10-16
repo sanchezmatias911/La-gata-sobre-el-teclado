@@ -3,13 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getAllClases } from '../../services/api/clase.services';
 import type { ClaseProgramadaBody, LocalTime } from "../../services/types/types";
 import './Schedule.css';
-// import { mockData } from '../../data/scheduleMockData'
-
-
-const DAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-const START_HOUR = 8;
-const END_HOUR = 21;
-const HOURS = Array.from({ length: END_HOUR - START_HOUR + 1 }, (_, i) => START_HOUR + i);
+import { DAYS, HOURS, START_HOUR } from '../../data/scheduleMockData'
 
 export const Schedule = () => {
     const navigate = useNavigate();

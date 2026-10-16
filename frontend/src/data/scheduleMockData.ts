@@ -1,4 +1,11 @@
 import type { ClaseProgramadaBody } from "../services/types/types.ts";
+import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+
+export const DAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+export const START_HOUR = 8;
+export const END_HOUR = 21;
+export const HOURS = Array.from({ length: END_HOUR - START_HOUR + 1 }, (_, i) => START_HOUR + i);
 
 export const mockData: ClaseProgramadaBody[] = [
     {
