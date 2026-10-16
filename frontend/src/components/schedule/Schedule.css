@@ -59,8 +59,8 @@
 
 .grid-header {
     display: flex;
-    align-items: flex-start; /* Esto empuja el texto hacia arriba */
-    justify-content: center; /* Esto mantiene el texto centrado horizontalmente */
+    align-items: flex-start;
+    justify-content: center;
     color: #ffffff;
     text-align: center;
     font-weight: 600;
