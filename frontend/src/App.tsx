@@ -5,8 +5,8 @@ const App = () => {
     return (
         <>
             <Routes>
-                <Route path='/calendario' element={<Schedule />} />
-                <Route path='/calendario/:id_clase' element={<ClassProfile />} />
+                <Route path='/clases' element={<Schedule />} />
+                <Route path='/clases/:id_clase' element={<ClassProfile />} />
             </Routes>
         </>
     );
