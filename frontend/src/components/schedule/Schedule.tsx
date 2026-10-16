@@ -7,9 +7,7 @@ const getActivityBadgeClass = (status: ScheduleCell['status']): string => {
 
     switch (status) {
         case 'Activa': return 'class-pill pill-active';
-        case 'Borrador': return 'class-pill pill-draft';
         case 'Cancelada': return 'class-pill pill-cancelled';
-        case 'Finalizada': return 'class-pill pill-finished';
         default: return 'class-pill';
     }
 };
@@ -23,9 +21,7 @@ export const Schedule = () => {
 
     const legendItems: { status: ScheduleCell['status']; label: string }[] = [
         { status: 'Activa', label: 'Activa' },
-        { status: 'Borrador', label: 'Borrador' },
         { status: 'Cancelada', label: 'Cancelada' },
-        { status: 'Finalizada', label: 'Finalizada' }
     ];
 
     return (

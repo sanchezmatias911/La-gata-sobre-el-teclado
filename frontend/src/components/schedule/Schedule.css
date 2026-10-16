@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 1400px;
+    max-width: 1600px;
     gap: 2rem;
 }
 
@@ -21,19 +21,20 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 1rem;
-    padding: 0 1rem;
 }
 
 .legend-item {
     display: flex;
     align-items: center;
+    border-radius: 10px;
+    background-color: #262626;
 }
 
 .table-responsive {
     width: 100%;
     background-color: #262626;
     padding: 2rem;
-    border-radius: 16px;
+    border-radius: 24px;
     border: 1px solid #333;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     overflow-x: auto;
@@ -47,7 +48,7 @@
 
 .custom-table th {
     color: #ffffff;
-    padding: 1rem 0.5rem 1.5rem;
+    padding: 0 0.5rem 1.5rem;
     text-align: center;
     font-weight: 600;
     text-transform: uppercase;
@@ -75,15 +76,15 @@
 }
 
 .empty-slot {
-    color: #444444;
+    color: #ffffff;
 }
 
 .class-pill {
     display: inline-block;
-    padding: 0.6rem 1rem;
+    padding: 0.4rem 1rem;
     width: 100%;
     max-width: 130px;
-    border-radius: 13px;
+    border-radius: 10px;
     font-size: 0.85rem;
     font-weight: 600;
     border: 1px solid transparent;
@@ -99,55 +100,28 @@
 }
 
 .pill-active {
-    background-color: rgb(3 196 72 / 0.47);
-    border-color: rgba(34, 180, 84, 0.3);
+    color: #7adf92;
+    background-color: rgb(0 191 66 / 0.27);
+    border-color: rgb(0 255 90 / 0.45);
 }
 
 .pill-active:hover {
-    background-color: rgba(34, 180, 84, 0.1);
-    border-color: #22b454;
-}
-
-.pill-draft {
-    color: #eab308;
-    border-color: rgba(234, 179, 8, 0.3);
-}
-
-.pill-draft:hover {
-    background-color: rgba(234, 179, 8, 0.1);
-    border-color: #eab308;
+    background-color: rgba(34 180 84 / 0.1);
 }
 
 .pill-cancelled {
-    color: #b41e1e;
-    border-color: rgba(180, 30, 30, 0.3);
+    color: #d63838;
+    background-color: rgb(191 0 0 / 0.27);
+    border-color: rgb(255 0 0 / 0.45);
 }
 
 .pill-cancelled:hover {
-    background-color: rgba(180, 30, 30, 0.1);
-    border-color: #b41e1e;
+    background-color: rgb(202 26 26 / 0.1);
 }
 
-.pill-finished {
-    color: #8892b0;
-    border-color: rgba(136, 146, 176, 0.3);
-}
-
-.pill-finished:hover {
-    background-color: rgba(136, 146, 176, 0.1);
-    border-color: #8892b0;
-}
-
-/* Excepciones para las pastillas de la leyenda (no interactivas) */
 .schedule-legend .class-pill {
     cursor: default;
-    width: auto;
-    padding: 0.5rem 1.2rem;
-}
-
-.schedule-legend .class-pill:hover {
-    transform: none;
-    box-shadow: none;
-    background-color: #191919;
-    border-color: inherit;
+    width: 110px;
+    padding: 0.5rem 0;
+    box-sizing: border-box;
 }
