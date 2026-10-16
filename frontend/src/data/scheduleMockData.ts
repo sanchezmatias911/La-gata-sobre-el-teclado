@@ -1,6 +1,4 @@
 import type { ClaseProgramadaBody } from "../services/types/types.ts";
-import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
 
 export const DAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 export const START_HOUR = 8;

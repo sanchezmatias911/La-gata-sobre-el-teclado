@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllClases } from '../../services/api/clase.services';
+import { DAYS, HOURS, START_HOUR } from '../../data/scheduleMockData'
 import type { ClaseProgramadaBody, LocalTime } from "../../services/types/types";
 import './Schedule.css';
-import { DAYS, HOURS, START_HOUR } from '../../data/scheduleMockData'
 
 export const Schedule = () => {
     const navigate = useNavigate();
