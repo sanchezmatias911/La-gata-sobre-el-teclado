@@ -74,18 +74,18 @@
     font-weight: 500;
 }
 
-.schedule-tags {
+.schedule-tag {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    width: 100%;
+    width: 30%;
 }
 
 .tag-pill {
     background-color: #191919;
     border: 1px solid #333;
     padding: 0.5rem 1rem;
-    border-radius: 20px;
+    border-radius: 12px;
     font-size: 0.9rem;
     font-weight: 600;
     flex: 1;
@@ -113,7 +113,7 @@
 
 .progress-fill {
     height: 100%;
-    background-color: #22b454;
+    background-color: #01c447;
     border-radius: 4px;
     transition: width 0.5s ease-in-out;
 }
@@ -128,30 +128,59 @@
 .btn {
     width: 100%;
     padding: 1rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
     font-weight: 600;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    text-align: center;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
 .btn-enroll {
-    background-color: #22b454;
-    color: #ffffff;
-    border: 1px solid #3fd16f;
+    --btn-color: #7adf92;
+    --btn-border: rgb(0 255 90 / 0.45);
+    color: var(--btn-color);
+    border-color: var(--btn-border);
+    background-color: rgb(0 191 66 / 0.27);
 }
 
 .btn-enroll:hover {
-    background-color: #15cf53;
+    color: var(--btn-color);
+    border-color: var(--btn-border);
+    background-color: rgb(34 180 84 / 0.1);
 }
 
 .btn-cancel {
-    background-color: #b41e1e;
-    color: #ffffff;
-    border: 1px solid rgba(255, 77, 77, 0.3);
+    --btn-color: #d63838;
+    --btn-border: rgb(255 0 0 / 0.45);
+    color: var(--btn-color);
+    border-color: var(--btn-border);
+    background-color: rgb(191 0 0 / 0.27);
 }
 
 .btn-cancel:hover {
-    background-color: #cb1414;
+    color: var(--btn-color);
+    border-color: var(--btn-border);
+    background-color: rgb(202 26 26 / 0.1);
+}
+
+.btn-enroll:active,
+.btn-enroll:focus {
+    color: var(--btn-color);
+    border-color: var(--btn-border);
+    background-color: rgb(34 180 84 / 0.15);
+}
+
+.btn-cancel:active,
+.btn-cancel:focus {
+    color: var(--btn-color);
+    border-color: var(--btn-border);
+    background-color: rgb(202 26 26 / 0.15);
 }

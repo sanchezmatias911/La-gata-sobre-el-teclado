@@ -4,7 +4,7 @@ interface ClassProfileProps {
     name?: string;
     professor?: string;
     imageUrl?: string;
-    schedule?: string[];
+    schedule?: string;
     enrolled?: number;
     capacity?: number;
 }
@@ -13,7 +13,7 @@ export const ClassProfile = ({
                                  name = "Funcional",
                                  professor = "Martín Palermo",
                                  imageUrl = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop",
-                                 schedule = ["Lunes 18:00", "Miércoles 18:00", "Viernes 19:00"],
+                                 schedule = "Lunes 18:00",
                                  enrolled = 45,
                                  capacity = 50
                              }: ClassProfileProps) => {
@@ -35,11 +35,9 @@ export const ClassProfile = ({
                 <div className="class-body">
 
                     <div className="class-section">
-                        <h3 className="section-title">Horarios disponibles</h3>
-                        <div className="schedule-tags">
-                            {schedule.map((session, index) => (
-                                <span key={index} className="tag-pill">{session}</span>
-                            ))}
+                        <h3 className="section-title">Horario disponible</h3>
+                        <div className="schedule-tag">
+                            <span className="tag-pill">{schedule}</span>
                         </div>
                     </div>
 

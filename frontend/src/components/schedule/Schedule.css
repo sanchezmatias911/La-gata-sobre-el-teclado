@@ -30,6 +30,13 @@
     background-color: #262626;
 }
 
+.legend-pill {
+    cursor: default !important;
+    width: 110px !important;
+    padding: 0.5rem 0 !important;
+    margin: 0 !important;
+}
+
 .table-responsive {
     width: 100%;
     background-color: #262626;
@@ -40,88 +47,76 @@
     overflow-x: auto;
 }
 
-.custom-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.95rem;
+.schedule-grid {
+    display: grid;
+    grid-template-columns: 80px repeat(6, 1fr);
+    grid-template-rows: 45px;
+    grid-auto-rows: 35px;
+    gap: 0;
+    position: relative;
+    min-width: 900px;
 }
 
-.custom-table th {
+.grid-header {
+    display: flex;
+    align-items: flex-start; /* Esto empuja el texto hacia arriba */
+    justify-content: center; /* Esto mantiene el texto centrado horizontalmente */
     color: #ffffff;
-    padding: 0 0.5rem 1.5rem;
     text-align: center;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 0.85rem;
     border-bottom: 2px solid #333;
+    grid-row: 1;
 }
 
-.custom-table td {
-    padding: 0.75rem 0.5rem;
-    text-align: center;
-    border-bottom: 1px solid #333;
-    transition: background-color 0.2s ease;
-}
-
-.custom-table tbody tr:hover td {
-    background-color: #2c2c2c;
-}
-
-.time-col {
+.grid-time-label {
     color: #ffffff;
     font-weight: 600;
     font-size: 0.95rem;
-    width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.empty-slot {
-    color: #ffffff;
+.grid-row-group {
+    border-bottom: 1px solid #333;
+    grid-column: 1 / -1;
+    pointer-events: none;
 }
 
-.class-pill {
-    display: inline-block;
-    padding: 0.4rem 1rem;
-    width: 100%;
-    max-width: 130px;
-    border-radius: 10px;
+.class-pill-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
     font-size: 0.85rem;
     font-weight: 600;
     border: 1px solid transparent;
-    white-space: nowrap;
-    text-align: center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    justify-self: stretch;
+    width: auto;
+    margin: 8px;
+    text-align: center;
+    padding: 0.5rem;
+    z-index: 2;
 }
 
-.class-pill:hover {
+.class-pill-grid:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
 }
 
 .pill-active {
     color: #7adf92;
-    background-color: rgb(0 191 66 / 0.27);
+    background-color: #1c4f2e;
     border-color: rgb(0 255 90 / 0.45);
-}
-
-.pill-active:hover {
-    background-color: rgba(34 180 84 / 0.1);
 }
 
 .pill-cancelled {
     color: #d63838;
-    background-color: rgb(191 0 0 / 0.27);
+    background-color: #4f1c1c;
     border-color: rgb(255 0 0 / 0.45);
-}
-
-.pill-cancelled:hover {
-    background-color: rgb(202 26 26 / 0.1);
-}
-
-.schedule-legend .class-pill {
-    cursor: default;
-    width: 110px;
-    padding: 0.5rem 0;
-    box-sizing: border-box;
 }
