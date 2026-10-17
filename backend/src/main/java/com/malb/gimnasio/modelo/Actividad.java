@@ -16,7 +16,7 @@ public class Actividad {
     @Range(min = 0, max = 50, message = "Debe haber entre 0 y 50 cupos")
     private int cupo;
 
-    //@NonNull en el momento de copilacion
+    //@NonNull en el momento de compilación
     public Actividad (@NonNull String nombre, @NonNull String descripcion, @NonNull int cupo){
         this.cupo = cupo;
         this.descripcion = descripcion;
