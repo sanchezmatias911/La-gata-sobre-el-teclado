@@ -9,4 +9,5 @@ public interface InscripcionService {
     Inscripcion recuperar(Long id);
     List<Inscripcion> recuperarTodos();
     void eliminar(Long id);
+    void eliminarTodos();
 }
