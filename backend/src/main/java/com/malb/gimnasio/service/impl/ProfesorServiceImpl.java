@@ -33,6 +33,13 @@ public class ProfesorServiceImpl implements ProfesorService {
         return profesorDAO.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("no hay profesor con ese ID"));
     }
+    @Override
+    public Profesor recuperarPorDNI(Long dni) {
+        if (dni == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
+
+        return profesorDAO.findByDni(dni)
+                .orElseThrow(() -> new RecursoNoEncontradoException("no hay profesor con ese ID"));
+    }
 
     @Override
     public List<Profesor> recuperarTodos() {
