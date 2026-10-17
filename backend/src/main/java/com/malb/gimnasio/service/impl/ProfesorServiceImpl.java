@@ -27,11 +27,11 @@ public class ProfesorServiceImpl implements ProfesorService {
     }
 
     @Override
-    public Profesor recuperar(Long dni) {
-        if (dni == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
+    public Profesor recuperar(Long id) {
+        if (id == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
 
-        return profesorDAO.findByDni(dni)
-                .orElseThrow(() -> new RecursoNoEncontradoException("profesor con ese dni"));
+        return profesorDAO.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontradoException("no hay profesor con ese ID"));
     }
 
     @Override
@@ -50,5 +50,10 @@ public class ProfesorServiceImpl implements ProfesorService {
 
         Profesor profesor = recuperar(dni);
         profesorDAO.delete(profesor);
+    }
+
+    @Override
+    public void eliminarTodos() {
+        profesorDAO.deleteAll();
     }
 }

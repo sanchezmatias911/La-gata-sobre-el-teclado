@@ -9,4 +9,5 @@ public interface ClienteService {
     Cliente recuperar(Long dni);
     List<Cliente> recuperarTodos();
     void eliminar(Long dni);
+    void eliminarTodos();
 }

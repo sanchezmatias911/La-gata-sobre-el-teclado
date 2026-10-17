@@ -53,4 +53,9 @@ public class ActividadServiceImpl implements ActividadService {
         Actividad actividad = recuperar(id);
         actividadDAO.delete(actividad);
     }
+
+    @Override
+    public void eliminarTodos() {
+        actividadDAO.deleteAll();
+    }
 }

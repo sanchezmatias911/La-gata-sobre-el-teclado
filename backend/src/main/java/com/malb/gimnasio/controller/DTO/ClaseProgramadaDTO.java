@@ -6,29 +6,29 @@ import com.malb.gimnasio.modelo.usuario.Profesor;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalTime;
-import java.util.List;
 
 public record ClaseProgramadaDTO(
         @NotNull
         Long id,
 
-        @NotNull
+        @NotNull(message = "El día es obligatorio")
         Dia dia,
 
-        @NotNull
+        @NotNull(message = "La hora de inicio es obligatoria")
         LocalTime horaInicio,
 
-        @NotNull
+        @NotNull(message = "La hora de fin es obligatoria")
         LocalTime horaFin,
 
         @NotNull
         EstadoClaseProgramada estado,
 
         @NotNull
-        Profesor profesor,
+        Long idProfesor,
 
         @NotNull
-        Actividad actividad
+        Long idActividad
+
 
 ) {
     public static ClaseProgramadaDTO desdeModelo(ClaseProgramada clase){
@@ -38,13 +38,9 @@ public record ClaseProgramadaDTO(
                 clase.getHoraInicio(),
                 clase.getHoraFin(),
                 clase.getEstado(),
-                clase.getProfesor(),
-                clase.getActividad()
+                clase.getProfesor().getId(),
+                clase.getActividad().getId()
         );
     }
 
-    public ClaseProgramada aModelo(){
-        ClaseProgramada clase = new ClaseProgramada(this.dia, this.horaInicio, this.horaFin, this.profesor, this.actividad, this.estado);
-        return clase;
-    }
 }

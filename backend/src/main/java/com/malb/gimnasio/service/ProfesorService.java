@@ -9,4 +9,5 @@ public interface ProfesorService {
     Profesor recuperar(Long dni);
     List<Profesor> recuperarTodos();
     void eliminar(Long dni);
+    void eliminarTodos();
 }

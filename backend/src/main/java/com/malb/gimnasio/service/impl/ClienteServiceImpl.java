@@ -49,4 +49,8 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente cliente = recuperar(dni);
         clienteDAO.delete(cliente);
     }
+    @Override
+    public void eliminarTodos() {
+        clienteDAO.deleteAll();
+    }
 }
