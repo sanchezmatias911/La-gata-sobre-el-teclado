@@ -13,7 +13,6 @@ export interface ClaseProgramadaBody {
   estado: string; 
   profesor: SimpleProfesor; 
   actividad: Actividad;
-  inscripciones: SimpleInscipciones[]; 
 }
 
 export interface ProfesorBody {

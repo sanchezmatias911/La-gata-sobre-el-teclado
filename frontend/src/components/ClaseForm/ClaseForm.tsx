@@ -4,21 +4,23 @@ import { toast } from 'react-toastify';
 import { getAllActivities } from '../../services/api/actividad.service';
 import { getAllProfesores } from '../../services/api/profesor.service';
 import { createClass } from '../../services/api/clase.services';
-import type { ClaseProgramadaBody,LocalTime } from '../../services/types/types';
 import './ClaseForm.css';
+
 
 export const ClaseForm = () => {
   const navigate = useNavigate();
   const [actividades, setActividades] = useState<any[]>([]);
   const [profesores, setProfesores] = useState<any[]>([]);
 
+  // El estado espera los objetos JSON completos para profesor y actividad
   const [formData, setFormData] = useState({
-    actividadId: '',
-    profesorDni: '',
+    id: '',
     dia: 'LUNES',
     horaInicio: '',
     horaFin: '',
-    estado: 'BORRADOR'
+    estado: 'BORRADOR',
+    profesor: null as any,
+    actividad: null as any
   });
 
   useEffect(() => {
@@ -27,23 +29,12 @@ export const ClaseForm = () => {
         const dataActividades = await getAllActivities();
         const dataProfesores = await getAllProfesores();
         
-        // Logs para que veas en la consola (F12) qué está llegando realmente desde el backend
-        console.log("Respuesta Actividades:", dataActividades);
-        console.log("Respuesta Profesores:", dataProfesores);
-
-        // Verifica si la API devuelve una lista directa o un objeto paginado (.content)
-        const actividadesArray = Array.isArray(dataActividades) 
-            ? dataActividades 
-            : (dataActividades?.content || []);
-            
-        const profesoresArray = Array.isArray(dataProfesores) 
-            ? dataProfesores 
-            : (dataProfesores?.content || []);
+        const actividadesArray = Array.isArray(dataActividades) ? dataActividades : (dataActividades?.content || []);
+        const profesoresArray = Array.isArray(dataProfesores) ? dataProfesores : (dataProfesores?.content || []);
 
         setActividades(actividadesArray);
         setProfesores(profesoresArray);
       } catch (error) {
-        console.error("Error en la petición:", error);
         toast.error("Error al cargar actividades y profesores.");
       }
     };
@@ -51,44 +42,50 @@ export const ClaseForm = () => {
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+
+    // Si es el select de profesor o actividad, parseamos el JSON que guardamos en el value
+    if (name === 'profesor' || name === 'actividad') {
+      if (value) {
+        setFormData(prev => ({ ...prev, [name]: JSON.parse(value) }));
+      } else {
+        setFormData(prev => ({ ...prev, [name]: null }));
+      }
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.actividadId || !formData.profesorDni || !formData.horaInicio || !formData.horaFin) {
+    if (!formData.id || !formData.actividad || !formData.profesor || !formData.horaInicio || !formData.horaFin) {
       toast.warning("Faltan completar campos obligatorios.");
       return;
     }
 
-    // Armamos el objeto respetando el contrato exigido por el backend
+    // Agregamos los segundos (":00") para asegurarnos de que cumpla el formato de hora estándar de Java (HH:mm:ss)
+    const horaInicioFormateada = `${formData.horaInicio}:00`;
+    const horaFinFormateada = `${formData.horaFin}:00`;
+
+    // Como formData.profesor y formData.actividad ya son los JSON completos
+    // los mandamos directo al body, junto con las horas formateadas como string.
     const nuevaClase = {
-      id: 0,
+      id: Number(formData.id),
       dia: formData.dia,
-      horaInicio: formData.horaInicio,
-      horaFin: formData.horaFin,
+      horaInicio: horaInicioFormateada,
+      horaFin: horaFinFormateada,
       estado: formData.estado,
-      profesor: { 
-        dni: Number(formData.profesorDni) 
-      },
-      actividad: { 
-        id: Number(formData.actividadId) 
-      }
+      profesor: formData.profesor,
+      actividad: formData.actividad
     };
 
     try {
-      await createClass(nuevaClase as unknown as ClaseProgramadaBody);
+      // Usamos "as any" para saltarnos temporalmente la validación de tu interfaz LocalTime en TypeScript
+      // ya que el backend te exige un string.
+      await createClass(nuevaClase as any);
       toast.success("¡Clase registrada exitosamente!");
-      
-      // Redirigir a la lista de clases después de 1.5 segundos
-      setTimeout(() => {
-        navigate('/clases');
-      }, 1500);
-
+      setTimeout(() => navigate('/clases'), 1500);
     } catch (error) {
       console.error("Error al crear la clase:", error);
       toast.error("Hubo un error al registrar la clase.");
@@ -102,11 +99,26 @@ export const ClaseForm = () => {
         
         <form onSubmit={handleSubmit} className="custom-form">
           <div className="form-group">
+            <label>ID de la Clase *</label>
+            <input 
+              type="number" 
+              name="id" 
+              value={formData.id} 
+              onChange={handleChange} 
+              placeholder="Ej: 101"
+            />
+          </div>
+
+          <div className="form-group">
             <label>Actividad *</label>
-            <select name="actividadId" value={formData.actividadId} onChange={handleChange}>
+            <select 
+              name="actividad" 
+              value={formData.actividad ? JSON.stringify(formData.actividad) : ''} 
+              onChange={handleChange}
+            >
               <option value="">Seleccione una actividad...</option>
               {actividades.map(act => (
-                <option key={act.id} value={act.id}>
+                <option key={act.id} value={JSON.stringify(act)}>
                   {act.nombre || `Actividad ${act.id}`}
                 </option>
               ))}
@@ -115,10 +127,14 @@ export const ClaseForm = () => {
 
           <div className="form-group">
             <label>Profesor *</label>
-            <select name="profesorDni" value={formData.profesorDni} onChange={handleChange}>
+            <select 
+              name="profesor" 
+              value={formData.profesor ? JSON.stringify(formData.profesor) : ''} 
+              onChange={handleChange}
+            >
               <option value="">Seleccione un profesor...</option>
               {profesores.map(prof => (
-                <option key={prof.dni} value={prof.dni}>
+                <option key={prof.dni} value={JSON.stringify(prof)}>
                   {prof.nombre} (DNI: {prof.dni})
                 </option>
               ))}

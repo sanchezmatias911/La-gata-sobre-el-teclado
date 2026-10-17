@@ -31,6 +31,7 @@ export const ActividadForm = () => {
     }
 
     try {
+      console.log(formData)
       await createActivity(formData as ActividadBody);
       toast.success("¡Actividad registrada exitosamente!");
       setTimeout(() => navigate('/clases'), 1500);

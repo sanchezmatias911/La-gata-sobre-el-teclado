@@ -50,7 +50,7 @@ export const ProfesorForm = () => {
       await createProfesor(nuevoProfesor);
       
       toast.success("¡Profesor registrado exitosamente!");
-      setTimeout(() => navigate('/profesores'), 1500);
+      setTimeout(() => navigate('/clases'), 1500);
     } catch (error) {
       toast.error("Hubo un error al registrar al profesor.");
     }
