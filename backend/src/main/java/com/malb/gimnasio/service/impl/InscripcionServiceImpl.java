@@ -50,4 +50,8 @@ public class InscripcionServiceImpl implements InscripcionService {
         Inscripcion inscripcion = recuperar(id);
         inscripcionDAO.delete(inscripcion);
     }
+    @Override
+    public void eliminarTodos() {
+        inscripcionDAO.deleteAll();
+    }
 }

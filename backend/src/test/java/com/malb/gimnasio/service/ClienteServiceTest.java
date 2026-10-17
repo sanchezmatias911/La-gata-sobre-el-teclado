@@ -1,6 +1,7 @@
 package com.malb.gimnasio.service;
 
 import com.malb.gimnasio.modelo.usuario.Cliente;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -59,5 +60,10 @@ public class ClienteServiceTest {
         clienteService.eliminar(dni);
 
         assertThrows(RuntimeException.class, () -> clienteService.recuperar(dni));
+    }
+
+    @AfterEach
+    public void tearDown() {
+        clienteService.eliminarTodos();
     }
 }
