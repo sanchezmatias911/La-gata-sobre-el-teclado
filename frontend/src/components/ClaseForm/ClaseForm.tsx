@@ -12,15 +12,14 @@ export const ClaseForm = () => {
   const [actividades, setActividades] = useState<any[]>([]);
   const [profesores, setProfesores] = useState<any[]>([]);
 
-  // El estado espera los objetos JSON completos para profesor y actividad
+  // Eliminamos el id de la clase del estado inicial
   const [formData, setFormData] = useState({
-    id: '',
     dia: 'LUNES',
     horaInicio: '',
     horaFin: '',
     estado: 'BORRADOR',
-    profesor: null as any,
-    actividad: null as any
+    idProfesor: '',
+    idActividad: ''
   });
 
   useEffect(() => {
@@ -42,47 +41,35 @@ export const ClaseForm = () => {
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-
-    // Si es el select de profesor o actividad, parseamos el JSON que guardamos en el value
-    if (name === 'profesor' || name === 'actividad') {
-      if (value) {
-        setFormData(prev => ({ ...prev, [name]: JSON.parse(value) }));
-      } else {
-        setFormData(prev => ({ ...prev, [name]: null }));
-      }
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
-    }
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.id || !formData.actividad || !formData.profesor || !formData.horaInicio || !formData.horaFin) {
+    if (!formData.idActividad || !formData.idProfesor || !formData.horaInicio || !formData.horaFin) {
       toast.warning("Faltan completar campos obligatorios.");
       return;
     }
 
-    // Agregamos los segundos (":00") para asegurarnos de que cumpla el formato de hora estándar de Java (HH:mm:ss)
+    // Formateamos la hora para que Spring Boot la acepte (HH:mm:ss)
     const horaInicioFormateada = `${formData.horaInicio}:00`;
     const horaFinFormateada = `${formData.horaFin}:00`;
 
-    // Como formData.profesor y formData.actividad ya son los JSON completos
-    // los mandamos directo al body, junto con las horas formateadas como string.
+    // Armamos el payload exacto sin enviar ningún ID de clase
     const nuevaClase = {
-      id: Number(formData.id),
       dia: formData.dia,
       horaInicio: horaInicioFormateada,
       horaFin: horaFinFormateada,
       estado: formData.estado,
-      profesor: formData.profesor,
-      actividad: formData.actividad
+      idProfesor: Number(formData.idProfesor),
+      idActividad: Number(formData.idActividad)
     };
 
     try {
-      // Usamos "as any" para saltarnos temporalmente la validación de tu interfaz LocalTime en TypeScript
-      // ya que el backend te exige un string.
       await createClass(nuevaClase as any);
       toast.success("¡Clase registrada exitosamente!");
       setTimeout(() => navigate('/clases'), 1500);
@@ -98,27 +85,14 @@ export const ClaseForm = () => {
         <h2 className="form-title">Registrar Nueva Clase</h2>
         
         <form onSubmit={handleSubmit} className="custom-form">
-          <div className="form-group">
-            <label>ID de la Clase *</label>
-            <input 
-              type="number" 
-              name="id" 
-              value={formData.id} 
-              onChange={handleChange} 
-              placeholder="Ej: 101"
-            />
-          </div>
+          {/* Eliminado el input del ID de la clase */}
 
           <div className="form-group">
             <label>Actividad *</label>
-            <select 
-              name="actividad" 
-              value={formData.actividad ? JSON.stringify(formData.actividad) : ''} 
-              onChange={handleChange}
-            >
+            <select name="idActividad" value={formData.idActividad} onChange={handleChange}>
               <option value="">Seleccione una actividad...</option>
               {actividades.map(act => (
-                <option key={act.id} value={JSON.stringify(act)}>
+                <option key={act.id} value={act.id}>
                   {act.nombre || `Actividad ${act.id}`}
                 </option>
               ))}
@@ -127,14 +101,10 @@ export const ClaseForm = () => {
 
           <div className="form-group">
             <label>Profesor *</label>
-            <select 
-              name="profesor" 
-              value={formData.profesor ? JSON.stringify(formData.profesor) : ''} 
-              onChange={handleChange}
-            >
+            <select name="idProfesor" value={formData.idProfesor} onChange={handleChange}>
               <option value="">Seleccione un profesor...</option>
               {profesores.map(prof => (
-                <option key={prof.dni} value={JSON.stringify(prof)}>
+                <option key={prof.id} value={prof.id}>
                   {prof.nombre} (DNI: {prof.dni})
                 </option>
               ))}

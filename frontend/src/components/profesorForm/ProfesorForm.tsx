@@ -35,7 +35,7 @@ export const ProfesorForm = () => {
     }
 
     try {
-      // Construimos el objeto respetando estrictamente la interfaz ProfesorBody
+    
       const nuevoProfesor: ProfesorBody = {
         dni: Number(formData.dni),
         email: formData.email,
