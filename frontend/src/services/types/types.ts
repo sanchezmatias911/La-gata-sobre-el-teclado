@@ -24,7 +24,6 @@ export interface ProfesorBody {
   telefono: string;
   biografia: string;
   especialidades: string;
-  misClases: SimpleClaseProgramada[];
 }
 
 export interface InscripcionBody {

@@ -5,15 +5,21 @@ import { createProfesor } from '../../services/api/profesor.service';
 import type { ProfesorBody } from '../../services/types/types';
 import '../ClaseForm/ClaseForm.css';
 
+
+
 export const ProfesorForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     dni: '',
+    email: '',
+    password: '',
     nombre: '',
-    apellido: ''
+    telefono: '',
+    biografia: '',
+    especialidades: ''
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -23,19 +29,26 @@ export const ProfesorForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.dni || !formData.nombre || !formData.apellido) {
-      toast.warning("Todos los campos son obligatorios.");
+    if (!formData.dni || !formData.nombre || !formData.email || !formData.password) {
+      toast.warning("DNI, Nombre, Email y Contraseña son obligatorios.");
       return;
     }
 
     try {
-      // Convertimos el DNI a número según el tipo esperado en el servicio
-      const nuevoProfesor = {
-        ...formData,
-        dni: Number(formData.dni)
+      // Construimos el objeto respetando estrictamente la interfaz ProfesorBody
+      const nuevoProfesor: ProfesorBody = {
+        dni: Number(formData.dni),
+        email: formData.email,
+        password: formData.password,
+        nombre: formData.nombre,
+        telefono: formData.telefono,
+        biografia: formData.biografia,
+        especialidades: formData.especialidades
       };
       
-      await createProfesor(nuevoProfesor as ProfesorBody);
+      // Ahora lo pasamos directamente al servicio
+      await createProfesor(nuevoProfesor);
+      
       toast.success("¡Profesor registrado exitosamente!");
       setTimeout(() => navigate('/profesores'), 1500);
     } catch (error) {
@@ -71,17 +84,61 @@ export const ProfesorForm = () => {
           </div>
 
           <div className="form-group">
-            <label>Apellido *</label>
+            <label>Email *</label>
             <input 
-              type="text" 
-              name="apellido" 
-              value={formData.apellido} 
+              type="email" 
+              name="email" 
+              value={formData.email} 
+              onChange={handleChange} 
+              placeholder="correo@ejemplo.com"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Contraseña *</label>
+            <input 
+              type="password" 
+              name="password" 
+              value={formData.password} 
               onChange={handleChange} 
             />
           </div>
 
+          <div className="form-group">
+            <label>Teléfono</label>
+            <input 
+              type="text" 
+              name="telefono" 
+              value={formData.telefono} 
+              onChange={handleChange} 
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Especialidades</label>
+            <input 
+              type="text" 
+              name="especialidades" 
+              value={formData.especialidades} 
+              onChange={handleChange} 
+              placeholder="Ej: Yoga, Pilates"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Biografía</label>
+            <textarea 
+              name="biografia" 
+              value={formData.biografia} 
+              onChange={handleChange} 
+              placeholder="Breve descripción del profesor..."
+              rows={4}
+              style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}
+            />
+          </div>
+
           <div className="form-actions">
-            <button type="button" className="btn-cancelar" onClick={() => navigate('/profesores')}>
+            <button type="button" className="btn-cancelar" onClick={() => navigate('/clases')}>
               Cancelar
             </button>
             <button type="submit" className="btn-guardar">

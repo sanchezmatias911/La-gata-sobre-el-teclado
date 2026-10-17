@@ -7,11 +7,6 @@ import { createClass } from '../../services/api/clase.services';
 import type { ClaseProgramadaBody,LocalTime } from '../../services/types/types';
 import './ClaseForm.css';
 
-const parseLocalTime = (timeString: string): LocalTime => {
-  const [hour, minute] = timeString.split(':').map(Number);
-  return { hour, minute, second: 0, nano: 0 };
-};
-
 export const ClaseForm = () => {
   const navigate = useNavigate();
   const [actividades, setActividades] = useState<any[]>([]);
@@ -23,7 +18,7 @@ export const ClaseForm = () => {
     dia: 'LUNES',
     horaInicio: '',
     horaFin: '',
-    estado: 'Activa'
+    estado: 'BORRADOR'
   });
 
   useEffect(() => {
@@ -31,9 +26,24 @@ export const ClaseForm = () => {
       try {
         const dataActividades = await getAllActivities();
         const dataProfesores = await getAllProfesores();
-        setActividades(dataActividades);
-        setProfesores(dataProfesores);
+        
+        // Logs para que veas en la consola (F12) qué está llegando realmente desde el backend
+        console.log("Respuesta Actividades:", dataActividades);
+        console.log("Respuesta Profesores:", dataProfesores);
+
+        // Verifica si la API devuelve una lista directa o un objeto paginado (.content)
+        const actividadesArray = Array.isArray(dataActividades) 
+            ? dataActividades 
+            : (dataActividades?.content || []);
+            
+        const profesoresArray = Array.isArray(dataProfesores) 
+            ? dataProfesores 
+            : (dataProfesores?.content || []);
+
+        setActividades(actividadesArray);
+        setProfesores(profesoresArray);
       } catch (error) {
+        console.error("Error en la petición:", error);
         toast.error("Error al cargar actividades y profesores.");
       }
     };
@@ -55,26 +65,32 @@ export const ClaseForm = () => {
       return;
     }
 
-    const nuevaClase: Partial<ClaseProgramadaBody> = {
+    // Armamos el objeto respetando el contrato exigido por el backend
+    const nuevaClase = {
+      id: 0,
       dia: formData.dia,
-      horaInicio: parseLocalTime(formData.horaInicio),
-      horaFin: parseLocalTime(formData.horaFin),
+      horaInicio: formData.horaInicio,
+      horaFin: formData.horaFin,
       estado: formData.estado,
-      actividad: { id: Number(formData.actividadId) },
-      profesor: { id: Number(formData.profesorDni) },
-      inscripciones: [] 
+      profesor: { 
+        dni: Number(formData.profesorDni) 
+      },
+      actividad: { 
+        id: Number(formData.actividadId) 
+      }
     };
 
     try {
-      await createClass(nuevaClase as ClaseProgramadaBody);
+      await createClass(nuevaClase as unknown as ClaseProgramadaBody);
       toast.success("¡Clase registrada exitosamente!");
       
-      // Redirigir al calendario después de 1.5 segundos
+      // Redirigir a la lista de clases después de 1.5 segundos
       setTimeout(() => {
         navigate('/clases');
       }, 1500);
 
     } catch (error) {
+      console.error("Error al crear la clase:", error);
       toast.error("Hubo un error al registrar la clase.");
     }
   };
@@ -90,7 +106,9 @@ export const ClaseForm = () => {
             <select name="actividadId" value={formData.actividadId} onChange={handleChange}>
               <option value="">Seleccione una actividad...</option>
               {actividades.map(act => (
-                <option key={act.id} value={act.id}>{act.nombre || `Actividad ${act.id}`}</option>
+                <option key={act.id} value={act.id}>
+                  {act.nombre || `Actividad ${act.id}`}
+                </option>
               ))}
             </select>
           </div>
@@ -100,7 +118,9 @@ export const ClaseForm = () => {
             <select name="profesorDni" value={formData.profesorDni} onChange={handleChange}>
               <option value="">Seleccione un profesor...</option>
               {profesores.map(prof => (
-                <option key={prof.dni} value={prof.dni}>{prof.nombre} {prof.apellido}</option>
+                <option key={prof.dni} value={prof.dni}>
+                  {prof.nombre} (DNI: {prof.dni})
+                </option>
               ))}
             </select>
           </div>
@@ -142,8 +162,8 @@ export const ClaseForm = () => {
           <div className="form-group">
             <label>Estado</label>
             <select name="estado" value={formData.estado} onChange={handleChange}>
-              <option value="Activa">Activa</option>
-              <option value="Borrador">Borrador</option>
+              <option value="ACTIVA">ACTIVA</option>
+              <option value="BORRADOR">BORRADOR</option>
             </select>
           </div>
 

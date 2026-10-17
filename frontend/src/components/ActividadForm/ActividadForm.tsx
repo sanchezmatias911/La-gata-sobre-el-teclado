@@ -5,17 +5,20 @@ import { createActivity } from '../../services/api/actividad.service';
 import type { ActividadBody } from '../../services/types/types';
 import '../ClaseForm/ClaseForm.css';
 
+
 export const ActividadForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    id: 0,
     nombre: '',
-    descripcion: ''
+    descripcion: '',
+    cupo: 1
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.type === 'number' ? Number(e.target.value) : e.target.value
     });
   };
 
@@ -49,7 +52,7 @@ export const ActividadForm = () => {
               name="nombre" 
               value={formData.nombre} 
               onChange={handleChange} 
-              placeholder="Ej: Yoga, Crossfit..."
+              placeholder="Ej: Musculación, Funcional..."
             />
           </div>
 
@@ -61,6 +64,18 @@ export const ActividadForm = () => {
               value={formData.descripcion} 
               onChange={handleChange} 
               placeholder="Breve descripción de la actividad"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Cupo</label>
+            <input 
+              type="number" 
+              name="cupo" 
+              value={formData.cupo} 
+              onChange={handleChange} 
+              placeholder="Capacidad máxima"
+              min="1"
             />
           </div>
 
