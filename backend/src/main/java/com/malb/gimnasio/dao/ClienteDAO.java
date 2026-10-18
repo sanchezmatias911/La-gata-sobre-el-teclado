@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ClienteDAO extends JpaRepository<Cliente, Long> {
     Optional<Cliente> findByDni(Long dni);
+
 }

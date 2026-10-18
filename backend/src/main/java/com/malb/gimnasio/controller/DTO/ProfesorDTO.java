@@ -9,6 +9,9 @@ import java.util.List;
 
 public record ProfesorDTO (
         @NotNull
+        Long id,
+
+        @NotNull
         Long dni,
 
         @NotNull @NotBlank
@@ -31,6 +34,7 @@ public record ProfesorDTO (
 ) {
     public static ProfesorDTO desdeModelo(Profesor profesor) {
         return new ProfesorDTO(
+                profesor.getId(),
                 profesor.getDni(),
                 profesor.getEmail(),
                 profesor.getPassword(),

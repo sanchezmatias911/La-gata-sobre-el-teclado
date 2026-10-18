@@ -4,6 +4,7 @@ import com.malb.gimnasio.dao.ClaseProgramadaDAO;
 import com.malb.gimnasio.modelo.ClaseProgramada;
 import com.malb.gimnasio.modelo.Inscripcion;
 import com.malb.gimnasio.service.ClaseProgramadaService;
+import com.malb.gimnasio.service.exception.RecursoEnUsoException;
 import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,16 +24,25 @@ public class ClaseProgramadaServiceImpl implements ClaseProgramadaService {
 
     @Override
     public void crear(ClaseProgramada claseProgramada) {
-        if (claseProgramada == null) { throw new IllegalArgumentException("no se puede crear algo nulo"); }
+        if (claseProgramada == null) {
+            throw new IllegalArgumentException("no se puede crear algo nulo");
+        }
+        validarHorario(claseProgramada);
+        boolean existeConflicto = claseProgramadaDAO.existeConflictoHorario(claseProgramada.getDia(), claseProgramada.getHoraInicio(), claseProgramada.getHoraFin());
+
+        if (existeConflicto) {
+            throw new RecursoEnUsoException("Ya existe una clase en ese día y horario.");
+        }
         claseProgramadaDAO.save(claseProgramada);
     }
 
     @Override
     public ClaseProgramada recuperar(Long id) {
-        if (id == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
+        if (id == null) {
+            throw new IllegalArgumentException("no se puede recuperar algo nulo");
+        }
 
-        return claseProgramadaDAO.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("clase con ese id"));
+        return claseProgramadaDAO.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("clase con ese id"));
     }
 
     @Override
@@ -42,7 +52,9 @@ public class ClaseProgramadaServiceImpl implements ClaseProgramadaService {
 
     @Override
     public void eliminar(Long id) {
-        if (id == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
+        if (id == null) {
+            throw new IllegalArgumentException("no se puede recuperar algo nulo");
+        }
 
         ClaseProgramada claseProgramada = recuperar(id);
 
@@ -59,5 +71,20 @@ public class ClaseProgramadaServiceImpl implements ClaseProgramadaService {
         clase.setActividad(null);*/
 
         claseProgramadaDAO.delete(claseProgramada);
+    }
+
+    @Override
+    public void eliminarTodos() {
+        claseProgramadaDAO.deleteAll();
+    }
+
+    private void validarHorario(ClaseProgramada clase) {
+        if (clase.getDia() == null || clase.getHoraInicio() == null || clase.getHoraFin() == null) {
+            throw new IllegalArgumentException("El día y las horas son obligatorios");
+        }
+
+        if (!clase.getHoraFin().isAfter(clase.getHoraInicio())) {
+            throw new IllegalArgumentException("La hora de fin debe ser posterior a la hora de inicio");
+        }
     }
 }

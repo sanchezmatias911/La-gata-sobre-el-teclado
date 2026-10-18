@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
@@ -52,5 +51,10 @@ public class ActividadServiceImpl implements ActividadService {
 
         Actividad actividad = recuperar(id);
         actividadDAO.delete(actividad);
+    }
+
+    @Override
+    public void eliminarTodos() {
+        actividadDAO.deleteAll();
     }
 }

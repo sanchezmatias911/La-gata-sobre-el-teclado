@@ -9,4 +9,5 @@ public interface ClaseProgramadaService {
     ClaseProgramada recuperar(Long id);
     List<ClaseProgramada> recuperarTodos();
     void eliminar(Long id);
+    void eliminarTodos();
 }
