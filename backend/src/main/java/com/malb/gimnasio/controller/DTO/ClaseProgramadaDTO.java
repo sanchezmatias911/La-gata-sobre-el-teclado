@@ -3,13 +3,34 @@ package com.malb.gimnasio.controller.DTO;
 import com.malb.gimnasio.modelo.*;
 import com.malb.gimnasio.modelo.*;
 import com.malb.gimnasio.modelo.usuario.Profesor;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalTime;
-import java.util.List;
 
-public record ClaseProgramadaDTO(Long id, Dia dia, LocalTime horaInicio, LocalTime horaFin,
-                                 EstadoClaseProgramada estado, Profesor profesor, Actividad actividad,
-                                 List<Inscripcion> inscripciones) {
+public record ClaseProgramadaDTO(
+        @NotNull
+        Long id,
+
+        @NotNull(message = "El día es obligatorio")
+        Dia dia,
+
+        @NotNull(message = "La hora de inicio es obligatoria")
+        LocalTime horaInicio,
+
+        @NotNull(message = "La hora de fin es obligatoria")
+        LocalTime horaFin,
+
+        @NotNull
+        EstadoClaseProgramada estado,
+
+        @NotNull
+        Long idProfesor,
+
+        @NotNull
+        Long idActividad
+
+
+) {
     public static ClaseProgramadaDTO desdeModelo(ClaseProgramada clase){
         return new ClaseProgramadaDTO(
                 clase.getId(),
@@ -17,15 +38,9 @@ public record ClaseProgramadaDTO(Long id, Dia dia, LocalTime horaInicio, LocalTi
                 clase.getHoraInicio(),
                 clase.getHoraFin(),
                 clase.getEstado(),
-                clase.getProfesor(),
-                clase.getActividad(),
-                clase.getInscripciones());
+                clase.getProfesor().getId(),
+                clase.getActividad().getId()
+        );
     }
 
-    public ClaseProgramada aModelo(){
-        ClaseProgramada clase = new ClaseProgramada(this.dia, this.horaInicio, this.horaFin, this.profesor,
-                this.actividad, this.estado);
-        clase.setInscripciones(this.inscripciones);
-        return clase;
-    }
 }

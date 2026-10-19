@@ -2,6 +2,7 @@ package com.malb.gimnasio.service;
 
 import com.malb.gimnasio.modelo.Actividad;
 import com.malb.gimnasio.service.ActividadService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -60,5 +61,10 @@ public class ActividadServiceTest {
         actividadService.eliminar(id);
 
         assertThrows(RuntimeException.class, () -> actividadService.recuperar(id));
+    }
+
+    @AfterEach
+    public void tearDown() {
+        actividadService.eliminarTodos();
     }
 }

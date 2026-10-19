@@ -9,7 +9,6 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("Profesor")
 @NoArgsConstructor @Getter @Setter
-
 public class Profesor extends Usuario {
     private String biografia;
     private String especialidades;

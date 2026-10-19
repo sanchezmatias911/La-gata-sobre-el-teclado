@@ -13,8 +13,11 @@ import lombok.*;
 @Entity
 
 public abstract class Usuario{
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @NotNull (message = "El DNI no puede estar vacío.")
-    @Id
+    @Column(unique = true)
     private Long dni;
 
     @NotBlank (message = "El email no puede estar vacío.")

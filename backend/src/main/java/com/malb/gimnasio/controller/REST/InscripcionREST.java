@@ -3,6 +3,7 @@ package com.malb.gimnasio.controller.REST;
 import com.malb.gimnasio.controller.DTO.InscripcionDTO;
 import com.malb.gimnasio.modelo.Inscripcion;
 import com.malb.gimnasio.service.InscripcionService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ final public class InscripcionREST {
     }
 
     @PostMapping()
-    public ResponseEntity<InscripcionDTO> crear(@RequestBody InscripcionDTO dto) {
+    public ResponseEntity<InscripcionDTO> crear(@Valid @RequestBody InscripcionDTO dto) {
         Inscripcion inscripcion = dto.aModelo();
         inscripcionService.crear(inscripcion);
         return ResponseEntity.ok(InscripcionDTO.desdeModelo(inscripcion));

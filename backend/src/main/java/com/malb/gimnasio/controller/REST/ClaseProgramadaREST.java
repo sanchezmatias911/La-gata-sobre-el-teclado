@@ -1,11 +1,13 @@
 package com.malb.gimnasio.controller.REST;
 
 import com.malb.gimnasio.controller.DTO.ClaseProgramadaDTO;
+import com.malb.gimnasio.controller.DTO.CrearClaseProgramadaDTO;
 import com.malb.gimnasio.modelo.ClaseProgramada;
 import com.malb.gimnasio.service.ActividadService;
 import com.malb.gimnasio.service.ClaseProgramadaService;
 import com.malb.gimnasio.service.InscripcionService;
 import com.malb.gimnasio.service.ProfesorService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +31,8 @@ final public class ClaseProgramadaREST {
     }
 
     @PostMapping()
-    public ResponseEntity<ClaseProgramadaDTO> crear(@RequestBody ClaseProgramadaDTO dto) {
-        ClaseProgramada clase = dto.aModelo();
+    public ResponseEntity<ClaseProgramadaDTO> crear(@Valid @RequestBody CrearClaseProgramadaDTO dto) {
+        ClaseProgramada clase = dto.aModelo(profesorService.recuperar(dto.idProfesor()), actividadService.recuperar(dto.idActividad()));
         claseProgramadaService.crear(clase);
         return ResponseEntity.ok(ClaseProgramadaDTO.desdeModelo(clase));
     }

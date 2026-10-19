@@ -9,4 +9,5 @@ public interface ActividadService {
     Actividad recuperar(Long id);
     List<Actividad> recuperarTodos();
     void eliminar(Long id);
+    void eliminarTodos();
 }

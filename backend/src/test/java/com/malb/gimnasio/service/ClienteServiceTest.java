@@ -1,6 +1,7 @@
 package com.malb.gimnasio.service;
 
 import com.malb.gimnasio.modelo.usuario.Cliente;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +33,7 @@ public class ClienteServiceTest {
 
         clienteService.crear(cliente);
 
-        Cliente recuperado = clienteService.recuperar(cliente.getDni());
+        Cliente recuperado = clienteService.recuperar(cliente.getId());
 
         assertNotNull(recuperado);
         assertEquals(cliente.getDni(), recuperado.getDni());
@@ -54,10 +55,15 @@ public class ClienteServiceTest {
 
         clienteService.crear(cliente);
 
-        Long dni = cliente.getDni();
+        Long id = cliente.getId();
 
-        clienteService.eliminar(dni);
+        clienteService.eliminar(id);
 
-        assertThrows(RuntimeException.class, () -> clienteService.recuperar(dni));
+        assertThrows(RuntimeException.class, () -> clienteService.recuperar(id));
+    }
+
+    @AfterEach
+    public void tearDown() {
+        clienteService.eliminarTodos();
     }
 }
