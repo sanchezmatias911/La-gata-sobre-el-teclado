@@ -9,7 +9,6 @@ import '../ClaseForm/ClaseForm.css';
 export const ActividadForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    id: 0,
     nombre: '',
     descripcion: '',
     cupo: 1

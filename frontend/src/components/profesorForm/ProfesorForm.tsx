@@ -37,6 +37,7 @@ export const ProfesorForm = () => {
     try {
     
       const nuevoProfesor: ProfesorBody = {
+
         dni: Number(formData.dni),
         email: formData.email,
         password: formData.password,
