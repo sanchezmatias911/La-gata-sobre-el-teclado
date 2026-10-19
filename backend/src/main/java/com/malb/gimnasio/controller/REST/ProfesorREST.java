@@ -1,4 +1,5 @@
 package com.malb.gimnasio.controller.REST;
+import com.malb.gimnasio.controller.DTO.CrearProfesorDTO;
 import com.malb.gimnasio.controller.DTO.ProfesorDTO;
 import com.malb.gimnasio.modelo.usuario.Profesor;
 import com.malb.gimnasio.service.ProfesorService;
@@ -18,7 +19,7 @@ final public class ProfesorREST {
     }
 
     @PostMapping()
-    public ResponseEntity<ProfesorDTO> crear(@Valid @RequestBody ProfesorDTO dto) {
+    public ResponseEntity<ProfesorDTO> crear(@Valid @RequestBody CrearProfesorDTO dto) {
         Profesor profesor = dto.aModelo();
         profesorService.crear(profesor);
         return ResponseEntity.ok(ProfesorDTO.desdeModelo(profesor));
