@@ -1,0 +1,122 @@
+.schedule-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1rem;
+    background-color: #191919;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.schedule-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1600px;
+    gap: 2rem;
+}
+
+.schedule-legend {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #262626;
+}
+
+.legend-pill {
+    cursor: default !important;
+    width: 110px !important;
+    padding: 0.5rem 0 !important;
+    margin: 0 !important;
+}
+
+.table-responsive {
+    width: 100%;
+    background-color: #262626;
+    padding: 2rem;
+    border-radius: 24px;
+    border: 1px solid #333;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    overflow-x: auto;
+}
+
+.schedule-grid {
+    display: grid;
+    grid-template-columns: 80px repeat(6, 1fr);
+    grid-template-rows: 45px;
+    grid-auto-rows: 35px;
+    gap: 0;
+    position: relative;
+    min-width: 900px;
+}
+
+.grid-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    color: #ffffff;
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+    border-bottom: 2px solid #333;
+    grid-row: 1;
+}
+
+.grid-time-label {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-row-group {
+    border-bottom: 1px solid #333;
+    grid-column: 1 / -1;
+    pointer-events: none;
+}
+
+.class-pill-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    justify-self: stretch;
+    width: auto;
+    margin: 8px;
+    text-align: center;
+    padding: 0.5rem;
+    z-index: 2;
+}
+
+.class-pill-grid:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+.pill-active {
+    color: #7adf92;
+    background-color: #1c4f2e;
+    border-color: rgb(0 255 90 / 0.45);
+}
+
+.pill-cancelled {
+    color: #d63838;
+    background-color: #4f1c1c;
+    border-color: rgb(255 0 0 / 0.45);
+}

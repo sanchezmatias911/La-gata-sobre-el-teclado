@@ -1,45 +1,72 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import type { ClaseProgramadaBody } from "../../services/types/types";
+import { getClassById } from '../../services/api/clase.services';
+import { imageUrl } from '../../data/classByIdMockData'
 import './ClassProfile.css';
 
-interface ClassProfileProps {
-    name?: string;
-    professor?: string;
-    imageUrl?: string;
-    schedule?: string[];
-    enrolled?: number;
-    capacity?: number;
-}
+export const ClassProfile = () => {
+    const { id_clase } = useParams();
+    const [claseData, setClaseData] = useState<ClaseProgramadaBody | null>(null);
+    const [loading, setLoading] = useState(true);
 
-export const ClassProfile = ({
-                                 name = "Funcional",
-                                 professor = "Martín Palermo",
-                                 imageUrl = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop",
-                                 schedule = ["Lunes 18:00", "Miércoles 18:00", "Viernes 19:00"],
-                                 enrolled = 45,
-                                 capacity = 50
-                             }: ClassProfileProps) => {
+    useEffect(() => {
+        const fetchClase = async () => {
+            if (!id_clase) return;
+            try {
+                const data = await getClassById(Number(id_clase));
+                setClaseData(data);
+            } catch (error) {
+                console.error("Error al cargar la clase:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
+        fetchClase();
+    }, [id_clase]);
+
+    if (loading) {
+        return <div style={{ color: 'white', textAlign: 'center', marginTop: '3rem' }}>Cargando información de la clase...</div>;
+    }
+
+    if (!claseData) {
+        return <div style={{ color: 'white', textAlign: 'center', marginTop: '3rem' }}>No se encontró la clase solicitada.</div>;
+    }
+
+    const { actividad, profesor, dia, horaInicio, horaFin, inscripciones } = claseData;
+
+    const enrolled = inscripciones ? inscripciones.length : 0;
+    const capacity = actividad.cupo || 50;
     const occupancyPercentage = Math.min((enrolled / capacity) * 100, 100);
+
+    const formatTime = (time: { hour: number; minute: number }) => {
+        const h = time.hour < 10 ? `0${time.hour}` : time.hour;
+        const m = time.minute < 10 ? `0${time.minute}` : time.minute;
+        return `${h}:${m}`;
+    };
 
     return (
         <div className="class-container">
             <div className="class-card">
 
                 <div className="class-hero">
-                    <img src={imageUrl} alt={name} className="class-hero-img" />
+                    <img src={imageUrl} alt={actividad.nombre} className="class-hero-img" />
                     <div className="class-hero-overlay">
-                        <h1 className="class-name">{name}</h1>
-                        <p className="class-professor">Profesor: {professor}</p>
+                        <h1 className="class-name">{actividad.nombre}</h1>
+                        <p className="class-professor">Profesor: {profesor.nombre}</p>
                     </div>
                 </div>
 
                 <div className="class-body">
 
                     <div className="class-section">
-                        <h3 className="section-title">Horarios disponibles</h3>
-                        <div className="schedule-tags">
-                            {schedule.map((session, index) => (
-                                <span key={index} className="tag-pill">{session}</span>
-                            ))}
+                        <h3 className="section-title">Horario disponible</h3>
+                        <div className="schedule-tag">
+                            <span className="schedule-text">Desde</span>
+                            <span className="tag-pill">{dia} {formatTime(horaInicio)}</span>
+                            <span className="schedule-text">Hasta</span>
+                            <span className="tag-pill">{dia} {formatTime(horaFin)}</span>
                         </div>
                     </div>
 
