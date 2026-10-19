@@ -43,7 +43,8 @@
 }
 
 .form-group input, 
-.form-group select {
+.form-group select,
+.form-group textarea {
     background-color: #0e0e0e;
     border: 1px solid #303030;
     color: #cecfd2;
@@ -52,10 +53,13 @@
     font-size: 0.95rem;
     transition: border-color 0.2s ease-in-out;
     color-scheme: dark;
+    font-family: inherit;
+    resize: vertical;
 }
 
 .form-group input:focus, 
-.form-group select:focus {
+.form-group select:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: #32d65d;
 }

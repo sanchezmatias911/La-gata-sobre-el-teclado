@@ -134,7 +134,7 @@ export const ProfesorForm = () => {
               onChange={handleChange} 
               placeholder="Breve descripción del profesor..."
               rows={4}
-              style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}
+              
             />
           </div>
 
