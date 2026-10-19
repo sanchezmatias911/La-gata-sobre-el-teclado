@@ -33,7 +33,7 @@ public class ClienteServiceTest {
 
         clienteService.crear(cliente);
 
-        Cliente recuperado = clienteService.recuperar(cliente.getDni());
+        Cliente recuperado = clienteService.recuperar(cliente.getId());
 
         assertNotNull(recuperado);
         assertEquals(cliente.getDni(), recuperado.getDni());
@@ -55,11 +55,11 @@ public class ClienteServiceTest {
 
         clienteService.crear(cliente);
 
-        Long dni = cliente.getDni();
+        Long id = cliente.getId();
 
-        clienteService.eliminar(dni);
+        clienteService.eliminar(id);
 
-        assertThrows(RuntimeException.class, () -> clienteService.recuperar(dni));
+        assertThrows(RuntimeException.class, () -> clienteService.recuperar(id));
     }
 
     @AfterEach

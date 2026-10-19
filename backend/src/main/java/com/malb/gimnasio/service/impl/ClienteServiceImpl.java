@@ -47,14 +47,14 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public void eliminar(Long dni) {
-        if (dni == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
+    public void eliminar(Long id) {
+        if (id == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
 
         /* Se debería eliminar "tranquilamente" junto a sus incrpciones
         * se verá en su US
         * */
-        Cliente cliente = recuperar(dni);
-        clienteDAO.delete(cliente);
+
+        clienteDAO.delete(recuperar(id));
     }
     @Override
     public void eliminarTodos() {
