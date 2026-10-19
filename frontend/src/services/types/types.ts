@@ -6,25 +6,22 @@ export interface ActividadBody{
 }
 
 export interface ClaseProgramadaBody {
-    id: number,
-    dia: string,
-    horaInicio: LocalTime,
-    horaFin: LocalTime,
-    estado: string,
-    profesor: SimpleProfesor,
-    actividad: ActividadBody,
-    inscripciones: SimpleInscipciones[]
+  dia: string; 
+  horaInicio: LocalTime;
+  horaFin: LocalTime;
+  idProfesor: number; 
+  idActividad: number;
+  estado: string; 
 }
 
 export interface ProfesorBody {
-    dni: number;
-    email: string;
-    password?: string;
-    nombre: string;
-    telefono: string;
-    biografia: string;
-    especialidades: string;
-    misClases: SimpleClaseProgramada[];
+  dni: number;
+  email: string;
+  password?: string;
+  nombre: string;
+  telefono: string;
+  biografia: string;
+  especialidades: string;
 }
 
 export interface InscripcionBody {
