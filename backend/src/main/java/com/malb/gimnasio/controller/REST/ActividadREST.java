@@ -1,9 +1,11 @@
 package com.malb.gimnasio.controller.REST;
 
-import com.malb.gimnasio.controller.DTO.ActividadDTO;
+import com.malb.gimnasio.controller.DTO.request.CrearActividadDTO;
+import com.malb.gimnasio.controller.DTO.response.ActividadDTO;
 import com.malb.gimnasio.modelo.Actividad;
 import com.malb.gimnasio.service.ActividadService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +14,12 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/actividades")
+@AllArgsConstructor
 final public class ActividadREST {
     private final ActividadService actividadService;
 
-    public ActividadREST(ActividadService actividadService){
-        this.actividadService = actividadService;
-    }
-
     @PostMapping()
-    public ResponseEntity<ActividadDTO> crear(@Valid @RequestBody ActividadDTO dto) {
+    public ResponseEntity<ActividadDTO> crear(@Valid @RequestBody CrearActividadDTO dto) {
         Actividad actividad = dto.aModelo();
         actividadService.crear(actividad);
         return ResponseEntity.ok(ActividadDTO.desdeModelo(actividad));

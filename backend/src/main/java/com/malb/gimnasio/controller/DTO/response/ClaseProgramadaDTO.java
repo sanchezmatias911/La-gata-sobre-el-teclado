@@ -1,8 +1,6 @@
-package com.malb.gimnasio.controller.DTO;
+package com.malb.gimnasio.controller.DTO.response;
 
 import com.malb.gimnasio.modelo.*;
-import com.malb.gimnasio.modelo.*;
-import com.malb.gimnasio.modelo.usuario.Profesor;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalTime;

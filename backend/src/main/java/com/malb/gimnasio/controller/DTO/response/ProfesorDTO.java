@@ -1,11 +1,8 @@
-package com.malb.gimnasio.controller.DTO;
+package com.malb.gimnasio.controller.DTO.response;
 
-import com.malb.gimnasio.modelo.ClaseProgramada;
 import com.malb.gimnasio.modelo.usuario.Profesor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
-import java.util.List;
 
 public record ProfesorDTO (
         @NotNull

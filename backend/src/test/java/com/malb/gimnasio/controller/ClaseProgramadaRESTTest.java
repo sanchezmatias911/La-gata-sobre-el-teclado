@@ -2,7 +2,6 @@ package com.malb.gimnasio.controller;
 
 import com.malb.gimnasio.controller.REST.ClaseProgramadaREST;
 import com.malb.gimnasio.modelo.Actividad;
-import com.malb.gimnasio.modelo.ClaseProgramada;
 import com.malb.gimnasio.modelo.usuario.Profesor;
 import com.malb.gimnasio.service.ActividadService;
 import com.malb.gimnasio.service.ClaseProgramadaService;
@@ -10,8 +9,8 @@ import com.malb.gimnasio.service.InscripcionService;
 import com.malb.gimnasio.service.ProfesorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -28,16 +27,16 @@ class ClaseProgramadaRESTTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockitoBean
+    @MockBean
     private ClaseProgramadaService claseProgramadaService;
 
-    @MockitoBean
+    @MockBean
     private ProfesorService profesorService;
 
-    @MockitoBean
+    @MockBean
     private ActividadService actividadService;
 
-    @MockitoBean
+    @MockBean
     private InscripcionService inscripcionService;
 
     @Test
