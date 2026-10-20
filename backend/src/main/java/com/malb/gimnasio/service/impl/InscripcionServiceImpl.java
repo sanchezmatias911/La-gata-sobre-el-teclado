@@ -1,9 +1,13 @@
 package com.malb.gimnasio.service.impl;
 
 import com.malb.gimnasio.dao.InscripcionDAO;
+import com.malb.gimnasio.modelo.ClaseProgramada;
 import com.malb.gimnasio.modelo.Inscripcion;
+import com.malb.gimnasio.modelo.usuario.Cliente;
+import com.malb.gimnasio.service.ClaseProgramadaService;
 import com.malb.gimnasio.service.InscripcionService;
 import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,18 +16,19 @@ import java.util.NoSuchElementException;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class InscripcionServiceImpl implements InscripcionService {
     private final InscripcionDAO inscripcionDAO;
-
-    public InscripcionServiceImpl(InscripcionDAO inscripcionDAO) {
-        this.inscripcionDAO = inscripcionDAO;
-    }
+    private final ClaseProgramadaService claseProgramadaService;
 
     @Override
-    public void crear(Inscripcion inscripcion) {
-        if (inscripcion == null) { throw new IllegalArgumentException("no se puede crear algo nulo"); }
+    public Inscripcion crear(Cliente cliente, ClaseProgramada clase) {
+        Inscripcion inscripcion = new Inscripcion(cliente, clase);
 
-        inscripcionDAO.save(inscripcion);
+        clase.agregarNuevaInscripcion(inscripcion);
+        cliente.agregarNuevaInscripcion(inscripcion);
+
+        return inscripcionDAO.save(inscripcion);
     }
 
     @Override

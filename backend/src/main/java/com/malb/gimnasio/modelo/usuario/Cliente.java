@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,8 +14,14 @@ import java.util.List;
 
 public class Cliente extends Usuario {
     private LocalDateTime fechaDeRegistro;
-    @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER) @EqualsAndHashCode.Exclude
-    private List<Inscripcion> misInscripciones;
+
+    @OneToMany(mappedBy = "cliente")
+    @EqualsAndHashCode.Exclude
+    private List<Inscripcion> misInscripciones = new ArrayList<>();
+
+    public void agregarNuevaInscripcion(Inscripcion inscripcion) {
+        misInscripciones.add(inscripcion);
+    }
 
     public Cliente (@NonNull Long dni, @NonNull String email, @NonNull String password, @NonNull String nombre, @NonNull String telefono){
         super(dni, email, password, nombre, telefono);

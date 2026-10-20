@@ -23,8 +23,16 @@ public class ClaseProgramada {
     private Profesor profesor;
     @ManyToOne
     private Actividad actividad;
-    @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER) @EqualsAndHashCode.Exclude
-    private List<Inscripcion> inscripciones;
+    @OneToMany(
+            mappedBy = "claseProgramada",
+            cascade = CascadeType.ALL
+    )
+    @EqualsAndHashCode.Exclude
+    private List<Inscripcion> inscripciones = new ArrayList<>();
+
+    public void agregarNuevaInscripcion(Inscripcion inscripcion) {
+        inscripciones.add(inscripcion);
+    }
 
     public ClaseProgramada (@NonNull Dia dia, @NonNull LocalTime horaInicio, @NonNull LocalTime horaFin,
                             @NonNull Profesor profesor, @NonNull Actividad actividad, @NonNull EstadoClaseProgramada estado){
@@ -38,14 +46,10 @@ public class ClaseProgramada {
         this.inscripciones = new ArrayList<>();
     }
 
-    //TODO VER SI SE VA MODIFICAR SI SOLO TENGO HORA INICIO y DURACION
     private void validarHorario(LocalTime inicio, LocalTime fin) {
         if (!inicio.isBefore(fin)) {
             throw new HorarioInvalido("La hora de inicio debe ser anterior a la hora de fin.");
         }
     }
 
-    public void agregarNuevaIncripcion(Inscripcion i) {
-        inscripciones.add(i);
-    }
 }
