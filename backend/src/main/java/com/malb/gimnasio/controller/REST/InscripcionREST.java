@@ -1,9 +1,15 @@
 package com.malb.gimnasio.controller.REST;
 
-import com.malb.gimnasio.controller.DTO.InscripcionDTO;
+import com.malb.gimnasio.controller.DTO.request.CrearInscripcionDTO;
+import com.malb.gimnasio.controller.DTO.response.InscripcionDTO;
+import com.malb.gimnasio.modelo.ClaseProgramada;
 import com.malb.gimnasio.modelo.Inscripcion;
+import com.malb.gimnasio.modelo.usuario.Cliente;
+import com.malb.gimnasio.service.ClaseProgramadaService;
+import com.malb.gimnasio.service.ClienteService;
 import com.malb.gimnasio.service.InscripcionService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,17 +18,19 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/inscripciones")
-
+@AllArgsConstructor
 final public class InscripcionREST {
     private final InscripcionService inscripcionService;
-
-    public InscripcionREST(InscripcionService inscripcionService){
-        this.inscripcionService = inscripcionService;
-    }
+    private final ClaseProgramadaService claseProgramadaService;
+    private final ClienteService clienteService;
 
     @PostMapping()
-    public ResponseEntity<InscripcionDTO> crear(@Valid @RequestBody InscripcionDTO dto) {
-        Inscripcion inscripcion = dto.aModelo();
+    public ResponseEntity<InscripcionDTO> crear(@Valid @RequestBody CrearInscripcionDTO dto) {
+        //se podria hacer un mapper o que el servicio tenga el request jaja
+        ClaseProgramada clase = claseProgramadaService.recuperar(dto.idClaseProgramada());
+        Cliente cliente = clienteService.recuperar(dto.idCliente());
+
+        Inscripcion inscripcion = dto.aModelo(cliente, clase);
         inscripcionService.crear(inscripcion);
         return ResponseEntity.ok(InscripcionDTO.desdeModelo(inscripcion));
     }

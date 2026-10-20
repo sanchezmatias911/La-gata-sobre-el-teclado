@@ -1,4 +1,4 @@
-package com.malb.gimnasio.controller.DTO;
+package com.malb.gimnasio.controller.DTO.response;
 
 import com.malb.gimnasio.modelo.Actividad;
 import jakarta.validation.constraints.Max;
@@ -7,16 +7,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record ActividadDTO(
-        @NotNull
         Long id,
-
-        @NotNull @NotBlank
         String nombre,
-
-        @NotNull @NotBlank
         String descripcion,
-
-        @NotNull @Min(1) @Max(20)
         int cupo
 ) {
     public static ActividadDTO desdeModelo(Actividad actividad){
@@ -25,9 +18,5 @@ public record ActividadDTO(
                 actividad.getNombre(),
                 actividad.getDescripcion(),
                 actividad.getCupo());
-    }
-
-    public Actividad aModelo(){
-        return new Actividad(this.nombre, this.descripcion, this.cupo);
     }
 }
