@@ -19,10 +19,6 @@ public class Cliente extends Usuario {
     @EqualsAndHashCode.Exclude
     private List<Inscripcion> misInscripciones = new ArrayList<>();
 
-    public void agregarNuevaInscripcion(Inscripcion inscripcion) {
-        misInscripciones.add(inscripcion);
-    }
-
     public Cliente (@NonNull Long dni, @NonNull String email, @NonNull String password, @NonNull String nombre, @NonNull String telefono){
         super(dni, email, password, nombre, telefono);
         this.fechaDeRegistro = LocalDateTime.now();

@@ -7,7 +7,7 @@ import com.malb.gimnasio.modelo.usuario.Cliente;
 import java.util.List;
 
 public interface InscripcionService {
-    Inscripcion crear(Long cliente, Long clase);
+    Inscripcion crear(Cliente cliente, ClaseProgramada clase);
     Inscripcion recuperar(Long id);
     List<Inscripcion> recuperarTodos();
     void eliminar(Long id);

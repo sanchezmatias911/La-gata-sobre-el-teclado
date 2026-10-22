@@ -8,9 +8,9 @@ import com.malb.gimnasio.modelo.Dia;
 import com.malb.gimnasio.modelo.EstadoClaseProgramada;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.modelo.usuario.Profesor;
+import com.malb.gimnasio.service.exception.RecursoDuplicadoException;
 import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.time.LocalTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Transactional //VER PORQUE ROMPE SIN TRANSACTIONAL, TIENE QUE VER CON LAS CLAVES FORÁNEAS
+@Transactional
 class InscripcionServiceTest {
 
     @Autowired
@@ -39,6 +39,8 @@ class InscripcionServiceTest {
 
     private Cliente cliente;
     private ClaseProgramada clase;
+    private Profesor profesor;
+    private Actividad actividad;
 
     @BeforeEach
     void setUp() {
@@ -50,9 +52,7 @@ class InscripcionServiceTest {
                 "1100000000"
         );
 
-        clienteService.crear(cliente);
-
-        Profesor profesor = new Profesor(
+        profesor = new Profesor(
                 23456789L,
                 "profesor.inscripcion@test.com",
                 "password",
@@ -62,15 +62,11 @@ class InscripcionServiceTest {
                 "Yoga"
         );
 
-        profesorService.crear(profesor);
-
-        Actividad actividad = new Actividad(
+        actividad = new Actividad(
                 "Yoga Test",
                 "Actividad para pruebas",
                 20
         );
-
-        actividadService.crear(actividad);
 
         clase = new ClaseProgramada(
                 Dia.LUNES,
@@ -81,12 +77,15 @@ class InscripcionServiceTest {
                 EstadoClaseProgramada.ACTIVA
         );
 
+        clienteService.crear(cliente);
+        profesorService.crear(profesor);
+        actividadService.crear(actividad);
         claseProgramadaService.crear(clase);
     }
 
     @Test
     void crear_inscripcionValida_guardaLaInscripcion() {
-        Inscripcion inscripcion = inscripcionService.crear(cliente.getId(), clase.getId());
+        Inscripcion inscripcion = inscripcionService.crear(cliente, clase);
 
         assertNotNull(inscripcion);
         assertNotNull(inscripcion.getId());
@@ -94,16 +93,15 @@ class InscripcionServiceTest {
         assertEquals(clase.getId(), inscripcion.getClaseProgramada().getId());
     }
 
-    /* ERROR, LANZA NullPointerException
     @Test
     void crear_clienteYaInscripto_lanzaExcepcion() {
-        inscripcionService.crear(cliente.getId(), clase.getId());
+        inscripcionService.crear(cliente, clase);
 
         assertThrows(
                 RecursoDuplicadoException.class,
-                () -> inscripcionService.crear(cliente.getId(), clase.getId())
+                () -> inscripcionService.crear(cliente, clase)
         );
-    }*/
+    }
 
     @Test
     void crear_claseNoDisponible_lanzaExcepcion() {
@@ -111,25 +109,9 @@ class InscripcionServiceTest {
     }
 
     @Test
-    void crear_clienteInexistente_lanzaExcepcion() {
-        assertThrows(
-                RecursoNoEncontradoException.class,
-                () -> inscripcionService.crear(-1L, clase.getId())
-        );
-    }
-
-    @Test
-    void crear_claseInexistente_lanzaExcepcion() {
-        assertThrows(
-                RecursoNoEncontradoException.class,
-                () -> inscripcionService.crear(cliente.getId(), -1L)
-        );
-    }
-
-    @Test
     void recuperar_inscripcionExistente_devuelveInscripcion() {
         Inscripcion creada =
-                inscripcionService.crear(cliente.getId(), clase.getId());
+                inscripcionService.crear(cliente, clase);
 
         Inscripcion recuperada =
                 inscripcionService.recuperar(creada.getId());
@@ -157,25 +139,10 @@ class InscripcionServiceTest {
         );
     }
 
-    /* ERROR CON CLAVE FORÁNEA
-    @Test
-    void recuperarTodos_devuelveListaConLaInscripcionCreada() {
-        Inscripcion creada = inscripcionService.crear(cliente.getId(), clase.getId());
-
-        List<Inscripcion> inscripciones =
-                inscripcionService.recuperarTodos();
-
-        assertNotNull(inscripciones);
-        assertTrue(
-                inscripciones.stream()
-                        .anyMatch(i -> i.getId().equals(creada.getId()))
-        );
-    }*/
-
     @Test
     void eliminar_inscripcionExistente_eliminaLaInscripcion() {
         Inscripcion creada =
-                inscripcionService.crear(cliente.getId(), clase.getId());
+                inscripcionService.crear(cliente, clase);
 
         Long id = creada.getId();
 
@@ -211,6 +178,6 @@ class InscripcionServiceTest {
         actividadService.eliminarTodos();
         profesorService.eliminarTodos();
         clienteService.eliminarTodos();
-    }
-*/
+    }*/
+
 }

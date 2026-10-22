@@ -25,8 +25,10 @@ public class ClaseProgramada {
     @Enumerated(EnumType.STRING)
     private EstadoClaseProgramada estado;
     @ManyToOne
+    @JoinColumn(name = "profesor_id", nullable = false)
     private Profesor profesor;
     @ManyToOne
+    @JoinColumn(name = "actividad_id", nullable = false)
     private Actividad actividad;
     @OneToMany(mappedBy = "claseProgramada")
     @EqualsAndHashCode.Exclude
@@ -56,13 +58,6 @@ public class ClaseProgramada {
     }
 
     public int cantidadInscriptos() { return this.inscripciones.size(); }
-
-    public boolean tieneInscripto(Cliente cliente) {
-        return inscripciones.stream()
-                .anyMatch(inscripcion ->
-                        inscripcion.getCliente().getId().equals(cliente.getId())
-                );
-    }
 
     public void agregarInscripcion(Inscripcion i) {
         this.inscripciones.add(i);
