@@ -1,6 +1,7 @@
 package com.malb.gimnasio.modelo;
 
 import com.malb.gimnasio.modelo.exception.HorarioInvalido;
+import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.modelo.usuario.Profesor;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,29 +11,27 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.malb.gimnasio.modelo.EstadoClaseProgramada.ACTIVA;
+
 @Getter @Setter @NoArgsConstructor @ToString @EqualsAndHashCode
 @Entity
 public class ClaseProgramada {
     @Id @GeneratedValue
     private Long id;
+    @Enumerated(EnumType.STRING)
     private Dia dia;
     private LocalTime horaInicio;
     private LocalTime horaFin;
+    @Enumerated(EnumType.STRING)
     private EstadoClaseProgramada estado;
     @ManyToOne
     private Profesor profesor;
     @ManyToOne
     private Actividad actividad;
-    @OneToMany(
-            mappedBy = "claseProgramada",
-            cascade = CascadeType.ALL
-    )
+    @OneToMany(mappedBy = "claseProgramada")
     @EqualsAndHashCode.Exclude
     private List<Inscripcion> inscripciones = new ArrayList<>();
 
-    public void agregarNuevaInscripcion(Inscripcion inscripcion) {
-        inscripciones.add(inscripcion);
-    }
 
     public ClaseProgramada (@NonNull Dia dia, @NonNull LocalTime horaInicio, @NonNull LocalTime horaFin,
                             @NonNull Profesor profesor, @NonNull Actividad actividad, @NonNull EstadoClaseProgramada estado){
@@ -50,6 +49,23 @@ public class ClaseProgramada {
         if (!inicio.isBefore(fin)) {
             throw new HorarioInvalido("La hora de inicio debe ser anterior a la hora de fin.");
         }
+    }
+
+    public boolean puedeRecibirInscripciones() {
+        return this.estado == ACTIVA && this.actividad.getCupo() > this.cantidadInscriptos();
+    }
+
+    public int cantidadInscriptos() { return this.inscripciones.size(); }
+
+    public boolean tieneInscripto(Cliente cliente) {
+        return inscripciones.stream()
+                .anyMatch(inscripcion ->
+                        inscripcion.getCliente().getId().equals(cliente.getId())
+                );
+    }
+
+    public void agregarInscripcion(Inscripcion i) {
+        this.inscripciones.add(i);
     }
 
 }

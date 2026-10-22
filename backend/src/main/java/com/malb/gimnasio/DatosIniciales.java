@@ -229,13 +229,13 @@ public class DatosIniciales implements ApplicationRunner {
                 clase3
         );
 
-        inscripcionService.crear(inscripcion1);
+        inscripcionService.crear(cliente1.getId(), clase1.getId()); //CAMBIO DE FIRMA
         idsInscripciones.add(inscripcion1.getId());
 
-        inscripcionService.crear(inscripcion2);
+        inscripcionService.crear(cliente2.getId(), clase2.getId()); //CAMBIO DE FIRMA
         idsInscripciones.add(inscripcion2.getId());
 
-        inscripcionService.crear(inscripcion3);
+        inscripcionService.crear(cliente3.getId(), clase3.getId()); //CAMBIO DE FIRMA
         idsInscripciones.add(inscripcion3.getId());
 
 

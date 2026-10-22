@@ -37,8 +37,7 @@ public class ClienteServiceImpl implements ClienteService {
     public Cliente recuperar(Long id) {
         if (id == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
 
-        return clienteDAO.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException("cliente con ese dni"));
+        return clienteDAO.findById(id).orElseThrow(() -> new RecursoNoEncontradoException("cliente con ese id"));
     }
 
     @Override

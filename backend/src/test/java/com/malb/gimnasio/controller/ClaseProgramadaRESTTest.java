@@ -7,6 +7,8 @@ import com.malb.gimnasio.service.ActividadService;
 import com.malb.gimnasio.service.ClaseProgramadaService;
 import com.malb.gimnasio.service.InscripcionService;
 import com.malb.gimnasio.service.ProfesorService;
+import com.malb.gimnasio.service.exception.InscripcionNoPermitidaException;
+import com.malb.gimnasio.service.exception.RecursoDuplicadoException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -112,5 +114,151 @@ class ClaseProgramadaRESTTest {
     @Test
     void metodoNoPermitido_devuelve405() throws Exception {
         mockMvc.perform(put("/clases/1")).andExpect(status().isMethodNotAllowed());
+    }
+
+    // =========================
+    // SUSCRIBIRSE A UNA CLASE
+    // =========================
+
+    // CASO BUENO: suscripción exitosa.
+    @Test
+    void suscribir_clienteValidoYClaseValida_devuelve204() throws Exception {
+        String json = """
+        {
+            "idCliente": 1
+        }
+        """;
+
+        mockMvc.perform(post("/clases/10/suscribir")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isNoContent());
+
+        verify(inscripcionService).crear(1L, 10L);
+    }
+
+
+    // CASO MALO: el JSON no contiene el idCliente requerido.
+    @Test
+    void suscribir_sinIdCliente_devuelve400() throws Exception {
+        mockMvc.perform(post("/clases/10/suscribir")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isBadRequest());
+
+        verifyNoInteractions(inscripcionService);
+    }
+
+
+    // CASO MALO: el JSON está mal formado.
+    @Test
+    void suscribir_jsonMalFormado_devuelve400() throws Exception {
+        mockMvc.perform(post("/clases/10/suscribir")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                        {
+                            "idCliente":
+                        """))
+                .andExpect(status().isBadRequest());
+
+        verifyNoInteractions(inscripcionService);
+    }
+
+
+    // CASO MALO: el cliente no existe.
+    @Test
+    void suscribir_clienteInexistente_devuelve404() throws Exception {
+        String json = """
+        {
+            "idCliente": 999
+        }
+        """;
+
+        when(inscripcionService.crear(999L, 10L))
+                .thenThrow(new NoSuchElementException("Cliente no encontrado"));
+
+        mockMvc.perform(post("/clases/10/suscribir")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isNotFound());
+
+        verify(inscripcionService).crear(999L, 10L);
+    }
+
+
+    // CASO MALO: la clase no existe.
+    @Test
+    void suscribir_claseInexistente_devuelve404() throws Exception {
+        String json = """
+        {
+            "idCliente": 1
+        }
+        """;
+
+        when(inscripcionService.crear(1L, 999L))
+                .thenThrow(new NoSuchElementException("Clase no encontrada"));
+
+        mockMvc.perform(post("/clases/999/suscribir")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isNotFound());
+
+        verify(inscripcionService).crear(1L, 999L);
+    }
+
+
+    // CASO MALO: la clase no admite nuevas inscripciones.
+    @Test
+    void suscribir_claseNoDisponible_devuelve409() throws Exception {
+        String json = """
+        {
+            "idCliente": 1
+        }
+        """;
+
+        when(inscripcionService.crear(1L, 10L))
+                .thenThrow(new InscripcionNoPermitidaException(
+                        "La clase no está disponible para nuevas inscripciones"
+                ));
+
+        mockMvc.perform(post("/clases/10/suscribir")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isConflict());
+
+        verify(inscripcionService).crear(1L, 10L);
+    }
+
+
+    // CASO MALO: el cliente ya está inscripto en esa clase.
+    @Test
+    void suscribir_clienteYaInscripto_devuelve409() throws Exception {
+        String json = """
+        {
+            "idCliente": 1
+        }
+        """;
+
+        when(inscripcionService.crear(1L, 10L))
+                .thenThrow(new RecursoDuplicadoException(
+                        "El cliente ya está inscripto en esta clase"
+                ));
+
+        mockMvc.perform(post("/clases/10/suscribir")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isConflict());
+
+        verify(inscripcionService).crear(1L, 10L);
+    }
+
+
+    // CASO MALO: se utiliza un método HTTP no permitido, en vez de un post es un get.
+    @Test
+    void suscribir_conMetodoGet_devuelve405() throws Exception {
+        mockMvc.perform(get("/clases/10/suscribir"))
+                .andExpect(status().isMethodNotAllowed());
+
+        verifyNoInteractions(inscripcionService);
     }
 }

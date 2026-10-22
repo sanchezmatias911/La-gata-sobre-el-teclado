@@ -27,4 +27,8 @@ public class Cliente extends Usuario {
         super(dni, email, password, nombre, telefono);
         this.fechaDeRegistro = LocalDateTime.now();
     }
+
+    public void agregarInscripcion(Inscripcion i) {
+        this.misInscripciones.add(i);
+    }
 }

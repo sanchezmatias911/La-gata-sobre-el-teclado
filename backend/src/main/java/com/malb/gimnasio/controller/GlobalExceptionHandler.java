@@ -2,6 +2,8 @@ package com.malb.gimnasio.controller;
 
 import com.malb.gimnasio.controller.DTO.ApiError;
 import com.malb.gimnasio.modelo.exception.HorarioInvalido;
+import com.malb.gimnasio.service.exception.InscripcionNoPermitidaException;
+import com.malb.gimnasio.service.exception.RecursoDuplicadoException;
 import com.malb.gimnasio.service.exception.RecursoEnUsoException;
 import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -65,8 +67,12 @@ public class GlobalExceptionHandler {
     }
 
     //409
-    @ExceptionHandler(RecursoEnUsoException.class)
-    public ResponseEntity<ApiError> manejarIntegridad(RecursoEnUsoException ex) {
+    @ExceptionHandler({
+            RecursoEnUsoException.class,
+            InscripcionNoPermitidaException.class,
+            RecursoDuplicadoException.class
+    })
+    public ResponseEntity<ApiError> manejarIntegridad(RuntimeException ex) {
         ApiError error = new ApiError(409, ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
