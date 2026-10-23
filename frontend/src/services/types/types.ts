@@ -57,3 +57,8 @@ export interface LocalTime {
   second: number;
   nano: number;
 }
+
+
+export interface SubscribirClaseBody {
+   id: number
+}
