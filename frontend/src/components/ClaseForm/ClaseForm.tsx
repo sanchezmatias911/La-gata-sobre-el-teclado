@@ -166,3 +166,5 @@ export const ClaseForm = () => {
     </div>
   );
 };
+
+export default ClaseForm
