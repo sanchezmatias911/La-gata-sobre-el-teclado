@@ -18,11 +18,11 @@ import static com.malb.gimnasio.modelo.EstadoClaseProgramada.ACTIVA;
 public class ClaseProgramada {
     @Id @GeneratedValue
     private Long id;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private Dia dia;
     private LocalTime horaInicio;
     private LocalTime horaFin;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private EstadoClaseProgramada estado;
     @ManyToOne
     @JoinColumn(name = "profesor_id", nullable = false)

@@ -1,10 +1,7 @@
 package com.malb.gimnasio.controller;
 
 import com.malb.gimnasio.controller.REST.ClaseProgramadaREST;
-import com.malb.gimnasio.modelo.Actividad;
-import com.malb.gimnasio.modelo.ClaseProgramada;
-import com.malb.gimnasio.modelo.Dia;
-import com.malb.gimnasio.modelo.EstadoClaseProgramada;
+import com.malb.gimnasio.modelo.*;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.modelo.usuario.Profesor;
 import com.malb.gimnasio.service.ActividadService;
@@ -185,7 +182,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/10/suscripcion")
+        mockMvc.perform(post("/clases/10/suscribir")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNoContent());
@@ -198,7 +195,7 @@ class ClaseProgramadaRESTTest {
     // CASO MALO: el JSON no contiene el idCliente requerido.
     @Test
     void suscribir_sinIdCliente_devuelve400() throws Exception {
-        mockMvc.perform(post("/clases/10/suscripcion")
+        mockMvc.perform(post("/clases/10/suscribir")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isBadRequest());
@@ -209,7 +206,7 @@ class ClaseProgramadaRESTTest {
     // CASO MALO: el JSON está mal formado.
     @Test
     void suscribir_jsonMalFormado_devuelve400() throws Exception {
-        mockMvc.perform(post("/clases/10/suscripcion")
+        mockMvc.perform(post("/clases/10/suscribir")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                             {
@@ -232,7 +229,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/10/suscripcion")
+        mockMvc.perform(post("/clases/10/suscribir")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNotFound());
@@ -256,7 +253,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/999/suscripcion")
+        mockMvc.perform(post("/clases/999/suscribir")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNotFound());
@@ -285,7 +282,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/10/suscripcion")
+        mockMvc.perform(post("/clases/10/suscribir")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isConflict());
@@ -312,7 +309,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/10/suscripcion")
+        mockMvc.perform(post("/clases/10/suscribir")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isConflict());
@@ -323,8 +320,42 @@ class ClaseProgramadaRESTTest {
     // CASO MALO: se utiliza GET en lugar de POST.
     @Test
     void suscribir_conMetodoGet_devuelve405() throws Exception {
-        mockMvc.perform(get("/clases/10/suscripcion")).andExpect(status().isMethodNotAllowed());
+        mockMvc.perform(get("/clases/10/suscribir")).andExpect(status().isMethodNotAllowed());
 
         verifyNoInteractions(inscripcionService);
+    }
+
+    @Test
+    void desuscribir_inscripcionExistente_devuelve204() throws Exception {
+        mockMvc.perform(delete("/clases/10/desuscribir/1"))
+                .andExpect(status().isNoContent());
+
+        verify(inscripcionService).eliminar(10L);
+        verify(clienteService).eliminarSuscripcion(1L, 10L,10L);
+
+    }
+
+    @Test
+    void desuscribir_inscripcionInexistente_devuelve404() throws Exception {
+        doThrow(new RecursoNoEncontradoException("Inscripción no encontrada"))
+                .when(inscripcionService).eliminar(999L);
+
+        mockMvc.perform(delete("/clases/999/desuscribir/1"))
+                .andExpect(status().isNotFound());
+
+        verify(inscripcionService).eliminar(999L);
+        verifyNoInteractions(clienteService);
+    }
+
+    @Test
+    void desuscribir_clienteInexistente_devuelve404() throws Exception {
+        doThrow(new RecursoNoEncontradoException("Cliente no encontrado"))
+                .when(clienteService).eliminarSuscripcion(999L, 10L, 10L);
+
+        mockMvc.perform(delete("/clases/10/desuscribir/999"))
+                .andExpect(status().isNotFound());
+
+        verify(inscripcionService).eliminar(10L);
+        verify(clienteService).eliminarSuscripcion(999L, 10L, 10L);
     }
 }
