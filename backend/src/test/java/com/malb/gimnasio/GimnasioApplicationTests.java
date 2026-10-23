@@ -1,10 +1,10 @@
-package com.malb.gimnacio;
+package com.malb.gimnasio;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GimnacioApplicationTests {
+class GimnasioApplicationTests {
 
 	@Test
 	void contextLoads() {
