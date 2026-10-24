@@ -25,9 +25,9 @@ final public class ClienteREST {
         return ResponseEntity.ok(ClienteDTO.desdeModelo(cliente));
     }
 
-    @GetMapping("/{dni}")
-    public ResponseEntity<ClienteDTO> recuperar(@PathVariable Long dni) {
-        Cliente cliente = clienteService.recuperar(dni);
+    @GetMapping("/{id}")
+    public ResponseEntity<ClienteDTO> recuperar(@PathVariable Long id) {
+        Cliente cliente = clienteService.recuperar(id);
         return ResponseEntity.ok(ClienteDTO.desdeModelo(cliente));
     }
 
@@ -38,9 +38,9 @@ final public class ClienteREST {
         return ResponseEntity.ok((clientesDTO));
     }
 
-    @DeleteMapping("/{dni}")
-    public ResponseEntity<String> eliminar(@PathVariable Long dni){
-        clienteService.eliminar(dni);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminar(@PathVariable Long id){
+        clienteService.eliminar(id);
         return ResponseEntity.ok("Tu usuario ha sido eliminado correctamente.");
     }
 }

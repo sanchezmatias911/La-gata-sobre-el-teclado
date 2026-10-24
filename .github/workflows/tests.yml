@@ -1,0 +1,81 @@
+# Workflow: "Tests del backend"
+# Va en la RAÍZ del repositorio, en la ruta:  .github/workflows/tests.yml
+# GitHub detecta solo los archivos de esa carpeta, no hay que configurar nada más.
+
+name: Tests del backend
+
+# ¿CUÁNDO se ejecuta? (este bloque es el "desencadenante")
+on:
+  # Cada vez que alguien hace push a estas ramas...
+  push:
+    branches: [ main, develop ]
+  # ...y cada vez que se abre o actualiza un Pull Request hacia ellas.
+  # Así se prueba el código ANTES de mezclarlo.
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test-backend:
+    # Máquina virtual que presta GitHub (se crea y se destruye en cada corrida).
+    runs-on: ubuntu-latest
+
+    # PostgreSQL de apoyo para tus tests ACTUALES (los @SpringBootTest de service
+    # y GimnasioApplicationTests), que se conectan a localhost:5432 con
+    # usuario postgres / clave root / base gimnasio, igual que tu application.properties.
+    # El test de integración NO lo necesita (usa H2), pero el resto sí.
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: gimnasio
+        ports:
+          - 5432:5432
+        # Espera a que Postgres esté listo antes de seguir.
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    # Todos los comandos se ejecutan dentro de la carpeta backend.
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      # 1) Descarga el código del repo en la máquina.
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      # 2) Instala Java 21 (el mismo que pide tu build.gradle).
+      - name: Instalar Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      # 3) Prepara Gradle y guarda en caché las dependencias para que
+      #    las siguientes corridas sean más rápidas.
+      - name: Preparar Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # 4) Le da permiso de ejecución a gradlew (si el archivo se subió desde
+      #    Windows, en Linux puede no tenerlo y daría "Permission denied").
+      - name: Permiso de ejecución para gradlew
+        run: chmod +x gradlew
+
+      # 5) Corre TODOS los tests (unitarios + integración).
+      #    Si uno solo falla, el workflow queda en rojo ❌.
+      - name: Correr tests
+        run: ./gradlew test
+
+      # 6) Si fallaron, sube el reporte HTML para poder ver qué pasó
+      #    (pestaña Actions -> la corrida -> sección "Artifacts").
+      - name: Subir reporte de tests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-tests
+          path: backend/build/reports/tests/test

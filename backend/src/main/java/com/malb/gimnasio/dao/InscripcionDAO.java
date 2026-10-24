@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InscripcionDAO extends JpaRepository<Inscripcion, Long> {
+    // detecta inscripciones existentes en persistencia, aunque la colección esté desactualizada.
+    boolean existsByCliente_IdAndClaseProgramada_Id(Long clienteId, Long claseProgramadaId);
 }

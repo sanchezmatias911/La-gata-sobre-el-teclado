@@ -47,15 +47,15 @@ public class ProfesorServiceImpl implements ProfesorService {
     }
 
     @Override
-    public void eliminar(Long dni) {
-        if (dni == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
+    public void eliminar(Long id) {
+        if (id == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
 
         /* todavia no se sabe si se debe de lanzar un error o borrar sus cursos. Se verá en US
         if (tieneCursos) {
             throw new RecuersoEnConlicto("No se puede eliminar el profesor"); //CONFLICT
         }*/
 
-        Profesor profesor = recuperar(dni);
+        Profesor profesor = recuperar(id);
         profesorDAO.delete(profesor);
     }
 

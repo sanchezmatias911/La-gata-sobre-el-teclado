@@ -11,7 +11,6 @@ import lombok.*;
 @Getter
 @Setter @NoArgsConstructor @ToString
 @Entity
-
 public abstract class Usuario{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,5 +40,8 @@ public abstract class Usuario{
         this.telefono = telefono;
     }
 
+    //TODO FALTA VALIDACION PARA QUE EL DNI NO SEA UN DATO REPETIDO,
+    // SI BIEN TIENE @EL ERROR SE LANZA EN LA BDD, POR ELLO LANZARA UN 500 Y NO 409
+    // SE DEBE HACER "CampoRepetidoException(...)"
 
 }
