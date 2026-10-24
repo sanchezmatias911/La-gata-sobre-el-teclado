@@ -81,11 +81,24 @@ export const ClassProfile = () => {
     const capacity = actividad.cupo || 50;
     const occupancyPercentage = Math.min((enrolled / capacity) * 100, 100);
 
-    const formatTime = (time: { hour: number; minute: number }) => {
-        const h = time.hour < 10 ? `0${time.hour}` : time.hour;
-        const m = time.minute < 10 ? `0${time.minute}` : time.minute;
+    const formatTime = (time: any) => {
+    if (!time) return '';
+    
+    // Maneja strings del tipo "08:00:00" o "08:00"
+    if (typeof time === 'string') {
+        const [h, m] = time.split(':');
+        return `${h.padStart(2, '0')}:${m.padStart(2, '0')}`;
+    }
+    
+    // Maneja objetos { hour: 8, minute: 0 }
+    if (typeof time === 'object' && 'hour' in time) {
+        const h = String(time.hour).padStart(2, '0');
+        const m = String(time.minute).padStart(2, '0');
         return `${h}:${m}`;
-    };
+    }
+
+    return String(time);
+};
 
     return (
         <div className="class-container">
