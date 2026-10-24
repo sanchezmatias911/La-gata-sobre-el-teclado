@@ -8,7 +8,7 @@ import com.malb.gimnasio.modelo.Dia;
 import com.malb.gimnasio.modelo.EstadoClaseProgramada;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.modelo.usuario.Profesor;
-import com.malb.gimnasio.service.exception.RecursoDuplicadoException;
+import com.malb.gimnasio.modelo.exception.RecursoDuplicadoException;
 import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,24 +37,16 @@ class InscripcionServiceTest {
     @Autowired
     private ClaseProgramadaService claseProgramadaService;
 
-    private Cliente cliente1, cliente2;
-    private ClaseProgramada clase, clase2;
+    private Cliente cliente;
+    private ClaseProgramada clase;
     private Profesor profesor;
     private Actividad actividad;
 
     @BeforeEach
     void setUp() {
-        cliente1 = new Cliente(
+        cliente = new Cliente(
                 50111222L,
-                "cliente1.inscripcion@test.com",
-                "password",
-                "Cliente Test",
-                "1100000000"
-        );
-
-        cliente2 = new Cliente(
-                50111333L,
-                "cliente2.inscripcion@test.com",
+                "cliente.inscripcion@test.com",
                 "password",
                 "Cliente Test",
                 "1100000000"
@@ -85,17 +77,7 @@ class InscripcionServiceTest {
                 EstadoClaseProgramada.ACTIVA
         );
 
-        clase2 = new ClaseProgramada(
-                Dia.LUNES,
-                LocalTime.of(10, 0),
-                LocalTime.of(11, 0),
-                profesor,
-                actividad,
-                EstadoClaseProgramada.ACTIVA
-        );
-
-        clienteService.crear(cliente1);
-        clienteService.crear(cliente2);
+        clienteService.crear(cliente);
         profesorService.crear(profesor);
         actividadService.crear(actividad);
         claseProgramadaService.crear(clase);
@@ -103,21 +85,21 @@ class InscripcionServiceTest {
 
     @Test
     void crear_inscripcionValida_guardaLaInscripcion() {
-        Inscripcion inscripcion = inscripcionService.crear(cliente2, clase2);
+        Inscripcion inscripcion = inscripcionService.crear(cliente, clase);
 
         assertNotNull(inscripcion);
         assertNotNull(inscripcion.getId());
-        assertEquals(cliente2.getId(), inscripcion.getCliente().getId());
-        assertEquals(clase2.getId(), inscripcion.getClaseProgramada().getId());
+        assertEquals(cliente.getId(), inscripcion.getCliente().getId());
+        assertEquals(clase.getId(), inscripcion.getClaseProgramada().getId());
     }
 
     @Test
-    void crear_cliente1YaInscripto_lanzaExcepcion() {
-        inscripcionService.crear(cliente1, clase);
+    void crear_clienteYaInscripto_lanzaExcepcion() {
+        inscripcionService.crear(cliente, clase);
 
         assertThrows(
                 RecursoDuplicadoException.class,
-                () -> inscripcionService.crear(cliente1, clase)
+                () -> inscripcionService.crear(cliente, clase)
         );
     }
 
@@ -129,14 +111,14 @@ class InscripcionServiceTest {
     @Test
     void recuperar_inscripcionExistente_devuelveInscripcion() {
         Inscripcion creada =
-                inscripcionService.crear(cliente1, clase);
+                inscripcionService.crear(cliente, clase);
 
         Inscripcion recuperada =
                 inscripcionService.recuperar(creada.getId());
 
         assertNotNull(recuperada);
         assertEquals(creada.getId(), recuperada.getId());
-        assertEquals(cliente1.getId(), recuperada.getCliente().getId());
+        assertEquals(cliente.getId(), recuperada.getCliente().getId());
         assertEquals(clase.getId(),
                 recuperada.getClaseProgramada().getId());
     }
@@ -160,7 +142,7 @@ class InscripcionServiceTest {
     @Test
     void eliminar_inscripcionExistente_eliminaLaInscripcion() {
         Inscripcion creada =
-                inscripcionService.crear(cliente1, clase);
+                inscripcionService.crear(cliente, clase);
 
         Long id = creada.getId();
 
