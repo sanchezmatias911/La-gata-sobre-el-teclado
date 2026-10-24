@@ -1,4 +1,4 @@
-package com.malb.gimnasio.integracion;
+package com.malb.gimnasio;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.malb.gimnasio.dao.ActividadDAO;
