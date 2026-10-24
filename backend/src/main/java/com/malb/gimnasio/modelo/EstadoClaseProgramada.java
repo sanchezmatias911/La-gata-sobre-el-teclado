@@ -2,8 +2,7 @@ package com.malb.gimnasio.modelo;
 
 //SE VAN A BORRAR
 public enum EstadoClaseProgramada {
-    BORRADOR,
+    LLENA,
     ACTIVA,
-    CANCELADA,
-    FINALIZADA
+    INACTIVA
 }
