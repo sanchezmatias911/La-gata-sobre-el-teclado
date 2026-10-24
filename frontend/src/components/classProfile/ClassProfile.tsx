@@ -58,7 +58,7 @@ export const ClassProfile = () => {
 
         try {
             setSubmitting(true);
-            await subscribeClass(Number(id_clase), { id: Number(userIdInput) });
+            await subscribeClass(Number(id_clase), { idCliente: Number(userIdInput) });
             toast.success("¡Te has inscripto correctamente a la clase!");
             await fetchData(); 
         } catch (error) {
