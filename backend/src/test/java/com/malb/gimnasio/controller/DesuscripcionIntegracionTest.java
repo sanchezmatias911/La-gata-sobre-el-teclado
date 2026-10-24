@@ -68,8 +68,7 @@ class DesuscripcionIntegracionTest {
                 actividad,
                 EstadoClaseProgramada.ACTIVA
         );
-        clase = claseProgramadaDAO.save(clase);
-        System.out.println("ID de clase: " + clase.getId());
+
 
         Cliente cliente = new Cliente(
                 50111222L,
@@ -78,23 +77,26 @@ class DesuscripcionIntegracionTest {
                 "Cliente Test",
                 "1100000000"
         );
-        cliente = clienteDAO.save(cliente);
-        System.out.println("ID de cliente: " + cliente.getId());
 
         Inscripcion inscripcion = new Inscripcion(cliente, clase);
-        inscripcion = inscripcionDAO.save(inscripcion);
-        System.out.println("ID de inscripcion: " + inscripcion.getId());
+
+        clase.agregarInscripcion(inscripcion);
+        clase = claseProgramadaDAO.save(clase);
+
 
         cliente.agregarInscripcion(inscripcion);
-        clienteDAO.save(cliente);
+        cliente = clienteDAO.save(cliente);
 
-        Long idInscripcion = inscripcion.getId();
-        System.out.println("ID de Inscripcion: " + idInscripcion);
+
+        inscripcion = inscripcionDAO.save(inscripcion);
+
+
+        Long idClase = clase.getId();
+
         Long idCliente = cliente.getId();
-        System.out.println("ID de cliente: " + idCliente);
 
         mockMvc.perform(delete(
-                        "/clases/" + idInscripcion + "/desuscribir/" + idCliente))
+                        "/clases/" + idClase + "/desuscribir/" + idCliente))
                 .andExpect(status().isNoContent());
 
         assertFalse(inscripcionDAO.findById(inscripcion.getId()).isPresent());
