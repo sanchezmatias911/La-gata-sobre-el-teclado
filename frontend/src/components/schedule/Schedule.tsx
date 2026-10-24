@@ -109,7 +109,7 @@ export const Schedule = () => {
                                     }}
                                     onClick={() => handleClassClick(clase.id)}
                                 >
-                                    {clase.actividad.nombre}
+                                    {clase.nombreActividad}
                                 </div>
                             );
                         })}
