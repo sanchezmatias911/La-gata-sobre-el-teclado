@@ -182,7 +182,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/10/suscribir")
+        mockMvc.perform(post("/clases/10/suscripcion")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNoContent());
@@ -195,7 +195,7 @@ class ClaseProgramadaRESTTest {
     // CASO MALO: el JSON no contiene el idCliente requerido.
     @Test
     void suscribir_sinIdCliente_devuelve400() throws Exception {
-        mockMvc.perform(post("/clases/10/suscribir")
+        mockMvc.perform(post("/clases/10/suscripcion")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isBadRequest());
@@ -206,7 +206,7 @@ class ClaseProgramadaRESTTest {
     // CASO MALO: el JSON está mal formado.
     @Test
     void suscribir_jsonMalFormado_devuelve400() throws Exception {
-        mockMvc.perform(post("/clases/10/suscribir")
+        mockMvc.perform(post("/clases/10/suscripcion")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                             {
@@ -229,7 +229,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/10/suscribir")
+        mockMvc.perform(post("/clases/10/suscripcion")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNotFound());
@@ -253,7 +253,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/999/suscribir")
+        mockMvc.perform(post("/clases/999/suscripcion")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNotFound());
@@ -282,7 +282,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/10/suscribir")
+        mockMvc.perform(post("/clases/10/suscripcion")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isConflict());
@@ -309,7 +309,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/10/suscribir")
+        mockMvc.perform(post("/clases/10/suscripcion")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isConflict());
@@ -320,7 +320,7 @@ class ClaseProgramadaRESTTest {
     // CASO MALO: se utiliza GET en lugar de POST.
     @Test
     void suscribir_conMetodoGet_devuelve405() throws Exception {
-        mockMvc.perform(get("/clases/10/suscribir")).andExpect(status().isMethodNotAllowed());
+        mockMvc.perform(get("/clases/10/suscripcion")).andExpect(status().isMethodNotAllowed());
 
         verifyNoInteractions(inscripcionService);
     }
