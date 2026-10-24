@@ -3,11 +3,10 @@ package com.malb.gimnasio.modelo;
 import com.malb.gimnasio.modelo.exception.HorarioInvalido;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.modelo.usuario.Profesor;
-import com.malb.gimnasio.service.exception.InscripcionNoPermitidaException;
-import com.malb.gimnasio.service.exception.RecursoDuplicadoException;
+import com.malb.gimnasio.modelo.exception.InscripcionNoPermitidaException;
+import com.malb.gimnasio.modelo.exception.RecursoDuplicadoException;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

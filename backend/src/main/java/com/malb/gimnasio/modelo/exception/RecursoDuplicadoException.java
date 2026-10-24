@@ -1,4 +1,4 @@
-package com.malb.gimnasio.service.exception;
+package com.malb.gimnasio.modelo.exception;
 
 public class RecursoDuplicadoException extends RuntimeException {
     public RecursoDuplicadoException(String message) {
