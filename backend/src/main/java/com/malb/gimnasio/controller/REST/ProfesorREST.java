@@ -1,9 +1,10 @@
 package com.malb.gimnasio.controller.REST;
-import com.malb.gimnasio.controller.DTO.CrearProfesorDTO;
-import com.malb.gimnasio.controller.DTO.ProfesorDTO;
+import com.malb.gimnasio.controller.DTO.request.CrearProfesorDTO;
+import com.malb.gimnasio.controller.DTO.response.ProfesorDTO;
 import com.malb.gimnasio.modelo.usuario.Profesor;
 import com.malb.gimnasio.service.ProfesorService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +12,9 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/profesores")
+@AllArgsConstructor
 final public class ProfesorREST {
     private final ProfesorService profesorService;
-
-    public ProfesorREST(ProfesorService profesorService){
-        this.profesorService = profesorService;
-    }
 
     @PostMapping()
     public ResponseEntity<ProfesorDTO> crear(@Valid @RequestBody CrearProfesorDTO dto) {

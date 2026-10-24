@@ -6,12 +6,14 @@ export interface ActividadBody{
 }
 
 export interface ClaseProgramadaBody {
+  id:number;
   dia: string; 
   horaInicio: LocalTime;
   horaFin: LocalTime;
   idProfesor: number; 
   idActividad: number;
   estado: string; 
+  nombreActividad:string;
 }
 
 export interface ProfesorBody {

@@ -1,4 +1,4 @@
-package com.malb.gimnasio.controller.DTO;
+package com.malb.gimnasio.controller.DTO.request;
 
 import com.malb.gimnasio.modelo.Actividad;
 import com.malb.gimnasio.modelo.ClaseProgramada;
