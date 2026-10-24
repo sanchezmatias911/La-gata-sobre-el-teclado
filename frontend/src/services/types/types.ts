@@ -73,5 +73,5 @@ export interface LocalTime {
 
 
 export interface SubscribirClaseBody {
-   id: number
+   idCliente: number
 }

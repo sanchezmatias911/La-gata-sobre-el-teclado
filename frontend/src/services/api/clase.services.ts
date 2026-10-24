@@ -38,6 +38,6 @@ export const deleteClass= async (id:number) => {
 };
 
 export const subscribeClass = async (id: number, subscripcion: SubscribirClaseBody) => {
-    const respuesta = await axiosInstance.post(`/clases/${id}/subscribir`, subscripcion);
+    const respuesta = await axiosInstance.post(`/clases/${id}/suscripcion`, subscripcion);
     return respuesta.data;
 }
