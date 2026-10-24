@@ -2,7 +2,8 @@
   "scripts": {
     "appgym": "concurrently \"npm run dev --prefix frontend\" \"backend\\gradlew.bat -p backend bootRun\"",
     "install:frontend": "npm install --prefix frontend",
-    "rebuild:backend": "backend\\gradlew.bat -p backend clean build -x test"
+    "rebuild:backend": "backend\\gradlew.bat -p backend clean build -x test",
+    "test:integracion": "cd backend && gradlew test --tests *GimnasioIntegracionTest"
   },
   "dependencies": {
     "react-toastify": "^11.1.0"
