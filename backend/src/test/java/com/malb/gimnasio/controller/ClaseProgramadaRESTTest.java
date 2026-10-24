@@ -9,8 +9,8 @@ import com.malb.gimnasio.service.ClaseProgramadaService;
 import com.malb.gimnasio.service.InscripcionService;
 import com.malb.gimnasio.service.ProfesorService;
 import com.malb.gimnasio.service.ClienteService;
-import com.malb.gimnasio.service.exception.InscripcionNoPermitidaException;
-import com.malb.gimnasio.service.exception.RecursoDuplicadoException;
+import com.malb.gimnasio.modelo.exception.InscripcionNoPermitidaException;
+import com.malb.gimnasio.modelo.exception.RecursoDuplicadoException;
 import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -241,9 +241,7 @@ class ClaseProgramadaRESTTest {
     // CASO MALO: la clase no existe.
     @Test
     void suscribir_claseInexistente_devuelve404() throws Exception {
-        Cliente cliente = mock(Cliente.class);
 
-        when(clienteService.recuperar(1L)).thenReturn(cliente);
         when(claseProgramadaService.recuperar(999L))
                 .thenThrow(new RecursoNoEncontradoException("Clase no encontrada"));
 
@@ -258,7 +256,6 @@ class ClaseProgramadaRESTTest {
                         .content(json))
                 .andExpect(status().isNotFound());
 
-        verify(clienteService).recuperar(1L);
         verify(claseProgramadaService).recuperar(999L);
         verifyNoInteractions(inscripcionService);
     }

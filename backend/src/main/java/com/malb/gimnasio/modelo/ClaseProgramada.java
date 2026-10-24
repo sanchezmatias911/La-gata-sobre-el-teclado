@@ -3,9 +3,10 @@ package com.malb.gimnasio.modelo;
 import com.malb.gimnasio.modelo.exception.HorarioInvalido;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.modelo.usuario.Profesor;
+import com.malb.gimnasio.modelo.exception.InscripcionNoPermitidaException;
+import com.malb.gimnasio.modelo.exception.RecursoDuplicadoException;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -53,14 +54,33 @@ public class ClaseProgramada {
         }
     }
 
-    public boolean puedeRecibirInscripciones() {
-        return this.estado == ACTIVA && this.actividad.getCupo() > this.cantidadInscriptos();
-    }
-
     public int cantidadInscriptos() { return this.inscripciones.size(); }
 
     public void agregarInscripcion(Inscripcion i) {
-        this.inscripciones.add(i);
+        if (!puedeRecibirInscripciones()) {
+            throw new InscripcionNoPermitidaException(
+                    "La clase no está disponible para nuevas inscripciones"
+            );
+        }
+
+        if (tieneInscripto(i.getCliente())) {
+            throw new RecursoDuplicadoException(
+                    "El cliente ya está inscripto en esta clase."
+            );
+        }
+
+        this.inscripciones.add(i);;
+    }
+
+    private boolean puedeRecibirInscripciones() {
+        return this.estado == ACTIVA && this.actividad.getCupo() > this.cantidadInscriptos();
+    }
+
+    private boolean tieneInscripto(Cliente cliente) {
+        return inscripciones.stream()
+                .anyMatch(inscripcion ->
+                        inscripcion.getCliente().getId().equals(cliente.getId())
+                );
     }
 
     public void eliminarInscripcion(Inscripcion inscripcion) {

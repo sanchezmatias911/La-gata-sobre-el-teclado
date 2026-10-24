@@ -8,9 +8,9 @@ import com.malb.gimnasio.modelo.Dia;
 import com.malb.gimnasio.modelo.EstadoClaseProgramada;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.modelo.usuario.Profesor;
-import com.malb.gimnasio.service.exception.RecursoDuplicadoException;
+import com.malb.gimnasio.modelo.exception.RecursoDuplicadoException;
 import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
-import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,6 @@ import java.time.LocalTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Transactional
 class InscripcionServiceTest {
 
     @Autowired
@@ -68,6 +67,10 @@ class InscripcionServiceTest {
                 20
         );
 
+        clienteService.crear(cliente);
+        profesorService.crear(profesor);
+        actividadService.crear(actividad);
+
         clase = new ClaseProgramada(
                 Dia.LUNES,
                 LocalTime.of(10, 0),
@@ -76,10 +79,6 @@ class InscripcionServiceTest {
                 actividad,
                 EstadoClaseProgramada.ACTIVA
         );
-
-        clienteService.crear(cliente);
-        profesorService.crear(profesor);
-        actividadService.crear(actividad);
         claseProgramadaService.crear(clase);
     }
 
@@ -170,7 +169,7 @@ class InscripcionServiceTest {
         );
     }
 
-/*
+
     @AfterEach
     void tearDown() {
         inscripcionService.eliminarTodos();
@@ -178,6 +177,6 @@ class InscripcionServiceTest {
         actividadService.eliminarTodos();
         profesorService.eliminarTodos();
         clienteService.eliminarTodos();
-    }*/
+    }
 
 }

@@ -1,5 +1,5 @@
 import axiosInstance from "./axios";
-import type { ClaseProgramadaBody } from "../types/types";
+import type { ClaseProgramadaBody,SubscribirClaseBody } from "../types/types";
 
 export const getAllClases = async () => {
     try {  
@@ -32,7 +32,12 @@ export const getClassById = async (id:number) => {
 };
 
 
-export const deleteActivity = async (id:number) => {
+export const deleteClass= async (id:number) => {
     const respuesta = await axiosInstance.delete(`/clases/${id}`);
     return respuesta.data;
 };
+
+export const subscribeClass = async (id: number, subscripcion: SubscribirClaseBody) => {
+    const respuesta = await axiosInstance.post(`/clases/${id}/suscripcion`, subscripcion);
+    return respuesta.data;
+}

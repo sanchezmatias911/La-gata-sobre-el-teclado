@@ -1,17 +1,30 @@
-export interface ActividadBody{
+export interface ActividadResponseBody{
     id: number,
     nombre: string,
     descripcion: string,
     cupo: number
 }
 
+export interface ProfesorResponseBody {
+   id: number,
+  dni: number,
+  email: string,
+  password: string,
+  nombre: string,
+  telefono: string,
+  biografia: string,
+  especialidades: string
+}
+
 export interface ClaseProgramadaBody {
+  id:number;
   dia: string; 
   horaInicio: LocalTime;
   horaFin: LocalTime;
   idProfesor: number; 
   idActividad: number;
   estado: string; 
+  nombreActividad:string;
 }
 
 export interface ProfesorBody {
@@ -56,4 +69,9 @@ export interface LocalTime {
   minute: number;
   second: number;
   nano: number;
+}
+
+
+export interface SubscribirClaseBody {
+   idCliente: number
 }
