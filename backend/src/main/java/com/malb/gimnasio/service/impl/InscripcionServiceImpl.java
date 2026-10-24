@@ -29,23 +29,13 @@ public class InscripcionServiceImpl implements InscripcionService {
 
     @Override
     public Inscripcion crear(Cliente cliente, ClaseProgramada clase) {
-        //se asume que ya están persistidas, al ser utilizada por el controller
-
-        if (!clase.puedeRecibirInscripciones()) {
-            throw new InscripcionNoPermitidaException("La clase no está disponible para nuevas inscripciones");
-        }
-
-        if (inscripcionDAO.existsByCliente_IdAndClaseProgramada_Id(cliente.getId(), clase.getId())) {
-            throw new RecursoDuplicadoException("El cliente ya está inscripto en esta clase.");
-        }
+        //se asume que ya están persistidas y no es nulo, al ser utilizada por el controller
 
         Inscripcion inscripcion = new Inscripcion(cliente, clase);
+        System.out.println(cliente.getMisInscripciones());
 
-        cliente.agregarInscripcion(inscripcion);
+        cliente.agregarInscripcion(inscripcion); //se podría hacer que luego el cliente mande el otro mensaje de abajo.
         clase.agregarInscripcion(inscripcion);
-
-        clienteDAO.save(cliente); //no se que tan necesario es
-        claseProgramadaDAO.save(clase); //no se que tan necesario es
 
         return inscripcionDAO.save(inscripcion);
     }

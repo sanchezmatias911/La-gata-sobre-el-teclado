@@ -1,6 +1,8 @@
 package com.malb.gimnasio.modelo.usuario;
 
+import com.malb.gimnasio.modelo.ClaseProgramada;
 import com.malb.gimnasio.modelo.Inscripcion;
+import com.malb.gimnasio.service.exception.RecursoDuplicadoException;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +27,19 @@ public class Cliente extends Usuario {
     }
 
     public void agregarInscripcion(Inscripcion i) {
+        if (!estaInscriptoEn(i.getClaseProgramada())) {
+            throw new RecursoDuplicadoException(
+                    "El cliente ya está inscripto en esta clase."
+            );
+        }
+
         this.misInscripciones.add(i);
+    }
+
+    private boolean estaInscriptoEn(ClaseProgramada claseProgramada) {
+        return misInscripciones.stream()
+                .anyMatch(inscripcion ->
+                        inscripcion.getClaseProgramada().getId().equals(claseProgramada.getId())
+                );
     }
 }

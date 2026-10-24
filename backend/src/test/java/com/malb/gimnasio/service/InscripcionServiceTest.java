@@ -37,16 +37,24 @@ class InscripcionServiceTest {
     @Autowired
     private ClaseProgramadaService claseProgramadaService;
 
-    private Cliente cliente;
-    private ClaseProgramada clase;
+    private Cliente cliente1, cliente2;
+    private ClaseProgramada clase, clase2;
     private Profesor profesor;
     private Actividad actividad;
 
     @BeforeEach
     void setUp() {
-        cliente = new Cliente(
+        cliente1 = new Cliente(
                 50111222L,
-                "cliente.inscripcion@test.com",
+                "cliente1.inscripcion@test.com",
+                "password",
+                "Cliente Test",
+                "1100000000"
+        );
+
+        cliente2 = new Cliente(
+                50111333L,
+                "cliente2.inscripcion@test.com",
                 "password",
                 "Cliente Test",
                 "1100000000"
@@ -77,7 +85,17 @@ class InscripcionServiceTest {
                 EstadoClaseProgramada.ACTIVA
         );
 
-        clienteService.crear(cliente);
+        clase2 = new ClaseProgramada(
+                Dia.LUNES,
+                LocalTime.of(10, 0),
+                LocalTime.of(11, 0),
+                profesor,
+                actividad,
+                EstadoClaseProgramada.ACTIVA
+        );
+
+        clienteService.crear(cliente1);
+        clienteService.crear(cliente2);
         profesorService.crear(profesor);
         actividadService.crear(actividad);
         claseProgramadaService.crear(clase);
@@ -85,21 +103,21 @@ class InscripcionServiceTest {
 
     @Test
     void crear_inscripcionValida_guardaLaInscripcion() {
-        Inscripcion inscripcion = inscripcionService.crear(cliente, clase);
+        Inscripcion inscripcion = inscripcionService.crear(cliente2, clase2);
 
         assertNotNull(inscripcion);
         assertNotNull(inscripcion.getId());
-        assertEquals(cliente.getId(), inscripcion.getCliente().getId());
-        assertEquals(clase.getId(), inscripcion.getClaseProgramada().getId());
+        assertEquals(cliente2.getId(), inscripcion.getCliente().getId());
+        assertEquals(clase2.getId(), inscripcion.getClaseProgramada().getId());
     }
 
     @Test
-    void crear_clienteYaInscripto_lanzaExcepcion() {
-        inscripcionService.crear(cliente, clase);
+    void crear_cliente1YaInscripto_lanzaExcepcion() {
+        inscripcionService.crear(cliente1, clase);
 
         assertThrows(
                 RecursoDuplicadoException.class,
-                () -> inscripcionService.crear(cliente, clase)
+                () -> inscripcionService.crear(cliente1, clase)
         );
     }
 
@@ -111,14 +129,14 @@ class InscripcionServiceTest {
     @Test
     void recuperar_inscripcionExistente_devuelveInscripcion() {
         Inscripcion creada =
-                inscripcionService.crear(cliente, clase);
+                inscripcionService.crear(cliente1, clase);
 
         Inscripcion recuperada =
                 inscripcionService.recuperar(creada.getId());
 
         assertNotNull(recuperada);
         assertEquals(creada.getId(), recuperada.getId());
-        assertEquals(cliente.getId(), recuperada.getCliente().getId());
+        assertEquals(cliente1.getId(), recuperada.getCliente().getId());
         assertEquals(clase.getId(),
                 recuperada.getClaseProgramada().getId());
     }
@@ -142,7 +160,7 @@ class InscripcionServiceTest {
     @Test
     void eliminar_inscripcionExistente_eliminaLaInscripcion() {
         Inscripcion creada =
-                inscripcionService.crear(cliente, clase);
+                inscripcionService.crear(cliente1, clase);
 
         Long id = creada.getId();
 

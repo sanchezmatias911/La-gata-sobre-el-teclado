@@ -241,9 +241,7 @@ class ClaseProgramadaRESTTest {
     // CASO MALO: la clase no existe.
     @Test
     void suscribir_claseInexistente_devuelve404() throws Exception {
-        Cliente cliente = mock(Cliente.class);
 
-        when(clienteService.recuperar(1L)).thenReturn(cliente);
         when(claseProgramadaService.recuperar(999L))
                 .thenThrow(new RecursoNoEncontradoException("Clase no encontrada"));
 
@@ -258,7 +256,6 @@ class ClaseProgramadaRESTTest {
                         .content(json))
                 .andExpect(status().isNotFound());
 
-        verify(clienteService).recuperar(1L);
         verify(claseProgramadaService).recuperar(999L);
         verifyNoInteractions(inscripcionService);
     }
