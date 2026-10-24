@@ -27,4 +27,9 @@ public class Cliente extends Usuario {
     public void agregarInscripcion(Inscripcion i) {
         this.misInscripciones.add(i);
     }
+
+    public void eliminarInscripcion(Inscripcion inscripcion) {
+        //deberia haber una validacion
+        this.misInscripciones.remove(inscripcion);
+    }
 }

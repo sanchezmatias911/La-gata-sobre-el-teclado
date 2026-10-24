@@ -18,11 +18,11 @@ import static com.malb.gimnasio.modelo.EstadoClaseProgramada.ACTIVA;
 public class ClaseProgramada {
     @Id @GeneratedValue
     private Long id;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private Dia dia;
     private LocalTime horaInicio;
     private LocalTime horaFin;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private EstadoClaseProgramada estado;
     @ManyToOne
     @JoinColumn(name = "profesor_id", nullable = false)
@@ -63,4 +63,8 @@ public class ClaseProgramada {
         this.inscripciones.add(i);
     }
 
+    public void eliminarInscripcion(Inscripcion inscripcion) {
+        //deberia haber una validacion
+        this.inscripciones.remove(inscripcion);
+    }
 }

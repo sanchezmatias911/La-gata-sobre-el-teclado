@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
 
+import static com.malb.gimnasio.modelo.Dia.LUNES;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -61,7 +62,7 @@ class DesuscripcionIntegracionTest {
         actividad = actividadDAO.save(actividad);
 
         ClaseProgramada clase = new ClaseProgramada(
-                Dia.LUNES,
+                LUNES,
                 LocalTime.of(10, 0),
                 LocalTime.of(11, 0),
                 profesor,

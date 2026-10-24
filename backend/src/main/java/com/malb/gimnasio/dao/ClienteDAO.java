@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface ClienteDAO extends JpaRepository<Cliente, Long> {
     Optional<Cliente> findByDni(Long dni);
-
+/*
     @Modifying
     @Transactional
     @Query(value = """
@@ -21,5 +21,5 @@ public interface ClienteDAO extends JpaRepository<Cliente, Long> {
     WHERE cliente_id = :idCliente
       AND mis_inscripciones_id = :idInscripcion
     """, nativeQuery = true)
-    void eliminarSuscripcion(@Param("idCliente") Long idCliente, @Param("idInscripcion") Long idInscripcion);
+    void eliminarSuscripcion(@Param("idCliente") Long idCliente, @Param("idInscripcion") Long idInscripcion);*/
 }
