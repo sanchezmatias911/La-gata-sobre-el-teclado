@@ -6,31 +6,47 @@ import { subscribeClass } from '../../services/api/clase.services';
 import { imageUrl } from '../../data/classByIdMockData'
 import { toast } from 'react-toastify';
 import './ClassProfile.css';
+import { getActivityById } from '../../services/api/actividad.service';
+import { getProfesorById } from '../../services/api/profesor.service';
+import type { ActividadResponseBody,ProfesorResponseBody } from '../../services/types/types';
 
 
 export const ClassProfile = () => {
     const { id_clase } = useParams();
     const [claseData, setClaseData] = useState<ClaseProgramadaBody | null>(null);
+    const [actividad, setActividad] = useState<ActividadResponseBody | null>(null);
+    const [profesor, setProfesor] = useState<ProfesorResponseBody | null>(null);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false); 
     const [userIdInput, setUserIdInput] = useState<number | string>(1);
 
-    const fetchClase = async () => {
+    const fetchData = async () => {
         if (!id_clase) return;
         try {
-            const data = await getClassById(Number(id_clase));
-            setClaseData(data);
+            setLoading(true);
+            
+            // 1. Obtener la clase programada
+            const clase = await getClassById(Number(id_clase));
+            setClaseData(clase);
+
+            // 2. Obtener la actividad y el profesor en paralelo usando sus IDs
+            const [actividadData, profesorData] = await Promise.all([
+                getActivityById(clase.idActividad),
+                getProfesorById(clase.idProfesor)
+            ]);
+
+            setActividad(actividadData);
+            setProfesor(profesorData);
         } catch (error) {
-            toast.error("Error al cargar la clase:");
+            toast.error("Error al cargar los datos de la clase");
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchClase();
+        fetchData();
     }, [id_clase]);
-
 
     const handleSubscribe = async () => {
         if (!id_clase) return;
@@ -42,19 +58,11 @@ export const ClassProfile = () => {
 
         try {
             setSubmitting(true);
-
-            
-          
-
             await subscribeClass(Number(id_clase), { id: Number(userIdInput) });
-
             toast.success("¡Te has inscripto correctamente a la clase!");
-            
-    
-            await fetchClase(); 
+            await fetchData(); 
         } catch (error) {
-            toast.error("Error al inscribirse a la clase:");
-          
+            toast.error("Error al inscribirse a la clase.");
         } finally {
             setSubmitting(false);
         }
@@ -64,13 +72,12 @@ export const ClassProfile = () => {
         return <div style={{ color: 'white', textAlign: 'center', marginTop: '3rem' }}>Cargando información de la clase...</div>;
     }
 
-    if (!claseData) {
+    if (!claseData || !actividad || !profesor) {
         return <div style={{ color: 'white', textAlign: 'center', marginTop: '3rem' }}>No se encontró la clase solicitada.</div>;
     }
 
-    const { actividad, profesor, dia, horaInicio, horaFin, inscripciones } = claseData;
-
-    const enrolled = inscripciones ? inscripciones.length : 0;
+    const { dia, horaInicio, horaFin } = claseData;
+    const enrolled = 0; // Se actualizará cuando el backend devuelva las inscripciones
     const capacity = actividad.cupo || 50;
     const occupancyPercentage = Math.min((enrolled / capacity) * 100, 100);
 
@@ -80,7 +87,7 @@ export const ClassProfile = () => {
         return `${h}:${m}`;
     };
 
-   return (
+    return (
         <div className="class-container">
             <div className="class-card">
                 <div className="class-hero">
@@ -112,7 +119,6 @@ export const ClassProfile = () => {
                         </div>
                     </div>
 
-                    
                     <div className="class-section" style={{ marginTop: '1rem' }}>
                         <label style={{ color: 'white', display: 'block', marginBottom: '0.5rem' }}>
                             ID del usuario a inscribir (Modo Prueba):
