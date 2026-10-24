@@ -5,28 +5,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record ProfesorDTO (
-        @NotNull
         Long id,
-
-        @NotNull
         Long dni,
-
-        @NotNull @NotBlank
         String email,
-
-        @NotNull @NotBlank
         String password,
-
-        @NotNull @NotBlank
         String nombre,
-
-        @NotNull @NotBlank
         String telefono,
-
-        @NotNull @NotBlank
         String biografia,
-
-        @NotNull @NotBlank
         String especialidades
 ) {
     public static ProfesorDTO desdeModelo(Profesor profesor) {
