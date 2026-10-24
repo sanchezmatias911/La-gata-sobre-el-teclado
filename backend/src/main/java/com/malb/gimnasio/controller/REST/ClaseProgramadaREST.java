@@ -48,7 +48,7 @@ final public class ClaseProgramadaREST {
         return ResponseEntity.ok("Tu clase ha sido eliminada correctamente.");
     }
 
-    @PostMapping("/{id}/suscribir")
+    @PostMapping("/{id}/suscripcion")
     public ResponseEntity<Void> suscribir(@PathVariable Long id, @Valid @RequestBody SuscribirClaseDTO dto) {
         ClaseProgramada clase = claseProgramadaService.recuperar(id);
         Cliente cliente = clienteService.recuperar(dto.idCliente());
