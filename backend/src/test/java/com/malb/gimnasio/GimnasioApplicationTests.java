@@ -306,7 +306,7 @@ class GimnasioIntegracionTest {
 		Long idProfesor = crearProfesor(23456789L, "profe@test.com");
 		Long idCliente = crearCliente(40111222L, "ana@test.com", "Ana Perez");
 
-		Long idClase = crearClase("LUNES", "10:00:00", "11:00:00", idProfesor, idActividad, "BORRADOR"); //TODO CAMBAIR EL ESTADO CUANDO SE REFACTORICE
+		Long idClase = crearClase("LUNES", "10:00:00", "11:00:00", idProfesor, idActividad, "INACTIVA"); //TODO CAMBAIR EL ESTADO CUANDO SE REFACTORICE
 
 		suscribir(idClase, idCliente)
 				.andExpect(status().isConflict());
