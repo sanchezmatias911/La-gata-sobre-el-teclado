@@ -1,31 +1,20 @@
 package com.malb.gimnasio.controller.DTO.response;
 
 import com.malb.gimnasio.modelo.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalTime;
 
 public record ClaseProgramadaDTO(
-        @NotNull
         Long id,
-
-        @NotNull(message = "El día es obligatorio")
         Dia dia,
-
-        @NotNull(message = "La hora de inicio es obligatoria")
         LocalTime horaInicio,
-
-        @NotNull(message = "La hora de fin es obligatoria")
         LocalTime horaFin,
-
-        @NotNull
         EstadoClaseProgramada estado,
-
-        @NotNull
         Long idProfesor,
-
-        @NotNull
-        Long idActividad
+        Long idActividad,
+        String nombreActividad
 
 
 ) {
@@ -37,7 +26,8 @@ public record ClaseProgramadaDTO(
                 clase.getHoraFin(),
                 clase.getEstado(),
                 clase.getProfesor().getId(),
-                clase.getActividad().getId()
+                clase.getActividad().getId(),
+                clase.getActividad().getNombre()
         );
     }
 
