@@ -25,8 +25,8 @@ export const Schedule = () => {
         fetchClases();
     }, []);
 
-    const handleClassClick = (id: number) => {
-        navigate(`/clases/${id}`);
+    const handleClassClick = (id_clase: number) => {
+        navigate(`/clases/${id_clase}`);
     };
 
     const getColumnForDay = (dia: string) => {

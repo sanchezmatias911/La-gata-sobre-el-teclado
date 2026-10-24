@@ -1,8 +1,19 @@
-export interface ActividadBody{
+export interface ActividadResponseBody{
     id: number,
     nombre: string,
     descripcion: string,
     cupo: number
+}
+
+export interface ProfesorResponseBody {
+   id: number,
+  dni: number,
+  email: string,
+  password: string,
+  nombre: string,
+  telefono: string,
+  biografia: string,
+  especialidades: string
 }
 
 export interface ClaseProgramadaBody {
