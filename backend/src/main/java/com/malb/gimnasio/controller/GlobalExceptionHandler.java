@@ -1,6 +1,7 @@
 package com.malb.gimnasio.controller;
 
 import com.malb.gimnasio.controller.DTO.ApiError;
+import com.malb.gimnasio.modelo.exception.ConflictoHorarioException;
 import com.malb.gimnasio.modelo.exception.HorarioInvalido;
 import com.malb.gimnasio.modelo.exception.InscripcionNoPermitidaException;
 import com.malb.gimnasio.modelo.exception.RecursoDuplicadoException;
@@ -69,6 +70,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
             RecursoEnUsoException.class,
             InscripcionNoPermitidaException.class,
+            ConflictoHorarioException.class,
             RecursoDuplicadoException.class
     })
     public ResponseEntity<ApiError> manejarIntegridad(RuntimeException ex) {
