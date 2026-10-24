@@ -151,3 +151,5 @@ export const ProfesorForm = () => {
     </div>
   );
 };
+
+export default ProfesorForm;

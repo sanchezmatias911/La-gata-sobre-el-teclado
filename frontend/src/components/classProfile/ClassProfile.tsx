@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import type { ClaseProgramadaBody } from "../../services/types/types";
-import { getClassById } from '../../services/api/clase.services';
+import { deleteActivity, getClassById } from '../../services/api/clase.services';
 import { imageUrl } from '../../data/classByIdMockData'
 import './ClassProfile.css';
+import { toast } from 'react-toastify';
 
 export const ClassProfile = () => {
     const { id_clase } = useParams();
     const [claseData, setClaseData] = useState<ClaseProgramadaBody | null>(null);
     const [loading, setLoading] = useState(true);
+    const [cancelling, setCancelling] = useState(false);
 
-    useEffect(() => {
-        const fetchClase = async () => {
+    const fetchClase = async () => {
             if (!id_clase) return;
             try {
                 const data = await getClassById(Number(id_clase));
@@ -23,6 +24,7 @@ export const ClassProfile = () => {
             }
         };
 
+    useEffect(() => {
         fetchClase();
     }, [id_clase]);
 
@@ -34,16 +36,38 @@ export const ClassProfile = () => {
         return <div style={{ color: 'white', textAlign: 'center', marginTop: '3rem' }}>No se encontró la clase solicitada.</div>;
     }
 
-    const { actividad, profesor, dia, horaInicio, horaFin, inscripciones } = claseData;
+    const { dia, horaInicio, horaFin, idActividad, idProfesor } = claseData;
 
-    const enrolled = inscripciones ? inscripciones.length : 0;
-    const capacity = actividad.cupo || 50;
-    const occupancyPercentage = Math.min((enrolled / capacity) * 100, 100);
+    // El backend manda horas como string "18:00:00"
+    const formatTime = (time: string) => {
+        if (!time) return "--:--";
+        // "18:00:00" -> "18:00"
+        return time.slice(0, 5);
+    };
 
-    const formatTime = (time: { hour: number; minute: number }) => {
-        const h = time.hour < 10 ? `0${time.hour}` : time.hour;
-        const m = time.minute < 10 ? `0${time.minute}` : time.minute;
-        return `${h}:${m}`;
+    // No hay actividad ni profesor en el DTO, uso placeholders
+    const nombreActividad = `Actividad #${idActividad ?? "?"}`;
+    const nombreProfesor = `Profesor #${idProfesor ?? "?"}`;
+    const enrolled = 0;        // el DTO no trae inscripciones
+    const capacity = 50;       // valor por defecto
+    const occupancyPercentage = 0;
+
+
+    const handleCancelSubscription = async () => {
+    if (!id_clase) return;
+    
+    try {
+        setCancelling(true);
+        await deleteActivity(Number(id_clase));
+        toast.success("Inscripción cancelada correctamente.");
+        
+        // Volvemos a cargar los datos para que se actualice la barra de progreso
+        await fetchClase(); 
+    } catch (error) {
+        toast.error("Error al cancelar la inscripción.");
+    } finally {
+        setCancelling(false);
+    }
     };
 
     return (
@@ -51,10 +75,10 @@ export const ClassProfile = () => {
             <div className="class-card">
 
                 <div className="class-hero">
-                    <img src={imageUrl} alt={actividad.nombre} className="class-hero-img" />
+                    <img src={imageUrl} alt={nombreActividad} className="class-hero-img" />
                     <div className="class-hero-overlay">
-                        <h1 className="class-name">{actividad.nombre}</h1>
-                        <p className="class-professor">Profesor: {profesor.nombre}</p>
+                        <h1 className="class-name">{nombreActividad}</h1>
+                        <p className="class-professor">Profesor: {nombreProfesor}</p>
                     </div>
                 </div>
 
@@ -87,8 +111,12 @@ export const ClassProfile = () => {
                         <button className="btn btn-enroll">
                             Inscribirse a la clase
                         </button>
-                        <button className="btn btn-cancel">
-                            Cancelar inscripción
+                        <button 
+                            className="btn btn-cancel"
+                            onClick={handleCancelSubscription}
+                            disabled={cancelling}
+                        >
+                        {cancelling ? 'Cancelando...' : 'Cancelar inscripción'}
                         </button>
                     </div>
 

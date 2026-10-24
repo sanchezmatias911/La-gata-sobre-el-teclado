@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { 
   Schedule,
@@ -18,6 +19,15 @@ const App = () => {
                 <Route path='/clases/nuevaActividad' element={<ActividadForm />} />
                 <Route path='/clases/:id_clase' element={<ClassProfile />} />
             </Routes>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                pauseOnHover
+                theme="light" aria-label={undefined}            
+            />
         </>
     );
 }

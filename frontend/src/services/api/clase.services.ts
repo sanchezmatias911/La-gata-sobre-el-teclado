@@ -33,6 +33,6 @@ export const getClassById = async (id:number) => {
 
 
 export const deleteActivity = async (id:number) => {
-    const respuesta = await axiosInstance.delete(`/clases/${id}`);
+    const respuesta = await axiosInstance.delete(`/inscripciones/${id}`);
     return respuesta.data;
 };
