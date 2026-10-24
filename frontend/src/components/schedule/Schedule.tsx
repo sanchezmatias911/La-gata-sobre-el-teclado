@@ -5,6 +5,7 @@ import type { ClaseProgramadaBody, LocalTime } from "../../services/types/types"
 import { DAYS, HOURS, START_HOUR } from '../../data/scheduleMockData'
 import './Schedule.css';
 
+
 export const Schedule = () => {
     const navigate = useNavigate();
     const [clases, setClases] = useState<ClaseProgramadaBody[]>([]);
@@ -25,31 +26,60 @@ export const Schedule = () => {
         fetchClases();
     }, []);
 
-    const handleClassClick = (id: number) => {
-        navigate(`/clases/${id}`);
+    const handleClassClick = (id_clase: number) => {
+        navigate(`/clases/${id_clase}`);
+    };
+
+    // Helper para normalizar strings quitando tildes y mayúsculas
+    const normalizeString = (str: string) => {
+        if (!str) return '';
+        return str
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+    };
+
+    // Helper para parsear la hora independientemente de si viene como String ("08:00:00") o como Objeto LocalTime
+    const parseTime = (time: LocalTime | string | any) => {
+        if (typeof time === 'string') {
+            const [h, m] = time.split(':').map(Number);
+            return { hour: h || 0, minute: m || 0 };
+        }
+        if (time && typeof time === 'object' && 'hour' in time) {
+            return time;
+        }
+        return { hour: 0, minute: 0 };
     };
 
     const getColumnForDay = (dia: string) => {
-        const index = DAYS.findIndex(d => d.toLowerCase() === dia.toLowerCase());
+        if (!dia) return -1;
+        const normalizedDia = normalizeString(dia);
+        const index = DAYS.findIndex(d => normalizeString(d) === normalizedDia);
         return index >= 0 ? index + 2 : -1;
     };
 
-    const getRowForTime = (hour: number, minute: number) => {
+    const getRowForTime = (time: LocalTime | string) => {
+        const { hour, minute } = parseTime(time);
         const baseRow = (hour - START_HOUR) * 2 + 2;
         const extraRow = minute >= 30 ? 1 : 0;
         return baseRow + extraRow;
     };
 
-    const getDurationInRows = (horaInicio: LocalTime, horaFin: LocalTime) => {
-        const inicioEnMinutos = horaInicio.hour * 60 + horaInicio.minute;
-        const finEnMinutos = horaFin.hour * 60 + horaFin.minute;
+    const getDurationInRows = (horaInicio: LocalTime | string, horaFin: LocalTime | string) => {
+        const inicio = parseTime(horaInicio);
+        const fin = parseTime(horaFin);
+
+        const inicioEnMinutos = inicio.hour * 60 + inicio.minute;
+        const finEnMinutos = fin.hour * 60 + fin.minute;
         const duracionEnMinutos = finEnMinutos - inicioEnMinutos;
-        return Math.ceil(duracionEnMinutos / 30);
+
+        return Math.max(1, Math.ceil(duracionEnMinutos / 30));
     };
 
     const getActivityBadgeClass = (estado: string) => {
-        if (estado === 'Activa') return 'class-pill-grid pill-active';
-        if (estado === 'Cancelada') return 'class-pill-grid pill-cancelled';
+        const estadoUpper = estado?.toUpperCase();
+        if (estadoUpper === 'ACTIVA') return 'class-pill-grid pill-active';
+        if (estadoUpper === 'CANCELADA') return 'class-pill-grid pill-cancelled';
         return 'class-pill-grid';
     };
 
@@ -77,14 +107,14 @@ export const Schedule = () => {
                         ))}
 
                         {HOURS.map((hour) => {
-                            const row = getRowForTime(hour, 0);
+                            const row = getRowForTime({ hour, minute: 0, second: 0, nano: 0 });
                             return (
                                 <div key={`bg-${hour}`} className="grid-row-group" style={{ gridRow: `${row} / span 2`, gridColumn: '1 / -1' }}></div>
                             );
                         })}
 
                         {HOURS.map((hour) => {
-                            const row = getRowForTime(hour, 0);
+                            const row = getRowForTime({ hour, minute: 0, second: 0, nano: 0 });
                             return (
                                 <div key={`time-${hour}`} className="grid-time-label" style={{ gridRow: `${row} / span 2`, gridColumn: 1 }}>
                                     {hour < 10 ? `0${hour}:00` : `${hour}:00`}
@@ -94,7 +124,7 @@ export const Schedule = () => {
 
                         {clases.map((clase) => {
                             const col = getColumnForDay(clase.dia);
-                            const rowStart = getRowForTime(clase.horaInicio.hour, clase.horaInicio.minute);
+                            const rowStart = getRowForTime(clase.horaInicio);
                             const durationInRows = getDurationInRows(clase.horaInicio, clase.horaFin);
 
                             if (col === -1 || durationInRows <= 0) return null;
@@ -109,7 +139,7 @@ export const Schedule = () => {
                                     }}
                                     onClick={() => handleClassClick(clase.id)}
                                 >
-                                    {clase.actividad.nombre}
+                                    {clase.nombreActividad || 'Clase'}
                                 </div>
                             );
                         })}

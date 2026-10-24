@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "bd:iniciar": "net start postgresql-x64-15",
+    "matapuerto-8080": "powershell -Command \"Stop-Process -Id (Get-NetTCPConnection -LocalPort 8080).OwningProcess -Force\"",
     "appgym": "concurrently \"npm run dev --prefix frontend\" \"backend\\gradlew.bat -p backend bootRun\"",
     "install:frontend": "npm install --prefix frontend",
     "rebuild:backend": "backend\\gradlew.bat -p backend clean build -x test",
