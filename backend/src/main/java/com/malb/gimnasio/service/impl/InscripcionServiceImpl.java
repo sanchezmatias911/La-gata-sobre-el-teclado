@@ -1,29 +1,36 @@
 package com.malb.gimnasio.service.impl;
 
+import com.malb.gimnasio.dao.ClaseProgramadaDAO;
+import com.malb.gimnasio.dao.ClienteDAO;
 import com.malb.gimnasio.dao.InscripcionDAO;
+import com.malb.gimnasio.modelo.ClaseProgramada;
 import com.malb.gimnasio.modelo.Inscripcion;
+import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.service.InscripcionService;
 import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class InscripcionServiceImpl implements InscripcionService {
     private final InscripcionDAO inscripcionDAO;
-
-    public InscripcionServiceImpl(InscripcionDAO inscripcionDAO) {
-        this.inscripcionDAO = inscripcionDAO;
-    }
+    private final ClaseProgramadaDAO claseProgramadaDAO;
+    private final ClienteDAO clienteDAO;
 
     @Override
-    public void crear(Inscripcion inscripcion) {
-        if (inscripcion == null) { throw new IllegalArgumentException("no se puede crear algo nulo"); }
+    public Inscripcion crear(Cliente cliente, ClaseProgramada clase) {
+        //se asume que ya están persistidas y no es nulo, al ser utilizada por el controller
 
-        inscripcionDAO.save(inscripcion);
+        Inscripcion inscripcion = new Inscripcion(cliente, clase);
+
+        cliente.agregarInscripcion(inscripcion); //se podría hacer que luego el cliente mande el otro mensaje de abajo.
+        clase.agregarInscripcion(inscripcion);
+
+        return inscripcionDAO.save(inscripcion);
     }
 
     @Override

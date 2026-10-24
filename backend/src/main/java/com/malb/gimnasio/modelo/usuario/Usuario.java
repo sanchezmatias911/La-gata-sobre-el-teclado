@@ -11,7 +11,6 @@ import lombok.*;
 @Getter
 @Setter @NoArgsConstructor @ToString
 @Entity
-
 public abstract class Usuario{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
