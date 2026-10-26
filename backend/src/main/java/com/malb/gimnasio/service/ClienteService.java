@@ -11,4 +11,5 @@ public interface ClienteService {
     List<Cliente> recuperarTodos();
     void eliminar(Long dni);
     void eliminarTodos();
+    void eliminarSuscripcion(Long id, Long idInscripcion, Long idClase);
 }

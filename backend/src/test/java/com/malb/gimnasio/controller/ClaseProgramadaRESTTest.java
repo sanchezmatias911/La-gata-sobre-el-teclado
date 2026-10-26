@@ -1,10 +1,7 @@
 package com.malb.gimnasio.controller;
 
 import com.malb.gimnasio.controller.REST.ClaseProgramadaREST;
-import com.malb.gimnasio.modelo.Actividad;
-import com.malb.gimnasio.modelo.ClaseProgramada;
-import com.malb.gimnasio.modelo.Dia;
-import com.malb.gimnasio.modelo.EstadoClaseProgramada;
+import com.malb.gimnasio.modelo.*;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.modelo.usuario.Profesor;
 import com.malb.gimnasio.service.ActividadService;
@@ -323,5 +320,50 @@ class ClaseProgramadaRESTTest {
         mockMvc.perform(get("/clases/10/suscripcion")).andExpect(status().isMethodNotAllowed());
 
         verifyNoInteractions(inscripcionService);
+    }
+
+    @Test
+    void desuscribir_inscripcionExistente_devuelve204() throws Exception {
+        Inscripcion inscripcion = mock(Inscripcion.class);
+        when(inscripcion.getId()).thenReturn(10L);
+
+        when(claseProgramadaService.recuperarInscripcionDeCliente(20L, 1L)).thenReturn(inscripcion);
+
+        mockMvc.perform(delete("/clases/20/desuscribir/1")).andExpect(status().isNoContent());
+
+        verify(claseProgramadaService).recuperarInscripcionDeCliente(20L, 1L);
+        verify(inscripcionService).eliminar(10L);
+        verify(clienteService).eliminarSuscripcion(1L, 10L, 20L);    }
+
+    @Test
+    void desuscribir_inscripcionInexistente_devuelve404() throws Exception {
+        when(claseProgramadaService.recuperarInscripcionDeCliente(20L, 1L))
+                .thenThrow(new RecursoNoEncontradoException("Inscripción no encontrada"));
+
+        mockMvc.perform(delete("/clases/20/desuscribir/1")).andExpect(status().isNotFound());
+
+        verify(claseProgramadaService).recuperarInscripcionDeCliente(20L, 1L);
+
+        verifyNoInteractions(inscripcionService, clienteService);
+    }
+
+    @Test
+    void desuscribir_clienteInexistente_devuelve404() throws Exception {
+        Inscripcion inscripcion = mock(Inscripcion.class);
+        when(inscripcion.getId()).thenReturn(10L);
+
+        when(claseProgramadaService.recuperarInscripcionDeCliente(20L, 999L)).thenReturn(inscripcion);
+
+        doThrow(new RecursoNoEncontradoException("Cliente no encontrado"))
+                .when(clienteService)
+                .eliminarSuscripcion(999L, 10L, 20L);
+
+        mockMvc.perform(delete("/clases/20/desuscribir/999")).andExpect(status().isNotFound());
+
+        verify(claseProgramadaService).recuperarInscripcionDeCliente(20L, 999L);
+
+        verify(inscripcionService).eliminar(10L);
+
+        verify(clienteService).eliminarSuscripcion(999L, 10L, 20L);
     }
 }

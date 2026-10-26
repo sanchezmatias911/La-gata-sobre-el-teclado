@@ -3,6 +3,7 @@ import com.malb.gimnasio.controller.DTO.request.SuscribirClaseDTO;
 import com.malb.gimnasio.controller.DTO.response.ClaseProgramadaDTO;
 import com.malb.gimnasio.controller.DTO.request.CrearClaseProgramadaDTO;
 import com.malb.gimnasio.modelo.ClaseProgramada;
+import com.malb.gimnasio.modelo.Inscripcion;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.service.*;
 import jakarta.validation.Valid;
@@ -57,4 +58,13 @@ final public class ClaseProgramadaREST {
 
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/{id}/desuscribir/{idCliente}")
+    public ResponseEntity<Void> desuscribir(@PathVariable Long id, @PathVariable Long idCliente) {
+        Inscripcion inscripcion = claseProgramadaService.recuperarInscripcionDeCliente(id, idCliente);
+        inscripcionService.eliminar(inscripcion.getId());
+        clienteService.eliminarSuscripcion(idCliente, inscripcion.getId(), id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

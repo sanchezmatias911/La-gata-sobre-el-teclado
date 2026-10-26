@@ -50,8 +50,7 @@ public class InscripcionServiceImpl implements InscripcionService {
     public void eliminar(Long id) {
         if (id == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
 
-        /* Creo que debería de eliminarse de forma "tanquila"
-        ver si implementarlo en su US
+        /* Aca podes usar los metodos que cree en clase y cliente, asi no es necesario hacer el metodo eliminarSuscripcion de cliente
         */
 
         Inscripcion inscripcion = recuperar(id);

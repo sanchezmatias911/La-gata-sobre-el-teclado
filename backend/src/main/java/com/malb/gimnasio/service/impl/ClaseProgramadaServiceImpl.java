@@ -78,6 +78,18 @@ public class ClaseProgramadaServiceImpl implements ClaseProgramadaService {
         claseProgramadaDAO.deleteAll();
     }
 
+    @Override
+    public Inscripcion recuperarInscripcionDeCliente(Long idClase, Long idCliente) {
+        ClaseProgramada clase = recuperar(idClase);
+
+        return clase.getInscripciones().stream()
+                .filter(inscripcion -> inscripcion.getCliente().getId().equals(idCliente))
+                .findFirst()
+                .orElseThrow(() -> new RecursoNoEncontradoException(
+                        "El cliente no está inscripto en esta clase"
+                ));
+    }
+
     private void validarHorario(ClaseProgramada clase) {
         if (clase.getDia() == null || clase.getHoraInicio() == null || clase.getHoraFin() == null) {
             throw new IllegalArgumentException("El día y las horas son obligatorios");

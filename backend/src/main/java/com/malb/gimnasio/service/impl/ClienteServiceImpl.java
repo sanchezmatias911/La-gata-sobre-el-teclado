@@ -1,6 +1,7 @@
 package com.malb.gimnasio.service.impl;
 
 import com.malb.gimnasio.dao.ClienteDAO;
+import com.malb.gimnasio.modelo.Inscripcion;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.service.ClienteService;
 import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
@@ -59,4 +60,15 @@ public class ClienteServiceImpl implements ClienteService {
     public void eliminarTodos() {
         clienteDAO.deleteAll();
     }
+
+    @Override
+    public void eliminarSuscripcion(Long id, Long idInscipcion, Long idClase) {
+        if (id == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
+        //clienteDAO.eliminarSuscripcion(id, idInscipcion);
+        Cliente cliente = recuperar(id);
+        cliente.getMisInscripciones().removeIf(
+                inscripcion -> inscripcion.getClaseProgramada().getId().equals(idClase)
+        );
+    }
+
 }

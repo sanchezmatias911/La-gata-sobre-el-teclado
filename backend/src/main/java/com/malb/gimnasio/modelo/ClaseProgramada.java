@@ -83,4 +83,8 @@ public class ClaseProgramada {
                 );
     }
 
+    public void eliminarInscripcion(Inscripcion inscripcion) {
+        //deberia haber una validacion
+        this.inscripciones.remove(inscripcion);
+    }
 }

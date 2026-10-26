@@ -1,4 +1,4 @@
-package com.malb.gimnasio.integracion;
+package com.malb.gimnasio;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.malb.gimnasio.dao.ActividadDAO;
@@ -301,12 +301,12 @@ class GimnasioIntegracionTest {
 	// TEST 10: clase que no está ACTIVA
 	// ------------------------------------------------------------------------
 	@Test
-	void noSePuedeSuscribir_aUnaClaseEnBorrador() throws Exception {
+	void noSePuedeSuscribir_aUnaClaseInactiva() throws Exception {
 		Long idActividad = crearActividad("Yoga", 20);
 		Long idProfesor = crearProfesor(23456789L, "profe@test.com");
 		Long idCliente = crearCliente(40111222L, "ana@test.com", "Ana Perez");
 
-		Long idClase = crearClase("LUNES", "10:00:00", "11:00:00", idProfesor, idActividad, "BORRADOR"); //TODO CAMBAIR EL ESTADO CUANDO SE REFACTORICE
+		Long idClase = crearClase("LUNES", "10:00:00", "11:00:00", idProfesor, idActividad, "INACTIVA"); //TODO CAMBAIR EL ESTADO CUANDO SE REFACTORICE
 
 		suscribir(idClase, idCliente)
 				.andExpect(status().isConflict());
