@@ -69,7 +69,15 @@ public class ClaseProgramada {
             );
         }
 
-        this.inscripciones.add(i);;
+        this.inscripciones.add(i);
+        this.actualizarEstado();
+    }
+
+    //TODO CREO QUE SE DEBERIA USAR, LA MISMA CLASE DEBERIA CAMBIAR DE ESTADO, falta más logica o mejor implementación
+    public void actualizarEstado() {
+        if (this.cantidadInscriptos() >= actividad.getCupo()) {
+            this.estado = EstadoClaseProgramada.LLENA;
+        }
     }
 
     private boolean puedeRecibirInscripciones() {
@@ -86,5 +94,6 @@ public class ClaseProgramada {
     public void eliminarInscripcion(Inscripcion inscripcion) {
         //deberia haber una validacion
         this.inscripciones.remove(inscripcion);
+        this.actualizarEstado();
     }
 }
