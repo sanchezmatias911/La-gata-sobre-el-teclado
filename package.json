@@ -6,6 +6,7 @@
     "install:frontend": "npm install --prefix frontend",
     "bd:iniciar:": "sudo systemctl start postgresql",
     "bd:apagar": "sudo systemctl stop postgresql",
+    "bd:estado": "systemctl status postgresql",
     "matapuerto-8080": "sudo fuser -k 8080/tcp",
     "test:integracion": "cd backend && ./gradlew test --tests *GimnasioIntegracionTest",
 
