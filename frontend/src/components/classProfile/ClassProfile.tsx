@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import type { ClaseProgramadaBody } from "../../services/types/types";
 import { getClassById } from '../../services/api/clase.services';
-import { subscribeClass } from '../../services/api/clase.services';
+import { subscribeClass, desuscribeClass } from '../../services/api/clase.services';
 import { imageUrl } from '../../data/classByIdMockData'
 import { toast } from 'react-toastify';
 import './ClassProfile.css';
@@ -19,6 +19,7 @@ export const ClassProfile = () => {
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false); 
     const [userIdInput, setUserIdInput] = useState<number | string>(1);
+    const [cancelling, setCancelling] = useState(false);
 
     const fetchData = async () => {
         if (!id_clase) return;
@@ -65,6 +66,20 @@ export const ClassProfile = () => {
             toast.error("Error al inscribirse a la clase.");
         } finally {
             setSubmitting(false);
+        }
+    };
+
+        const handleCancelSubscription = async () => {
+        if (!id_clase) return;
+        try {
+            setCancelling(true);
+            await desuscribeClass(Number(id_clase), Number(userIdInput));
+            toast.success("Inscripción cancelada correctamente.");
+            await fetchData(); 
+        } catch (error) {
+            toast.error("Error al cancelar la inscripción.");
+        } finally {
+            setCancelling(false);
         }
     };
 
@@ -159,8 +174,12 @@ export const ClassProfile = () => {
                         >
                             {submitting ? 'Inscribiendo...' : 'Inscribirse a la clase'}
                         </button>
-                        <button className="btn btn-cancel">
-                            Cancelar inscripción
+                        <button 
+                            className="btn btn-cancel" 
+                            onClick={handleCancelSubscription}
+                            disabled={cancelling}
+                        >
+                            {cancelling ? 'Cancelando...' : 'Cancelar inscripción'}
                         </button>
                     </div>
                 </div>
