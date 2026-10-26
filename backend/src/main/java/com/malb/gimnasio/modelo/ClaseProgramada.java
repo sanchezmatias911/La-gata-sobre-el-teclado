@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.malb.gimnasio.modelo.EstadoClaseProgramada.ACTIVA;
+import static com.malb.gimnasio.modelo.EstadoClaseProgramada.LLENA;
 
 @Getter @Setter @NoArgsConstructor @ToString @EqualsAndHashCode
 @Entity
@@ -73,10 +74,12 @@ public class ClaseProgramada {
         this.actualizarEstado();
     }
 
-    //TODO CREO QUE SE DEBERIA USAR, LA MISMA CLASE DEBERIA CAMBIAR DE ESTADO, falta más logica o mejor implementación
+    //TODO CREO QUE SE DEBERIA USAR, LA MISMA CLASE DEBERIA CAMBIAR DE ESTADO
     public void actualizarEstado() {
         if (this.cantidadInscriptos() >= actividad.getCupo()) {
-            this.estado = EstadoClaseProgramada.LLENA;
+            this.estado = LLENA;
+        } else if (this.cantidadInscriptos() < actividad.getCupo()) {
+            this.estado = ACTIVA;
         }
     }
 

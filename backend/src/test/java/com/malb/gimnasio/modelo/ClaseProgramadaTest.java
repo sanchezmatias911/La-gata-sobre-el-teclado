@@ -53,6 +53,10 @@ public class ClaseProgramadaTest {
         assertEquals(1, clase.cantidadInscriptos());
     }
 
+    // ---------------------------------------------------------------
+    // Casos malos
+    // ---------------------------------------------------------------
+
     @Test
     void noSePuedeAnotarALaClaseCuandoEstaLlena() {
         Actividad actividad1Cupo = new Actividad("Musculación", "Entrenamiento de fuerza", 1);
@@ -65,10 +69,6 @@ public class ClaseProgramadaTest {
                 clase1Cupo.agregarInscripcion(new Inscripcion())
         );
     }
-
-    // ---------------------------------------------------------------
-    // Casos malos
-    // ---------------------------------------------------------------
 
     @Test
     void rechazaHorariosInvalidos() {
