@@ -5,6 +5,7 @@
     "rebuild:backend": "./backend/gradlew -p backend clean build -x test",
     "install:frontend": "npm install --prefix frontend",
     "bd:iniciar:": "sudo systemctl start postgresql",
+    "bd:apagar": "sudo systemctl stop postgresql",
     "matapuerto-8080": "sudo fuser -k 8080/tcp",
     "test:integracion": "cd backend && ./gradlew test --tests *GimnasioIntegracionTest",
 
