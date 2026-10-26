@@ -62,7 +62,7 @@ class DesuscripcionIntegracionTest {
         actividad = actividadDAO.save(actividad);
 
         ClaseProgramada clase = new ClaseProgramada(
-                LUNES,
+                Dia.LUNES,
                 LocalTime.of(10, 0),
                 LocalTime.of(11, 0),
                 profesor,
