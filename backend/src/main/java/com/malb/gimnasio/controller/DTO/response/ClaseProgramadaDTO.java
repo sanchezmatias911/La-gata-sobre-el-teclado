@@ -14,7 +14,8 @@ public record ClaseProgramadaDTO(
         EstadoClaseProgramada estado,
         Long idProfesor,
         Long idActividad,
-        String nombreActividad
+        String nombreActividad,
+        int cantidadInscriptos
 
 
 ) {
@@ -27,7 +28,8 @@ public record ClaseProgramadaDTO(
                 clase.getEstado(),
                 clase.getProfesor().getId(),
                 clase.getActividad().getId(),
-                clase.getActividad().getNombre()
+                clase.getActividad().getNombre(),
+                clase.cantidadInscriptos()
         );
     }
 
