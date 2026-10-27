@@ -13,13 +13,4 @@ import java.util.Optional;
 @Repository
 public interface ClienteDAO extends JpaRepository<Cliente, Long> {
     Optional<Cliente> findByDni(Long dni);
-/*
-    @Modifying
-    @Transactional
-    @Query(value = """
-    DELETE FROM usuario_mis_inscripciones
-    WHERE cliente_id = :idCliente
-      AND mis_inscripciones_id = :idInscripcion
-    """, nativeQuery = true)
-    void eliminarSuscripcion(@Param("idCliente") Long idCliente, @Param("idInscripcion") Long idInscripcion);*/
 }
