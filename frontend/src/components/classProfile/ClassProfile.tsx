@@ -92,7 +92,7 @@ export const ClassProfile = () => {
     }
 
     const { dia, horaInicio, horaFin } = claseData;
-    const enrolled = 0; // Se actualizará cuando el backend devuelva las inscripciones
+    const enrolled = claseData.cantidadInscriptos || 0;
     const capacity = actividad.cupo || 50;
     const occupancyPercentage = Math.min((enrolled / capacity) * 100, 100);
 

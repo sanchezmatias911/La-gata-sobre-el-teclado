@@ -25,6 +25,7 @@ export interface ClaseProgramadaBody {
   idActividad: number;
   estado: string; 
   nombreActividad:string;
+  cantidadInscriptos: number;
 }
 
 export interface ProfesorBody {
