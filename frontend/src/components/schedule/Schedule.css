@@ -116,6 +116,12 @@
 }
 
 .pill-cancelled {
+    color: #c6b304;
+    background-color: #e4a0018c;
+    border-color: rgb(242, 255, 0);
+}
+
+.pill-completa {
     color: #d63838;
     background-color: #4f1c1c;
     border-color: rgb(255 0 0 / 0.45);
