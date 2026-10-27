@@ -1,11 +1,21 @@
-{
+{  
   "scripts": {
-    "bd:iniciar": "net start postgresql-x64-15",
-    "matapuerto-8080": "powershell -Command \"Stop-Process -Id (Get-NetTCPConnection -LocalPort 8080).OwningProcess -Force\"",
-    "appgym": "concurrently \"npm run dev --prefix frontend\" \"backend\\gradlew.bat -p backend bootRun\"",
+    
+    "appgym": "concurrently \"npm run dev --prefix frontend\" \"./backend/gradlew -p backend bootRun\"",
+    "rebuild:backend": "./backend/gradlew -p backend clean build -x test",
     "install:frontend": "npm install --prefix frontend",
-    "rebuild:backend": "backend\\gradlew.bat -p backend clean build -x test",
-    "test:integracion": "cd backend && gradlew test --tests *GimnasioIntegracionTest"
+    "bd:iniciar:": "sudo systemctl start postgresql",
+    "bd:apagar": "sudo systemctl stop postgresql",
+    "bd:estado": "systemctl status postgresql",
+    "matapuerto-8080": "sudo fuser -k 8080/tcp",
+    "test:integracion": "cd backend && ./gradlew test --tests *GimnasioIntegracionTest",
+
+    
+    "appgym:win": "concurrently \"npm run dev --prefix frontend\" \"backend\\gradlew.bat -p backend bootRun\"",
+    "rebuild:backend:win": "backend\\gradlew.bat -p backend clean build -x test",
+    "bd:iniciar:win": "net start postgresql-x64-15",
+    "matapuerto-8080:win": "powershell -Command \"Stop-Process -Id (Get-NetTCPConnection -LocalPort 8080).OwningProcess -Force\"",
+    "test:integracion:win": "cd backend && gradlew.bat test --tests *GimnasioIntegracionTest"
   },
   "dependencies": {
     "react-toastify": "^11.1.0"
