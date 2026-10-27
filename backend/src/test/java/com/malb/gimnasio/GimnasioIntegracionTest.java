@@ -6,6 +6,7 @@ import com.malb.gimnasio.dao.ClaseProgramadaDAO;
 import com.malb.gimnasio.dao.ClienteDAO;
 import com.malb.gimnasio.dao.InscripcionDAO;
 import com.malb.gimnasio.dao.ProfesorDAO;
+import com.malb.gimnasio.service.LimpiezaBaseDeDatosService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,26 +66,20 @@ class GimnasioIntegracionTest {
 	private ProfesorDAO profesorDAO;
 	@Autowired
 	private ActividadDAO actividadDAO;
+	@Autowired
+	private LimpiezaBaseDeDatosService limpiezaBaseDeDatosService;
 
 	// ------------------------------------------------------------------------
 	// LIMPIEZA
 	// ------------------------------------------------------------------------
 	@BeforeEach
 	void limpiarBaseDeDatos() {
-		inscripcionDAO.deleteAll();
-		claseProgramadaDAO.deleteAll();
-		clienteDAO.deleteAll();
-		profesorDAO.deleteAll();
-		actividadDAO.deleteAll();
+		limpiezaBaseDeDatosService.limpiarBaseDeDatos();
 	}
 
 	@AfterEach //para que al finalizar no se cargen datos a l bdd
 	void limpiarBaseDeDatosDespues() {
-		inscripcionDAO.deleteAll();
-		claseProgramadaDAO.deleteAll();
-		clienteDAO.deleteAll();
-		profesorDAO.deleteAll();
-		actividadDAO.deleteAll();
+		limpiezaBaseDeDatosService.limpiarBaseDeDatos();
 	}
 
 	// ------------------------------------------------------------------------
