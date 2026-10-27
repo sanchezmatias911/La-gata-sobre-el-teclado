@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.malb.gimnasio.modelo.EstadoClaseProgramada.ACTIVA;
+import static com.malb.gimnasio.modelo.EstadoClaseProgramada.LLENA;
 
 @Getter @Setter @NoArgsConstructor @ToString @EqualsAndHashCode
 @Entity
@@ -69,7 +70,17 @@ public class ClaseProgramada {
             );
         }
 
-        this.inscripciones.add(i);;
+        this.inscripciones.add(i);
+        this.actualizarEstado();
+    }
+
+    //TODO CREO QUE SE DEBERIA USAR, LA MISMA CLASE DEBERIA CAMBIAR DE ESTADO
+    public void actualizarEstado() {
+        if (this.cantidadInscriptos() >= actividad.getCupo()) {
+            this.estado = LLENA;
+        } else if (this.cantidadInscriptos() < actividad.getCupo()) {
+            this.estado = ACTIVA;
+        }
     }
 
     private boolean puedeRecibirInscripciones() {
@@ -86,5 +97,6 @@ public class ClaseProgramada {
     public void eliminarInscripcion(Inscripcion inscripcion) {
         //deberia haber una validacion
         this.inscripciones.remove(inscripcion);
+        this.actualizarEstado();
     }
 }
