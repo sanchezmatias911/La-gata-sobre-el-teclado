@@ -8,6 +8,7 @@ import {
   ProfesorForm,
   ClaseForm
 } from "./components/"; 
+import { Register } from './components/Register/Register';
 
 const App = () => {
     return (
@@ -18,6 +19,7 @@ const App = () => {
                 <Route path='/clases/nuevoProfesor' element={<ProfesorForm />} />
                 <Route path='/clases/nuevaActividad' element={<ActividadForm />} />
                 <Route path='/clases/:id_clase' element={<ClassProfile />} />
+                <Route path='/registrar' element={<Register />} />
             </Routes>
             <ToastContainer
                 position="bottom-right"

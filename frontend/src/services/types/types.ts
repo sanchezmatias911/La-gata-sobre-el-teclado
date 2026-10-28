@@ -54,15 +54,7 @@ export interface Actividad {id:number}            //provisional
 export interface SimpleCliente {id:number}        //provisional
 export interface SimpleClaseProgramada{id:number} //provisional
 
-export interface ClienteBody {
-  dni: number;
-  email: string;
-  password:string
-  nombre: string;
-  telefono: string;
-  fechaDeRegistro: string; 
-  misInscripciones: SimpleInscipciones []
-}
+
 
 export interface LocalTime {
   hour: number;
@@ -74,4 +66,14 @@ export interface LocalTime {
 
 export interface SubscribirClaseBody {
    idCliente: number
+}
+
+
+export interface RegistroBody  {
+  nombre: string;
+  apellido: string;
+  mail: string;
+  contraseña: string;
+  teléfono: number;
+  edad: number;
 }
