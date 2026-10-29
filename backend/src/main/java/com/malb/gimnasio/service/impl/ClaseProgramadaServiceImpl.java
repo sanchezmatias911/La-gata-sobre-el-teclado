@@ -92,14 +92,13 @@ public class ClaseProgramadaServiceImpl implements ClaseProgramadaService {
     }
 
     @Override
-    public void actualizarEstado(Long id) {
-        if (id == null) {
+    public void eliminarInscripcion(Long idClase, Inscripcion inscripcion) {
+        if (idClase == null) {
             throw new IllegalArgumentException("no se puede recuperar algo nulo");
         }
-
-        ClaseProgramada claseProgramada = recuperar(id);
-        claseProgramada.actualizarEstado();
-        claseProgramadaDAO.save(claseProgramada);
+        ClaseProgramada clase = recuperar(idClase);
+        clase.eliminarInscripcion(inscripcion);
+        claseProgramadaDAO.save(clase);
     }
 
     private void validarHorario(ClaseProgramada clase) {

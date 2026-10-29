@@ -12,5 +12,5 @@ public interface ClaseProgramadaService {
     void eliminar(Long id);
     void eliminarTodos();
     Inscripcion recuperarInscripcionDeCliente(Long id, Long idCliente);
-    void actualizarEstado(Long id);
+    void eliminarInscripcion(Long idClase, Inscripcion inscripcion);
 }

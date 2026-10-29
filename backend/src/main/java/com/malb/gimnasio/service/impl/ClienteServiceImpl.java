@@ -62,12 +62,11 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public void eliminarSuscripcion(Long id, Long idInscipcion, Long idClase) {
+    public void eliminarSuscripcion(Long id, Long idInscripcion, Long idClase) {
         if (id == null) { throw new IllegalArgumentException("no se puede recuperar algo nulo"); }
         Cliente cliente = recuperar(id);
         cliente.getMisInscripciones().removeIf(
-                inscripcion -> inscripcion.getClaseProgramada().getId().equals(idClase)
-        );
+                inscripcion -> inscripcion.getId().equals(idInscripcion));
     }
 
 }
