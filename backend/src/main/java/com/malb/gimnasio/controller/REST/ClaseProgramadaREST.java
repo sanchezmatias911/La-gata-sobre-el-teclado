@@ -60,11 +60,16 @@ final public class ClaseProgramadaREST {
     }
 
     @DeleteMapping("/{id}/desuscribir/{idCliente}")
-    public ResponseEntity<Void> desuscribir(@PathVariable Long id, @PathVariable Long idCliente) {
+    public ResponseEntity<ClaseProgramadaDTO> desuscribir(@PathVariable Long id, @PathVariable Long idCliente) {
+
         Inscripcion inscripcion = claseProgramadaService.recuperarInscripcionDeCliente(id, idCliente);
         inscripcionService.eliminar(inscripcion.getId());
         clienteService.eliminarSuscripcion(idCliente, inscripcion.getId(), id);
-        return ResponseEntity.noContent().build();
+        claseProgramadaService.eliminarInscripcion(id, inscripcion);
+
+        ClaseProgramada claseActualizada = claseProgramadaService.recuperar(id);
+
+        return ResponseEntity.ok(ClaseProgramadaDTO.desdeModelo(claseActualizada));
     }
 
 }

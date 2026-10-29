@@ -323,28 +323,60 @@ class ClaseProgramadaRESTTest {
     }
 
     @Test
-    void desuscribir_inscripcionExistente_devuelve204() throws Exception {
+    void desuscribir_inscripcionExistente_devuelve200() throws Exception {
         Inscripcion inscripcion = mock(Inscripcion.class);
         when(inscripcion.getId()).thenReturn(10L);
 
-        when(claseProgramadaService.recuperarInscripcionDeCliente(20L, 1L)).thenReturn(inscripcion);
+        when(claseProgramadaService.recuperarInscripcionDeCliente(20L, 1L))
+                .thenReturn(inscripcion);
 
-        mockMvc.perform(delete("/clases/20/desuscribir/1")).andExpect(status().isNoContent());
+        Profesor profesor = mock(Profesor.class);
+        when(profesor.getId()).thenReturn(2L);
 
-        verify(claseProgramadaService).recuperarInscripcionDeCliente(20L, 1L);
+        Actividad actividad = mock(Actividad.class);
+        when(actividad.getId()).thenReturn(3L);
+        when(actividad.getNombre()).thenReturn("Yoga");
+
+        ClaseProgramada clase = mock(ClaseProgramada.class);
+        when(clase.getId()).thenReturn(20L);
+        when(clase.getProfesor()).thenReturn(profesor);
+        when(clase.getActividad()).thenReturn(actividad);
+        when(clase.getEstado()).thenReturn(EstadoClaseProgramada.ACTIVA);
+        when(clase.getDia()).thenReturn(Dia.LUNES);
+        when(clase.getHoraInicio()).thenReturn(LocalTime.of(10, 0));
+        when(clase.getHoraFin()).thenReturn(LocalTime.of(11, 0));
+        when(clase.cantidadInscriptos()).thenReturn(0);
+
+        when(claseProgramadaService.recuperar(20L)).thenReturn(clase);
+
+        mockMvc.perform(delete("/clases/20/desuscribir/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(20L));
+
+        verify(claseProgramadaService)
+                .recuperarInscripcionDeCliente(20L, 1L);
         verify(inscripcionService).eliminar(10L);
-        verify(clienteService).eliminarSuscripcion(1L, 10L, 20L);    }
+        verify(clienteService).eliminarSuscripcion(1L, 10L, 20L);
+        verify(claseProgramadaService).eliminarInscripcion(20L, inscripcion);
+        verify(claseProgramadaService).recuperar(20L);
+    }
 
     @Test
     void desuscribir_inscripcionInexistente_devuelve404() throws Exception {
         when(claseProgramadaService.recuperarInscripcionDeCliente(20L, 1L))
-                .thenThrow(new RecursoNoEncontradoException("Inscripción no encontrada"));
+                .thenThrow(new RecursoNoEncontradoException(
+                        "Inscripción no encontrada"));
 
-        mockMvc.perform(delete("/clases/20/desuscribir/1")).andExpect(status().isNotFound());
+        mockMvc.perform(delete("/clases/20/desuscribir/1"))
+                .andExpect(status().isNotFound());
 
-        verify(claseProgramadaService).recuperarInscripcionDeCliente(20L, 1L);
+        verify(claseProgramadaService)
+                .recuperarInscripcionDeCliente(20L, 1L);
 
         verifyNoInteractions(inscripcionService, clienteService);
+
+        verify(claseProgramadaService, never()).eliminarInscripcion(anyLong(), any());
+        verify(claseProgramadaService, never()).recuperar(anyLong());
     }
 
     @Test
@@ -352,18 +384,22 @@ class ClaseProgramadaRESTTest {
         Inscripcion inscripcion = mock(Inscripcion.class);
         when(inscripcion.getId()).thenReturn(10L);
 
-        when(claseProgramadaService.recuperarInscripcionDeCliente(20L, 999L)).thenReturn(inscripcion);
+        when(claseProgramadaService.recuperarInscripcionDeCliente(20L, 999L))
+                .thenReturn(inscripcion);
 
         doThrow(new RecursoNoEncontradoException("Cliente no encontrado"))
                 .when(clienteService)
                 .eliminarSuscripcion(999L, 10L, 20L);
 
-        mockMvc.perform(delete("/clases/20/desuscribir/999")).andExpect(status().isNotFound());
+        mockMvc.perform(delete("/clases/20/desuscribir/999"))
+                .andExpect(status().isNotFound());
 
-        verify(claseProgramadaService).recuperarInscripcionDeCliente(20L, 999L);
-
+        verify(claseProgramadaService)
+                .recuperarInscripcionDeCliente(20L, 999L);
         verify(inscripcionService).eliminar(10L);
-
         verify(clienteService).eliminarSuscripcion(999L, 10L, 20L);
+
+        verify(claseProgramadaService, never()).eliminarInscripcion(anyLong(), any());
+        verify(claseProgramadaService, never()).recuperar(anyLong());
     }
 }
