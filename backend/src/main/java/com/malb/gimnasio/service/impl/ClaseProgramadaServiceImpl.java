@@ -9,9 +9,7 @@ import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -80,6 +78,9 @@ public class ClaseProgramadaServiceImpl implements ClaseProgramadaService {
 
     @Override
     public Inscripcion recuperarInscripcionDeCliente(Long idClase, Long idCliente) {
+        if (idClase == null) {
+            throw new IllegalArgumentException("no se puede recuperar algo nulo");
+        }
         ClaseProgramada clase = recuperar(idClase);
 
         return clase.getInscripciones().stream()
@@ -88,6 +89,16 @@ public class ClaseProgramadaServiceImpl implements ClaseProgramadaService {
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "El cliente no está inscripto en esta clase"
                 ));
+    }
+
+    @Override
+    public void eliminarInscripcion(Long idClase, Inscripcion inscripcion) {
+        if (idClase == null) {
+            throw new IllegalArgumentException("no se puede recuperar algo nulo");
+        }
+        ClaseProgramada clase = recuperar(idClase);
+        clase.eliminarInscripcion(inscripcion);
+        claseProgramadaDAO.save(clase);
     }
 
     private void validarHorario(ClaseProgramada clase) {

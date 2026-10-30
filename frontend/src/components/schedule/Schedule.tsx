@@ -80,6 +80,7 @@ export const Schedule = () => {
         const estadoUpper = estado?.toUpperCase();
         if (estadoUpper === 'ACTIVA') return 'class-pill-grid pill-active';
         if (estadoUpper === 'CANCELADA') return 'class-pill-grid pill-cancelled';
+        if (estadoUpper === 'LLENA') return 'class-pill-grid pill-completa'
         return 'class-pill-grid';
     };
 
@@ -95,6 +96,9 @@ export const Schedule = () => {
                     </div>
                     <div className="legend-item">
                         <span className="class-pill-grid pill-cancelled legend-pill">Cancelada</span>
+                    </div>
+                    <div className="legend-item">
+                        <span className="class-pill-grid pill-completa legend-pill">Completa</span>
                     </div>
                 </div>
 
