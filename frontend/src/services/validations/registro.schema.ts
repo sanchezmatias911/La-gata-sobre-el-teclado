@@ -2,6 +2,8 @@ import { z } from 'zod';
 
 const empiezaConMayuscula = /^[A-ZÁÉÍÓÚÑ]/;
 
+const telefonoArgRegex = /^\+54\s9\s\d{2,4}\s\d{4}-\d{4}$/;
+
 export const registroSchema = z.object({
   nombre: z
     .string()
@@ -29,7 +31,8 @@ export const registroSchema = z.object({
     
   teléfono: z
     .string()
-    .min(10, "El teléfono debe tener un mínimo de 10 caracteres"),
+    .min(1, "El teléfono es obligatorio")
+    .regex(telefonoArgRegex, "Formato inválido. Ejemplo: +54 9 11 1234-5678"),
     
   dni: z
     .number()
