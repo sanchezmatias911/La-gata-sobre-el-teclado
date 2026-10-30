@@ -40,7 +40,7 @@ export const Register = () => {
 
     try {
       await createCliente(formData);
-      toast.success("¡Registro completado exitosamente!");
+      toast.success("¡Bienvenido al Gimnacio la gata sobre el teclado!");
       {/* Provisorio esa navegacion a clases */}
       setTimeout(() => navigate('/clases/'), 1500); 
     } catch (error) {

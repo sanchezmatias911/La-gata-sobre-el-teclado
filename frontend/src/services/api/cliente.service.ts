@@ -13,7 +13,7 @@ export const getAllClientes = async () => {
 
 export const createCliente = async (nuevoCliente: RegistroBody) => {
     try {      
-        const respuesta = await axiosInstance.post('/clientes', nuevoCliente);       
+        const respuesta = await axiosInstance.post('/auth/registro', nuevoCliente);       
         return respuesta.data;
     } catch (error) {
         console.error("Error al crear el cliente:", error);
