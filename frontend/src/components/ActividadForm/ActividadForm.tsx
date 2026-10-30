@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { createActivity } from '../../services/api/actividad.service';
-import type { ActividadBody } from '../../services/types/types';
+import type { ActividadResponseBody } from '../../services/types/types';
 import '../ClaseForm/ClaseForm.css';
 
 
@@ -29,9 +29,22 @@ export const ActividadForm = () => {
       return;
     }
 
+    //VALIDACIONES DE CUPO:
+
+    if (formData.cupo === undefined || formData.cupo === null || isNaN(formData.cupo)) {
+      toast.warning("El cupo máximo es obligatorio.");
+      return;
+    }
+
+    if (formData.cupo <= 0) {
+      toast.error("El cupo máximo debe ser mayor que cero.");
+      return;
+    }
+
+
     try {
       console.log(formData)
-      await createActivity(formData as ActividadBody);
+      await createActivity(formData as ActividadResponseBody);
       toast.success("¡Actividad registrada exitosamente!");
       setTimeout(() => navigate('/clases'), 1500);
     } catch (error) {

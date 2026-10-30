@@ -57,6 +57,12 @@ export const ClassProfile = () => {
             return;
         }
 
+        // CON CARTEL DEL TOAST PARA CUANDO SE QUIERE INSCRIBIR Y NO HAY MAS CUPOS 
+        // if (enrolled >= capacity) {
+        //     toast.error("No hay más cupos en esta clase");
+        //     return;
+        // }
+
         try {
             setSubmitting(true);
             await subscribeClass(Number(id_clase), { idCliente: Number(userIdInput) });
@@ -92,7 +98,7 @@ export const ClassProfile = () => {
     }
 
     const { dia, horaInicio, horaFin } = claseData;
-    const enrolled = 0; // Se actualizará cuando el backend devuelva las inscripciones
+    const enrolled = claseData.cantidadInscriptos || 0;
     const capacity = actividad.cupo || 50;
     const occupancyPercentage = Math.min((enrolled / capacity) * 100, 100);
 
@@ -170,7 +176,7 @@ export const ClassProfile = () => {
                         <button 
                             className="btn btn-enroll"
                             onClick={handleSubscribe}
-                            disabled={submitting}
+                            disabled={submitting || enrolled>=capacity}
                         >
                             {submitting ? 'Inscribiendo...' : 'Inscribirse a la clase'}
                         </button>

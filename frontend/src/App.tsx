@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
+import Navbar from './components/navbar/Navbar';
 import "react-toastify/dist/ReactToastify.css";
 import { 
   Schedule,
@@ -12,6 +13,7 @@ import {
 const App = () => {
     return (
         <>
+            <Navbar />
             <Routes>
                 <Route path='/clases' element={<Schedule />} />
                 <Route path='/clases/nuevaClase' element={<ClaseForm />} />
