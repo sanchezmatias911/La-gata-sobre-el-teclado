@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { createActivity } from '../../services/api/actividad.service';
-import type { ActividadResponseBody } from '../../services/types/types';
+import type { ActividadBody } from '../../services/types/types';
 import '../ClaseForm/ClaseForm.css';
 
 
@@ -44,7 +44,7 @@ export const ActividadForm = () => {
 
     try {
       console.log(formData)
-      await createActivity(formData as ActividadResponseBody);
+      await createActivity(formData as ActividadBody);
       toast.success("¡Actividad registrada exitosamente!");
       setTimeout(() => navigate('/clases'), 1500);
     } catch (error) {

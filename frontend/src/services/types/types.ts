@@ -4,6 +4,11 @@ export interface ActividadResponseBody{
     descripcion: string,
     cupo: number
 }
+export interface ActividadBody{
+    nombre: string,
+    descripcion: string,
+    cupo: number
+}
 
 export interface ProfesorResponseBody {
    id: number,
