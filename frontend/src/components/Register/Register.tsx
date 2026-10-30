@@ -7,6 +7,7 @@ import { registroSchema } from '../../services/validations/registro.schema';
 import '../ClaseForm/ClaseForm.css'; // Reutilizamos los estilos generales del proyecto
 import { createCliente } from '../../services/api/cliente.service';
 
+
 export const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<RegistroBody>({
@@ -14,8 +15,8 @@ export const Register = () => {
     apellido: '',
     mail: '',
     contraseña: '',
-    teléfono: 0,
-    edad: 0
+    teléfono: '',
+    dni: 0
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +30,6 @@ export const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validación básica con Zod (de momento solo comprueba la estructura)
     const validacion = registroSchema.safeParse(formData);
     
     if (!validacion.success) {
@@ -77,7 +77,7 @@ export const Register = () => {
           </div>
 
           <div className="form-group">
-            <label>Correo Electrónico</label>
+            <label>Email</label>
             <input 
               type="email" 
               name="mail" 
@@ -97,28 +97,28 @@ export const Register = () => {
               placeholder="********"
             />
           </div>
+          
           <div style={{ display: 'flex', gap: '1rem' }}>
-
-          <div className="form-group" style={{ flex: 2 }}>
+            <div className="form-group" style={{ flex: 2 }}>
               <label>Teléfono</label>
               <input 
-                type="number" // <-- Cambiado de "text" a "number"
+                type="text" 
                 name="teléfono" 
-                value={formData.teléfono || ''} 
+                value={formData.teléfono} 
                 onChange={handleChange} 
                 placeholder="Ej: 1123456789"
               />
             </div>
             
             <div className="form-group" style={{ flex: 1 }}>
-              <label>Edad</label>
+              <label>DNI</label>
               <input 
                 type="number" 
-                name="edad" 
-                value={formData.edad || ''} 
+                name="dni" 
+                value={formData.dni || ''} 
                 onChange={handleChange} 
                 min="0"
-                placeholder="0"
+                placeholder="Sin puntos"
               />
             </div>
           </div>

@@ -74,6 +74,6 @@ export interface RegistroBody  {
   apellido: string;
   mail: string;
   contraseña: string;
-  teléfono: number;
-  edad: number;
+  teléfono: string;
+  dni: number;
 }
