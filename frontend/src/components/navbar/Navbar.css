@@ -2,7 +2,7 @@
 .custom-navbar {
     background-color: #000000; 
     width: 100%;
-    padding: 15px 40px; /*Espaciado*/
+    padding: 15px 40px; 
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -17,14 +17,14 @@
 }
 
 .navbar-logo img {
-    height: 40px; /* Ajustá el tamaño según tu imagen */
+    height: 40px; 
     width: auto;
     object-fit: contain;
 }
 
 .navbar-links {
     display: flex;
-    gap: 40px; /* Separación entre los links */
+    gap: 40px; 
 }
 
 .navbar-links a {
@@ -36,5 +36,5 @@
 }
 
 .navbar-links a:hover {
-    opacity: 0.7; /* Se hace un poquito transparente al pasar el mouse */
+    opacity: 0.7; 
 }
