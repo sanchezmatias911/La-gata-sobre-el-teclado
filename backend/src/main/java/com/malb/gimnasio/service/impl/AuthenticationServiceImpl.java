@@ -4,6 +4,7 @@ import com.malb.gimnasio.controller.DTO.request.RegistroClienteDTO;
 import com.malb.gimnasio.dao.ClienteDAO;
 import com.malb.gimnasio.modelo.exception.RecursoDuplicadoException;
 import com.malb.gimnasio.modelo.usuario.Cliente;
+import com.malb.gimnasio.service.AuthenticationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +12,7 @@ import java.util.Locale;
 
 @Service
 @Transactional
-public class AuthenticationServiceImpl {
+public class AuthenticationServiceImpl implements AuthenticationService {
     private final ClienteDAO clienteDAO;
 
     public AuthenticationServiceImpl(ClienteDAO clienteDAO) {
