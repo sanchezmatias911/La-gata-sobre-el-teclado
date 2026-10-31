@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import type { RegistroBody } from '../../services/types/types';
 import { registroSchema } from '../../services/validations/registro.schema';
-import '../ClaseForm/ClaseForm.css'; // Reutilizamos los estilos generales del proyecto
+import '../ClaseForm/ClaseForm.css'; 
 import { createCliente } from '../../services/api/cliente.service';
+
 
 type FormErrors = Partial<Record<keyof RegistroBody, string>>;
 
@@ -16,7 +17,7 @@ export const Register = () => {
     apellido: '',
     mail: '',
     contraseña: '',
-    teléfono: '',
+    telefono: '',
     dni: 0
   });
 
@@ -30,7 +31,6 @@ export const Register = () => {
       [name]: type === 'number' ? (value === '' ? 0 : Number(value)) : value
     }));
 
-    // Limpia el mensaje de error individual al escribir
     if (errors[name as keyof RegistroBody]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
@@ -80,9 +80,9 @@ export const Register = () => {
               value={formData.nombre} 
               onChange={handleChange} 
               placeholder="Ej: Juan"
-              style={errors.nombre ? { borderColor: '#ef4444' } : undefined}
+              className={errors.nombre ? 'input-error' : ''}
             />
-            {errors.nombre && <span style={{ color: '#ef4444', fontSize: '0.8rem', marginTop: '0.2rem' }}>{errors.nombre}</span>}
+            {errors.nombre && <span className="error-message">{errors.nombre}</span>}
           </div>
 
           <div className="form-group">
@@ -93,9 +93,9 @@ export const Register = () => {
               value={formData.apellido} 
               onChange={handleChange} 
               placeholder="Ej: Pérez"
-              style={errors.apellido ? { borderColor: '#ef4444' } : undefined}
+              className={errors.apellido ? 'input-error' : ''}
             />
-            {errors.apellido && <span style={{ color: '#ef4444', fontSize: '0.8rem', marginTop: '0.2rem' }}>{errors.apellido}</span>}
+            {errors.apellido && <span className="error-message">{errors.apellido}</span>}
           </div>
 
           <div className="form-group">
@@ -106,9 +106,9 @@ export const Register = () => {
               value={formData.mail} 
               onChange={handleChange} 
               placeholder="correo@ejemplo.com"
-              style={errors.mail ? { borderColor: '#ef4444' } : undefined}
+              className={errors.mail ? 'input-error' : ''}
             />
-            {errors.mail && <span style={{ color: '#ef4444', fontSize: '0.8rem', marginTop: '0.2rem' }}>{errors.mail}</span>}
+            {errors.mail && <span className="error-message">{errors.mail}</span>}
           </div>
 
           <div className="form-group">
@@ -119,37 +119,37 @@ export const Register = () => {
               value={formData.contraseña} 
               onChange={handleChange} 
               placeholder="********"
-              style={errors.contraseña ? { borderColor: '#ef4444' } : undefined}
+              className={errors.contraseña ? 'input-error' : ''}
             />
-            {errors.contraseña && <span style={{ color: '#ef4444', fontSize: '0.8rem', marginTop: '0.2rem' }}>{errors.contraseña}</span>}
+            {errors.contraseña && <span className="error-message">{errors.contraseña}</span>}
           </div>
           
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <div className="form-group" style={{ flex: 2 }}>
+          <div className="form-row">
+            <div className="form-group flex-2">
               <label>Teléfono</label>
               <input 
                 type="text" 
-                name="teléfono" 
-                value={formData.teléfono} 
+                name="telefono" 
+                value={formData.telefono} 
                 onChange={handleChange} 
                 placeholder="+54 9 11 1234-5678"
-                style={errors.teléfono ? { borderColor: '#ef4444' } : undefined}
+                className={errors.telefono ? 'input-error' : ''}
               />
-              {errors.teléfono && <span style={{ color: '#ef4444', fontSize: '0.8rem', marginTop: '0.2rem' }}>{errors.teléfono}</span>}
+              {errors.telefono && <span className="error-message">{errors.telefono}</span>}
             </div>
             
-            <div className="form-group" style={{ flex: 1 }}>
+            <div className="form-group flex-1">
               <label>DNI</label>
               <input 
                 type="number" 
                 name="dni" 
-                value={formData.dni || ''} 
+                value={formData.dni === 0 ? '' : formData.dni} 
                 onChange={handleChange} 
                 min="0"
                 placeholder="Sin puntos"
-                style={errors.dni ? { borderColor: '#ef4444' } : undefined}
+                className={errors.dni ? 'input-error' : ''}
               />
-              {errors.dni && <span style={{ color: '#ef4444', fontSize: '0.8rem', marginTop: '0.2rem' }}>{errors.dni}</span>}
+              {errors.dni && <span className="error-message">{errors.dni}</span>}
             </div>
           </div>
 

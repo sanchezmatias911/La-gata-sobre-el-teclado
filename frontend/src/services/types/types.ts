@@ -80,6 +80,6 @@ export interface RegistroBody  {
   apellido: string;
   mail: string;
   contraseña: string;
-  teléfono: string;
+  telefono: string;
   dni: number;
 }
