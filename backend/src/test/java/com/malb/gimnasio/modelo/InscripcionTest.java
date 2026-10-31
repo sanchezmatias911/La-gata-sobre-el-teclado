@@ -4,7 +4,7 @@ import com.malb.gimnasio.modelo.usuario.Cliente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InscripcionTest {
     Cliente cliente;
@@ -27,7 +27,9 @@ public class InscripcionTest {
 
     @Test
     void creaConClienteYClase() {
-
+        assertEquals(cliente, inscripcion.getCliente());
+        assertEquals(clase0, inscripcion.getClaseProgramada());
+        assertNotNull(inscripcion.getFechaDeInscripcion());
     }
 
 
@@ -37,5 +39,27 @@ public class InscripcionTest {
         Inscripcion primera = new Inscripcion(cliente, clase1);
         Inscripcion segunda = new Inscripcion(cliente, clase2);
 
+        assertEquals(cliente, primera.getCliente());
+        assertEquals(cliente, segunda.getCliente());
+    }
+
+    // ---------------------------------------------------------------
+    // Casos malos
+    // ---------------------------------------------------------------
+
+    @Test
+    void noSePuedeCrearSinCliente() {
+        assertThrows(
+                NullPointerException.class,
+                () -> new Inscripcion(null, clase0)
+        );
+    }
+
+    @Test
+    void noSePuedeCrearSinClase() {
+        assertThrows(
+                NullPointerException.class,
+                () -> new Inscripcion(cliente, null)
+        );
     }
 }
