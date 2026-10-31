@@ -1,5 +1,5 @@
 import axiosInstance from "./axios";
-import type { ClienteBody } from "../types/types";
+import type {  RegistroBody } from "../types/types";
 
 export const getAllClientes = async () => {
     try {  
@@ -11,9 +11,9 @@ export const getAllClientes = async () => {
     }
 };
 
-export const createCliente = async (nuevoCliente: ClienteBody) => {
+export const createCliente = async (nuevoCliente: RegistroBody) => {
     try {      
-        const respuesta = await axiosInstance.post('/clientes', nuevoCliente);       
+        const respuesta = await axiosInstance.post('/auth/registro', nuevoCliente);       
         return respuesta.data;
     } catch (error) {
         console.error("Error al crear el cliente:", error);

@@ -4,6 +4,11 @@ export interface ActividadResponseBody{
     descripcion: string,
     cupo: number
 }
+export interface ActividadBody{
+    nombre: string,
+    descripcion: string,
+    cupo: number
+}
 
 export interface ProfesorResponseBody {
    id: number,
@@ -55,15 +60,7 @@ export interface Actividad {id:number}            //provisional
 export interface SimpleCliente {id:number}        //provisional
 export interface SimpleClaseProgramada{id:number} //provisional
 
-export interface ClienteBody {
-  dni: number;
-  email: string;
-  password:string
-  nombre: string;
-  telefono: string;
-  fechaDeRegistro: string; 
-  misInscripciones: SimpleInscipciones []
-}
+
 
 export interface LocalTime {
   hour: number;
@@ -75,4 +72,14 @@ export interface LocalTime {
 
 export interface SubscribirClaseBody {
    idCliente: number
+}
+
+
+export interface RegistroBody  {
+  nombre: string;
+  apellido: string;
+  mail: string;
+  contraseña: string;
+  telefono: string;
+  dni: number;
 }

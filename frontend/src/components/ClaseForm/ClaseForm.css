@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     padding: 2rem 1rem;
-    background-color: #0e0e0e;
+    background-color: #191919;
     min-height: 100vh;
 }
 
@@ -102,4 +102,28 @@
 
 .btn-cancelar:hover {
     background-color: #303030;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.input-error {
+  border-color: #ef4444 !important;
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+  display: block;
 }

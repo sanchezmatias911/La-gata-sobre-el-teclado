@@ -9,6 +9,7 @@ import {
   ProfesorForm,
   ClaseForm
 } from "./components/"; 
+import { Register } from './components/Register/Register';
 
 const App = () => {
     return (
@@ -16,10 +17,11 @@ const App = () => {
             <Navbar />
             <Routes>
                 <Route path='/clases' element={<Schedule />} />
-                <Route path='/clases/nuevaClase' element={<ClaseForm />} />
-                <Route path='/clases/nuevoProfesor' element={<ProfesorForm />} />
-                <Route path='/clases/nuevaActividad' element={<ActividadForm />} />
                 <Route path='/clases/:id_clase' element={<ClassProfile />} />
+                <Route path='/registrar/clase' element={<ClaseForm />} />
+                <Route path='/registrar/profesor' element={<ProfesorForm />} />
+                <Route path='/registrar/actividad' element={<ActividadForm />} />
+                <Route path='/registrar/cliente' element={<Register />} />
             </Routes>
             <ToastContainer
                 position="bottom-right"
