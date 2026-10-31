@@ -15,6 +15,7 @@ function Navbar() {
                     <Link to="/">Inicio</Link>
                     <Link to="/clases">Clases</Link>
                     <Link to="/registrar/cliente">Registrarse</Link>
+                    <Link to="/">Ingresar</Link>
                 </div>
             </div>
         </nav>
