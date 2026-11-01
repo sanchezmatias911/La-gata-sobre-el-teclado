@@ -36,6 +36,7 @@ export const registroSchema = z.object({
   dni: z
     .number({ invalid_type_error: "El DNI debe ser un número" })
     .int("Debe ser un número entero")
+    .min(1000000, "EL dni debe ser valido")
     .positive("El DNI debe ser mayor a 0")
 });
 
