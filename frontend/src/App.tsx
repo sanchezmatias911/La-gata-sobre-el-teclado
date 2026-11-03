@@ -22,12 +22,14 @@ const App = () => {
             <Routes>
                 <Route path='/clases' element={<Schedule />} />
                 <Route path='/login' element={<Login />} />
-                <Route path='/clases/:id_clase' element={<ClassProfile />} />
-
-                <Route path='/registrar/clase' element={<ClaseForm />} />
-                <Route path='/registrar/profesor' element={<ProfesorForm />} />
-                <Route path='/registrar/actividad' element={<ActividadForm />} />
                 <Route path='/registrar/cliente' element={<Register />} />
+
+                <Route element={<ProtectedRoute />}>
+                     <Route path='/clases/:id_clase' element={<ClassProfile />} />
+                    <Route path='/registrar/clase' element={<ClaseForm />} />
+                    <Route path='/registrar/profesor' element={<ProfesorForm />} />
+                     <Route path='/registrar/actividad' element={<ActividadForm />} />
+                </Route>
             </Routes>
             <ToastContainer
                 position="bottom-right"

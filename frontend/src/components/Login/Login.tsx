@@ -8,6 +8,8 @@ import  type {LoginBody} from '../../services/types/types';
 import {toast} from 'react-toastify';
 import '../ClaseForm/ClaseForm.css'; 
 import './Login.css';
+import {loginSchema}  from '../../services/validations/login.schema';
+type FormErrors = Partial<Record<keyof LoginBody, string>>;
 
 export const Login = () => {
     const navigate = useNavigate();
@@ -19,31 +21,52 @@ export const Login = () => {
         contraseña: ''
     });
 
+    // 3. Estado para guardar los errores
+    const [errors, setErrors] = useState<FormErrors>({});
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
+
+        // Limpiamos el error del campo específico cuando el usuario empieza a escribir
+        if (errors[name as keyof LoginBody]) {
+            setErrors(prev => ({ ...prev, [name]: undefined }));
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
-        if (!formData.mail || !formData.contraseña) {
-            toast.warning("Por favor, completá todos los campos.");
-            return;
+        // 4. Validación con Zod
+        const validacion = loginSchema.safeParse(formData);
+        
+        if (!validacion.success) {
+            const newErrors: FormErrors = {};
+            validacion.error.issues.forEach((issue) => {
+                const fieldName = issue.path[0] as keyof LoginBody;
+                if (fieldName && !newErrors[fieldName]) {
+                    newErrors[fieldName] = issue.message;
+                }
+            });
+
+            setErrors(newErrors);
+            toast.warning("Por favor, revisá los campos ingresados.");
+            return; // Cortamos la ejecución si hay errores
         }
+
+        setErrors({}); // Limpiamos errores si Zod da luz verde
 
         try {
             setLoading(true);
             const response = await login(formData);
             loginContext(response.token, response.usuario);
-            toast.success("¡Bienvenido/a de vuelta!");
+            toast.success("¡Bienvenido/a de vuelta! A entrenar se ha dicho.");
             navigate('/clases');
         } catch (error) {
             toast.error("Correo o contraseña incorrectos.");
-            console.error("Error en login:", error);
         } finally {
             setLoading(false);
         }
@@ -51,7 +74,6 @@ export const Login = () => {
 
     return (
         <div className="form-page-container">
-            {/* Agregamos la clase login-box junto con form-content */}
             <div className="form-content login-box">
                 <h2 className="form-title">Iniciar Sesión</h2>
                 
@@ -65,8 +87,10 @@ export const Login = () => {
                             onChange={handleChange} 
                             placeholder="correo@ejemplo.com"
                             disabled={loading}
-                            required
+                            className={errors.mail ? 'input-error' : ''} // Clase de error
                         />
+                        {/* Mensaje de error de Zod */}
+                        {errors.mail && <span className="error-message">{errors.mail}</span>}
                     </div>
 
                     <div className="form-group">
@@ -78,11 +102,12 @@ export const Login = () => {
                             onChange={handleChange} 
                             placeholder="********"
                             disabled={loading}
-                            required
+                            className={errors.contraseña ? 'input-error' : ''} // Clase de error
                         />
+                        {/* Mensaje de error de Zod */}
+                        {errors.contraseña && <span className="error-message">{errors.contraseña}</span>}
                     </div>
                     
-                    {/* Usamos la nueva clase login-actions */}
                     <div className="login-actions">
                         <button 
                             type="submit" 
@@ -94,7 +119,6 @@ export const Login = () => {
                         
                         <button 
                             type="button" 
-                            /* Combinamos tu clase btn-cancelar con btn-crear-cuenta */
                             className="btn-cancelar btn-crear-cuenta" 
                             onClick={() => navigate('/registrar/cliente')}
                         >
