@@ -98,7 +98,7 @@ export interface UserInfo {
     rol: string;
 }
 
-interface AuthContextType {
+export interface AuthContextType {
     user: UserInfo | null;
     isAuthenticated: boolean;
     loginContext: (token: string, usuario: UserInfo) => void;

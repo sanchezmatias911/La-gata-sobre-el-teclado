@@ -7,17 +7,23 @@ import {
   ClassProfile,
   ActividadForm,
   ProfesorForm,
-  ClaseForm
+  ClaseForm,
+  Login
 } from "./components/"; 
 import { Register } from './components/Register/Register';
 
+import { AuthProvider } from './context/AuthContext';
+import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
+
 const App = () => {
     return (
-        <>
+        <AuthProvider>
             <Navbar />
             <Routes>
                 <Route path='/clases' element={<Schedule />} />
+                <Route path='/login' element={<Login />} />
                 <Route path='/clases/:id_clase' element={<ClassProfile />} />
+
                 <Route path='/registrar/clase' element={<ClaseForm />} />
                 <Route path='/registrar/profesor' element={<ProfesorForm />} />
                 <Route path='/registrar/actividad' element={<ActividadForm />} />
@@ -32,7 +38,7 @@ const App = () => {
                 pauseOnHover
                 theme="light" aria-label={undefined}            
             />
-        </>
+        </AuthProvider>
     );
 }
 
