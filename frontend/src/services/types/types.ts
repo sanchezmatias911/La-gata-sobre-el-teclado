@@ -83,3 +83,24 @@ export interface RegistroBody  {
   telefono: string;
   dni: number;
 }
+
+export interface LoginBody  {
+  mail: string;
+  contraseña: string;
+}
+
+
+// 1. Definimos los tipos de datos
+export interface UserInfo {
+    id: number;
+    nombre: string;
+    email: string;
+    rol: string;
+}
+
+interface AuthContextType {
+    user: UserInfo | null;
+    isAuthenticated: boolean;
+    loginContext: (token: string, usuario: UserInfo) => void;
+    logoutContext: () => void;
+}
