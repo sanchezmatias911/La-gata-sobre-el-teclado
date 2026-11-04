@@ -54,7 +54,6 @@ class InscripcionServiceTest {
         profesor = new Profesor(
                 23456789L,
                 "profesor.inscripcion@test.com",
-                "password",
                 "Profesor Test",
                 "1144556677",
                 "Profesor",

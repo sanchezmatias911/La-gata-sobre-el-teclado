@@ -5,6 +5,8 @@ import com.malb.gimnasio.modelo.Inscripcion;
 import com.malb.gimnasio.modelo.exception.ConflictoHorarioException;
 import com.malb.gimnasio.modelo.exception.RecursoDuplicadoException;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,6 +18,10 @@ import java.util.List;
 @NoArgsConstructor @Getter @Setter
 
 public class Cliente extends Usuario {
+    @NotBlank(message = "La contraseña no puede estar vacía.")
+    @Size(min = 8, message = "La contraseña debe tener al menos  8 caracteres.")
+    private String password;
+
     private LocalDateTime fechaDeRegistro;
 
     @OneToMany(mappedBy = "cliente")
@@ -23,8 +29,10 @@ public class Cliente extends Usuario {
     private List<Inscripcion> misInscripciones = new ArrayList<>();
 
     public Cliente (@NonNull Long dni, @NonNull String email, @NonNull String password, @NonNull String nombre, @NonNull String telefono){
-        super(dni, email, password, nombre, telefono);
+        super(dni, email, nombre, telefono);
+
         this.fechaDeRegistro = LocalDateTime.now();
+        this.password = password;
     }
 
     public void agregarInscripcion(Inscripcion i) {

@@ -71,7 +71,6 @@ class ClaseProgramadaRESTTest {
         Profesor profesor = new Profesor(
                 23456789L,
                 "profesor@test.com",
-                "clave123",
                 "Ana Lopez",
                 "1144556677",
                 "Profesora",
@@ -138,7 +137,6 @@ class ClaseProgramadaRESTTest {
         Profesor profesor = new Profesor(
                 23456789L,
                 "profesor@test.com",
-                "clave123",
                 "Ana Lopez",
                 "1144556677",
                 "Profesora",

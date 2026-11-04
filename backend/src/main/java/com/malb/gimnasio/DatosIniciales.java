@@ -70,7 +70,6 @@ public class DatosIniciales implements ApplicationRunner {
         Profesor profesor1 = new Profesor(
                 30111222L,
                 "juan.perez@gimnasio.com",
-                "password123",
                 "Juan Perez",
                 "1123456789",
                 "Profesor especializado en entrenamiento de fuerza",
@@ -80,7 +79,6 @@ public class DatosIniciales implements ApplicationRunner {
         Profesor profesor2 = new Profesor(
                 30222333L,
                 "ana.garcia@gimnasio.com",
-                "password123",
                 "Ana Garcia",
                 "1134567890",
                 "Profesora especializada en entrenamiento funcional",
@@ -90,7 +88,6 @@ public class DatosIniciales implements ApplicationRunner {
         Profesor profesor3 = new Profesor(
                 30333444L,
                 "lucas.lopez@gimnasio.com",
-                "password123",
                 "Lucas Lopez",
                 "1145678901",
                 "Profesor especializado en yoga",

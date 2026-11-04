@@ -46,7 +46,6 @@ class DesuscripcionIntegracionTest {
         Profesor profesor = new Profesor(
                 23456789L,
                 "profesor@test.com",
-                "clave123",
                 "Ana Lopez",
                 "1144556677",
                 "Profesora",
@@ -113,7 +112,6 @@ class DesuscripcionIntegracionTest {
         Profesor profesor = new Profesor(
                 23456789L,
                 "profesor@test.com",
-                "clave123",
                 "Ana Lopez",
                 "1144556677",
                 "Profesora",

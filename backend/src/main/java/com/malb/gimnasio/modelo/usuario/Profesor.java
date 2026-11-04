@@ -15,9 +15,9 @@ public class Profesor extends Usuario {
     @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER) @EqualsAndHashCode.Exclude
     private List<ClaseProgramada> misClases;
 
-    public Profesor (@NonNull Long dni, @NonNull String email, @NonNull String password, @NonNull String nombre,
+    public Profesor (@NonNull Long dni, @NonNull String email, @NonNull String nombre,
                      @NonNull String telefono, String biografia, String especialidades){
-        super(dni, email, password, nombre, telefono);
+        super(dni, email, nombre, telefono);
         this.biografia = biografia;
         this.especialidades = especialidades;
     }
