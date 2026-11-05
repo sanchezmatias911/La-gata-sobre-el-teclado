@@ -1,6 +1,8 @@
 package com.malb.gimnasio.service.impl;
 
+import com.malb.gimnasio.controller.DTO.request.CrearLoginDTO;
 import com.malb.gimnasio.controller.DTO.request.RegistroClienteDTO;
+import com.malb.gimnasio.controller.DTO.response.LoginDTO;
 import com.malb.gimnasio.dao.ClienteDAO;
 import com.malb.gimnasio.modelo.exception.RecursoDuplicadoException;
 import com.malb.gimnasio.modelo.usuario.Cliente;
@@ -38,6 +40,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
 
         clienteDAO.save(cliente);
+    }
+
+    @Override
+    public LoginDTO login(CrearLoginDTO dto) {
+        return null; //TODO IMPLEMENTAR
     }
 
     private String capitalizar(String texto) {
