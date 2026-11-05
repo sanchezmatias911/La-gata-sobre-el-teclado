@@ -5,10 +5,12 @@ import com.malb.gimnasio.controller.DTO.request.CrearClaseProgramadaDTO;
 import com.malb.gimnasio.modelo.ClaseProgramada;
 import com.malb.gimnasio.modelo.Inscripcion;
 import com.malb.gimnasio.modelo.usuario.Cliente;
+import com.malb.gimnasio.security.UsuarioAutenticado;
 import com.malb.gimnasio.service.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -50,7 +52,10 @@ final public class ClaseProgramadaREST {
     }
 
     @PostMapping("/{id}/suscripcion")
-    public ResponseEntity<Void> suscribir(@PathVariable Long id, @Valid @RequestBody SuscribirClaseDTO dto) {
+    public ResponseEntity<Void> suscribir(@PathVariable Long id, @Valid @RequestBody SuscribirClaseDTO dto, @AuthenticationPrincipal UsuarioAutenticado usuario) {
+
+        usuario.exigirAccesoACliente(dto.idCliente());
+
         ClaseProgramada clase = claseProgramadaService.recuperar(id);
         Cliente cliente = clienteService.recuperar(dto.idCliente());
 
@@ -60,7 +65,9 @@ final public class ClaseProgramadaREST {
     }
 
     @DeleteMapping("/{id}/desuscribir/{idCliente}")
-    public ResponseEntity<ClaseProgramadaDTO> desuscribir(@PathVariable Long id, @PathVariable Long idCliente) {
+    public ResponseEntity<ClaseProgramadaDTO> desuscribir(@PathVariable Long id, @PathVariable Long idCliente, @AuthenticationPrincipal UsuarioAutenticado usuario) {
+
+        usuario.exigirAccesoACliente(idCliente);
 
         Inscripcion inscripcion = claseProgramadaService.recuperarInscripcionDeCliente(id, idCliente);
         inscripcionService.eliminar(inscripcion.getId());
