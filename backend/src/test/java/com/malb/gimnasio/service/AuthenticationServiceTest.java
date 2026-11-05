@@ -12,6 +12,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -25,6 +26,8 @@ class AuthenticationServiceTest {
 
     @InjectMocks
     private AuthenticationServiceImpl authenticationService;
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     private RegistroClienteDTO dtoValido;
 
@@ -38,6 +41,8 @@ class AuthenticationServiceTest {
                 "1123456789",
                 34675645L
         );
+        when(passwordEncoder.encode("contra123"))
+                .thenReturn("$2a$12$hashDePrueba");
     }
 
     @Test
@@ -94,5 +99,22 @@ class AuthenticationServiceTest {
         verify(clienteDAO).save(captor.capture());
 
         assertEquals("1123456789", captor.getValue().getTelefono());
+    }
+    @Test
+    void registrarGuardaLaPasswordEncriptada() {
+        when(clienteDAO.existsByEmail("maria@gmail.com")).thenReturn(false);
+
+        ArgumentCaptor<Cliente> captor = ArgumentCaptor.forClass(Cliente.class);
+
+        authenticationService.registrar(dtoValido);
+
+        verify(clienteDAO).save(captor.capture());
+
+        assertEquals(
+                "$2a$12$hashDePrueba",
+                captor.getValue().getPassword()
+        );
+
+        verify(passwordEncoder).encode("contra123");
     }
 }

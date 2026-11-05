@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
@@ -36,6 +37,7 @@ public class DatosIniciales implements ApplicationRunner {
     private final ClaseProgramadaService claseProgramadaService;
     private final InscripcionService inscripcionService;
     private final LimpiezaBaseDeDatosService limpiezaBaseDeDatosService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(ApplicationArguments args) {
@@ -107,7 +109,7 @@ public class DatosIniciales implements ApplicationRunner {
         Cliente cliente1 = new Cliente(
                 40111222L,
                 "maria.gonzalez@gmail.com",
-                "password123",
+                passwordEncoder.encode("password123"),
                 "Maria Gonzalez",
                 "1156789012"
         );
@@ -115,7 +117,7 @@ public class DatosIniciales implements ApplicationRunner {
         Cliente cliente2 = new Cliente(
                 40222333L,
                 "pedro.rodriguez@gmail.com",
-                "password123",
+                passwordEncoder.encode("password123"),
                 "Pedro Rodriguez",
                 "1167890123"
         );
@@ -123,7 +125,7 @@ public class DatosIniciales implements ApplicationRunner {
         Cliente cliente3 = new Cliente(
                 40333444L,
                 "sofia.martinez@gmail.com",
-                "password123",
+                passwordEncoder.encode("password123"),
                 "Sofia Martinez",
                 "1178901234"
         );

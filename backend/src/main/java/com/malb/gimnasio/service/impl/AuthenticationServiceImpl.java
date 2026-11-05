@@ -7,6 +7,7 @@ import com.malb.gimnasio.dao.ClienteDAO;
 import com.malb.gimnasio.modelo.exception.RecursoDuplicadoException;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.service.AuthenticationService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +17,14 @@ import java.util.Locale;
 @Transactional
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final ClienteDAO clienteDAO;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthenticationServiceImpl(ClienteDAO clienteDAO) {
+    public AuthenticationServiceImpl(
+            ClienteDAO clienteDAO,
+            PasswordEncoder passwordEncoder
+    ) {
         this.clienteDAO = clienteDAO;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void registrar(RegistroClienteDTO dto) {
@@ -34,7 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Cliente cliente = new Cliente(
                 dto.dni(),
                 mail,
-                dto.contraseña(),
+                passwordEncoder.encode(dto.password()),
                 nombre + " " + apellido,
                 dto.telefono().trim()
         );
