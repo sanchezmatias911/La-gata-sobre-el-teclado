@@ -30,7 +30,7 @@ export const Home = () => {
                     <span className="hero-badge">Tu entrenamiento, tus reglas</span>
                     <h1 className="hero-title">La gata sobre el teclado</h1>
                     <p className="hero-subtitle">
-                        Gestioná tus clases de manera fácil, rápida y ordenada.
+                        Gestioná tus clases y horarios de forma ágil, intuitiva y sin complicaciones. <br/>
                         Dejá atrás el papel y tomá el control total de tu rutina.
                     </p>
                     <Link to="/clases" className="btn-primary">
