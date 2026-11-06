@@ -158,57 +158,14 @@
 }
 
 .activities-section {
-    background: linear-gradient(to bottom, #191919 0%, #1e1e1e 20%, #1e1e1e 100%);
+    background: linear-gradient(to bottom, #191919 0%, #1e1e1e 15%, #1e1e1e 100%);
 }
 
 .activities-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
-}
-
-.activity-card {
-    background-color: var(--bg-surface);
-    padding: 2rem;
-    border-radius: 16px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.activity-card:hover {
-    background-color: var(--bg-card);
-}
-
-.activity-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-    z-index: 1;
-}
-
-.activity-card p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin: 0;
-    z-index: 1;
-}
-
-.card-accent {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: var(--accent-gradient);
-    transition: width 0.3s ease;
-}
-
-.activity-card:hover .card-accent {
-    width: 6px;
+    align-items: start;
 }
 
 .footer {

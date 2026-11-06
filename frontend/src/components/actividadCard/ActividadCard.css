@@ -1,0 +1,80 @@
+.activity-card {
+    background-color: var(--bg-surface);
+    padding: 2rem;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.activity-card:hover {
+    background-color: var(--bg-card);
+}
+
+.activity-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    z-index: 1;
+}
+
+.activity-text {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+    z-index: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: height 0.4s ease-in-out;
+}
+
+.text-clamped {
+    height: 4.8rem;
+    -webkit-line-clamp: 3;
+}
+
+.text-expanded {
+    height: 11rem;
+    -webkit-line-clamp: 50;
+}
+
+.btn-mostrar-mas {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-align: left;
+    align-self: flex-start;
+    z-index: 1;
+    opacity: 0.6;
+    transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.btn-mostrar-mas:hover {
+    opacity: 1;
+    color: #b9b9b9;
+}
+
+.card-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent-gradient);
+    transition: width 0.3s ease;
+}
+
+.activity-card:hover .card-accent {
+    width: 6px;
+}

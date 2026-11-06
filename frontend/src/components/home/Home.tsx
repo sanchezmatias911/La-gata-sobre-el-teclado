@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
+import { ActividadCard } from "../";
+import { getAllActivities } from "../../services/api/actividad.service.ts";
 
-interface Actividad {
+export interface Actividad {
     id: number;
     nombre: string;
     descripcion: string;
@@ -12,19 +14,12 @@ export const Home = () => {
     const [actividades, setActividades] = useState<Actividad[]>([]);
 
     useEffect(() => {
-        const fetchActividadesMock = async () => {
-            const mockData: Actividad[] = [
-                { id: 1, nombre: "Funcional", descripcion: "Fuerza, agilidad y resistencia con ejercicios que imitan movimientos cotidianos. Dinamismo total." },
-                { id: 2, nombre: "Fitcombat", descripcion: "Alta intensidad combinando boxeo y muay thai con coreografías. Superá tus límites." },
-                { id: 3, nombre: "Yoga", descripcion: "Equilibrio y flexibilidad mediante posturas y meditación. Un espacio de paz para todos." },
-                { id: 4, nombre: "Stretching", descripcion: "Elongación profunda y corrección postural. El complemento perfecto para prevenir lesiones." },
-                { id: 5, nombre: "Zumba", descripcion: "Baile latino y ritmos aeróbicos para un cardio divertido. Tonificá mientras liberás endorfinas." },
-                { id: 6, nombre: "Full Local", descripcion: "Trabajo localizado en piernas, glúteos y abdomen con series dinámicas al ritmo de la música." }
-            ];
-            setActividades(mockData);
+        const fetchActividades = async () => {
+            const activities = await getAllActivities();
+            setActividades(activities);
         };
 
-        fetchActividadesMock();
+        fetchActividades();
     }, []);
 
     return (
@@ -72,11 +67,7 @@ export const Home = () => {
                     <h2 className="section-heading">Nuestras Actividades</h2>
                     <div className="activities-grid">
                         {actividades.map(act => (
-                            <article key={act.id} className="activity-card">
-                                <h3>{act.nombre}</h3>
-                                <p>{act.descripcion}</p>
-                                <div className="card-accent"></div>
-                            </article>
+                            <ActividadCard key={act.id} act={act} />
                         ))}
                     </div>
                 </div>
