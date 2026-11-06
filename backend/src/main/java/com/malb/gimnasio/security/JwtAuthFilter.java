@@ -1,6 +1,7 @@
 
 package com.malb.gimnasio.security;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,6 +19,11 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
+
+    /** Atributo del request con el motivo por el que se rechazó el token (lo lee SecurityConfig). */
+    public static final String ATRIBUTO_ERROR_TOKEN = "jwt.error";
+    public static final String TOKEN_VENCIDO = "VENCIDO";
+    public static final String TOKEN_INVALIDO = "INVALIDO";
 
     private final JwtService jwtService;
     private final CustomUserDetailsService userDetailsService;
@@ -78,12 +84,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
                     SecurityContextHolder.getContext()
                             .setAuthentication(authentication);
+                } else {
+                    request.setAttribute(ATRIBUTO_ERROR_TOKEN, TOKEN_INVALIDO);
                 }
             }
 
+        } catch (ExpiredJwtException e) {
+            SecurityContextHolder.clearContext();
+            request.setAttribute(ATRIBUTO_ERROR_TOKEN, TOKEN_VENCIDO);
         } catch (JwtException | IllegalArgumentException
                  | UsernameNotFoundException e) {
             SecurityContextHolder.clearContext();
+            request.setAttribute(ATRIBUTO_ERROR_TOKEN, TOKEN_INVALIDO);
         }
 
         filterChain.doFilter(request, response);

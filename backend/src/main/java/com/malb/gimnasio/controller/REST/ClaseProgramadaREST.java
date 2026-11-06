@@ -7,6 +7,7 @@ import com.malb.gimnasio.modelo.Inscripcion;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.security.UsuarioAutenticado;
 import com.malb.gimnasio.service.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ final public class ClaseProgramadaREST {
     private final InscripcionService inscripcionService;
     private final ClienteService clienteService;
 
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping()
     public ResponseEntity<ClaseProgramadaDTO> crear(@Valid @RequestBody CrearClaseProgramadaDTO dto) {
         ClaseProgramada clase = dto.aModelo(profesorService.recuperar(dto.idProfesor()), actividadService.recuperar(dto.idActividad()));
@@ -45,12 +47,14 @@ final public class ClaseProgramadaREST {
         return ResponseEntity.ok((clasesDTO));
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Long id){
         claseProgramadaService.eliminar(id);
         return ResponseEntity.ok("Tu clase ha sido eliminada correctamente.");
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/{id}/suscripcion")
     public ResponseEntity<Void> suscribir(@PathVariable Long id, @Valid @RequestBody SuscribirClaseDTO dto, @AuthenticationPrincipal UsuarioAutenticado usuario) {
 
@@ -64,6 +68,7 @@ final public class ClaseProgramadaREST {
         return ResponseEntity.noContent().build();
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/{id}/desuscribir/{idCliente}")
     public ResponseEntity<ClaseProgramadaDTO> desuscribir(@PathVariable Long id, @PathVariable Long idCliente, @AuthenticationPrincipal UsuarioAutenticado usuario) {
 

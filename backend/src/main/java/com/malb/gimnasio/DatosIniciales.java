@@ -1,11 +1,13 @@
 
 package com.malb.gimnasio;
 
+import com.malb.gimnasio.dao.UsuarioDAO;
 import com.malb.gimnasio.modelo.Actividad;
 import com.malb.gimnasio.modelo.ClaseProgramada;
 import com.malb.gimnasio.modelo.Dia;
 import com.malb.gimnasio.modelo.EstadoClaseProgramada;
 import com.malb.gimnasio.modelo.Inscripcion;
+import com.malb.gimnasio.modelo.usuario.Administrador;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.modelo.usuario.Profesor;
 import com.malb.gimnasio.service.*;
@@ -37,11 +39,23 @@ public class DatosIniciales implements ApplicationRunner {
     private final ClaseProgramadaService claseProgramadaService;
     private final InscripcionService inscripcionService;
     private final LimpiezaBaseDeDatosService limpiezaBaseDeDatosService;
+    private final UsuarioDAO usuarioDAO;
     private final PasswordEncoder passwordEncoder;
+
+    // Credenciales del administrador de DESARROLLO. Están documentadas en
+    // ReadmeDatosIniciales.md para que el frontend pueda iniciar sesión.
+    // Esta clase solo corre con cargar.datos.dummy=true: nunca en producción.
+    private static final String ADMIN_EMAIL = "admin@gimnasio.com";
+    private static final String ADMIN_PASSWORD = "Admin123456";
+    private static final Long ADMIN_DNI = 20111222L;
 
     @Override
     public void run(ApplicationArguments args) {
         log.info("Cargando datos iniciales de prueba...");
+
+        // 0. ADMINISTRADOR (único usuario que puede registrar clases, profesores y actividades)
+
+        crearAdministradorDeDesarrollo();
 
         // 1. ACTIVIDADES
 
@@ -109,7 +123,7 @@ public class DatosIniciales implements ApplicationRunner {
         Cliente cliente1 = new Cliente(
                 40111222L,
                 "maria.gonzalez@gmail.com",
-                passwordEncoder.encode("password123"),
+                "password123",
                 "Maria Gonzalez",
                 "1156789012"
         );
@@ -117,7 +131,7 @@ public class DatosIniciales implements ApplicationRunner {
         Cliente cliente2 = new Cliente(
                 40222333L,
                 "pedro.rodriguez@gmail.com",
-                passwordEncoder.encode("password123"),
+                "password123",
                 "Pedro Rodriguez",
                 "1167890123"
         );
@@ -125,7 +139,7 @@ public class DatosIniciales implements ApplicationRunner {
         Cliente cliente3 = new Cliente(
                 40333444L,
                 "sofia.martinez@gmail.com",
-                passwordEncoder.encode("password123"),
+                "password123",
                 "Sofia Martinez",
                 "1178901234"
         );
@@ -185,6 +199,25 @@ public class DatosIniciales implements ApplicationRunner {
         log.info("Datos de prueba cargados correctamente.");
     }
 
+    private void crearAdministradorDeDesarrollo() {
+        if (usuarioDAO.existsByEmailIgnoreCase(ADMIN_EMAIL)) {
+            log.info("El administrador de desarrollo ya existe. No se crea otro.");
+            return;
+        }
+
+        usuarioDAO.save(new Administrador(
+                ADMIN_DNI,
+                ADMIN_EMAIL,
+                passwordEncoder.encode(ADMIN_PASSWORD),
+                "Administrador",
+                "1100000000"
+        ));
+
+        log.info("Administrador de desarrollo creado: {}", ADMIN_EMAIL);
+    }
+
+    // El administrador NO se borra acá: puede venir de ADMIN_EMAIL/ADMIN_PASSWORD
+    // y tiene que sobrevivir al apagado. Si ya existe, no se vuelve a crear.
     @PreDestroy
     public void eliminarDatosIniciales() {
         log.info("Solicitando limpieza de la base de datos al cerrar la aplicación...");

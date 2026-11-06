@@ -1,9 +1,9 @@
 package com.malb.gimnasio.controller;
 
 import com.malb.gimnasio.controller.REST.ClienteREST;
-import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.security.CustomUserDetailsService;
 import com.malb.gimnasio.security.JwtService;
+import com.malb.gimnasio.security.WithUsuarioAutenticado;
 import com.malb.gimnasio.service.ClienteService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -23,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ClienteREST.class)
-@WithMockUser(roles = "ADMIN")
+@WithUsuarioAutenticado
 class ClienteRESTTest {
 
     @Autowired
