@@ -4,6 +4,7 @@ import com.malb.gimnasio.modelo.usuario.Cliente;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public record CrearClienteDTO (
     @NotNull
@@ -14,6 +15,7 @@ public record CrearClienteDTO (
     String email,
 
     @NotBlank
+    @Size(min = 8, message = "La password debe tener al menos 8 caracteres")
     String password,
 
     @NotBlank

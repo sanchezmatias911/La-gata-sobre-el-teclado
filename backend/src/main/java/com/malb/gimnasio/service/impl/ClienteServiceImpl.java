@@ -5,6 +5,7 @@ import com.malb.gimnasio.modelo.Inscripcion;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.service.ClienteService;
 import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,14 +16,20 @@ import java.util.NoSuchElementException;
 @Transactional
 public class ClienteServiceImpl implements ClienteService {
     private final ClienteDAO clienteDAO;
+    private final PasswordEncoder passwordEncoder;
 
-    public ClienteServiceImpl(ClienteDAO clienteDAO) {
+    public ClienteServiceImpl(ClienteDAO clienteDAO, PasswordEncoder passwordEncoder) {
         this.clienteDAO = clienteDAO;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void crear(Cliente cliente) {
         if (cliente == null) { throw new IllegalArgumentException("no se puede crear algo nulo"); }
+
+        // El cliente llega con la contraseña en texto plano y se guarda hasheada (BCrypt).
+        // Quien llame a crear() NO debe encriptarla antes, o quedaría doble hasheada.
+        cliente.setPassword(passwordEncoder.encode(cliente.getPassword()));
 
         clienteDAO.save(cliente);
     }

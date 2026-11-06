@@ -10,6 +10,8 @@ import com.malb.gimnasio.service.exception.RecursoNoEncontradoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -77,6 +79,20 @@ public class GlobalExceptionHandler {
         ApiError error = new ApiError(409, ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+
+    // 401
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ApiError> manejarCredenciales(BadCredentialsException ex) {
+        // Mensaje fijo del contrato: no revela si falló el mail o la contraseña.
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiError(401, "Mail o contraseña incorrectos."));
+    }
+
+    // 403
+    @ExceptionHandler(AccessDeniedException.class) //TODO VER QUE SEA PERSONALIZADO
+    public ResponseEntity<ApiError> manejarAccesoDenegado(AccessDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new ApiError(403, "No tenés permisos para realizar esta acción."));
     }
 
     // 500

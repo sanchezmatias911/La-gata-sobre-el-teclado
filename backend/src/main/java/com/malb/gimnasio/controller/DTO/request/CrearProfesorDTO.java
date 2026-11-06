@@ -10,8 +10,6 @@ public record CrearProfesorDTO(
 
         @NotNull @NotBlank String email,
 
-        @NotNull @NotBlank String password,
-
         @NotNull @NotBlank String nombre,
 
         @NotNull @NotBlank String telefono,
@@ -23,7 +21,7 @@ public record CrearProfesorDTO(
 ) {
     public Profesor aModelo() {
 
-        return new Profesor(this.dni(), this.email(), this.password(), this.nombre(), this.telefono(), this.biografia(), this.especialidades());
+        return new Profesor(this.dni(), this.email(), this.nombre(), this.telefono(), this.biografia(), this.especialidades());
 
     }
 }
