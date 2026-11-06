@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { createActivity } from '../../services/api/actividad.service';
 import type { ActividadBody } from '../../services/types/types';
-import '../ClaseForm/ClaseForm.css';
+import '../claseForm/ClaseForm.css';
 
 
 export const ActividadForm = () => {
