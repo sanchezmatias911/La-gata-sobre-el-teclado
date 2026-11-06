@@ -2,20 +2,25 @@ package com.malb.gimnasio.controller;
 
 import com.malb.gimnasio.controller.REST.ProfesorREST;
 import com.malb.gimnasio.modelo.usuario.Profesor;
+import com.malb.gimnasio.security.CustomUserDetailsService;
+import com.malb.gimnasio.security.JwtService;
 import com.malb.gimnasio.service.ProfesorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.NoSuchElementException;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ProfesorREST.class)
+@WithMockUser(roles = "ADMIN")
 class ProfesorRESTTest {
 
     @Autowired
@@ -23,6 +28,11 @@ class ProfesorRESTTest {
 
     @MockBean
     private ProfesorService profesorService;
+    @MockBean
+    private JwtService jwtService;
+
+    @MockBean
+    private CustomUserDetailsService customUserDetailsService;
 
     @Test
     void recuperarTodos_devuelve200() throws Exception {
@@ -52,7 +62,7 @@ class ProfesorRESTTest {
                 }
                 """;
 
-        mockMvc.perform(post("/profesores").contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isOk());
+        mockMvc.perform(post("/profesores").with(csrf()).contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isOk());
 
         verify(profesorService).crear(any(Profesor.class));
     }
@@ -71,18 +81,18 @@ class ProfesorRESTTest {
                 }
                 """;
 
-        mockMvc.perform(post("/profesores").contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isBadRequest());
+        mockMvc.perform(post("/profesores").with(csrf()).contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isBadRequest());
     }
 
     @Test
     void eliminar_devuelve200() throws Exception {
-        mockMvc.perform(delete("/profesores/23456789")).andExpect(status().isOk());
+        mockMvc.perform(delete("/profesores/23456789").with(csrf())).andExpect(status().isOk());
 
         verify(profesorService).eliminar(23456789L);
     }
 
     @Test
     void metodoNoPermitido_devuelve405() throws Exception {
-        mockMvc.perform(put("/profesores/23456789")).andExpect(status().isMethodNotAllowed());
+        mockMvc.perform(put("/profesores/23456789").with(csrf())).andExpect(status().isMethodNotAllowed());
     }
 }

@@ -55,11 +55,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 UserDetails usuario =
                         userDetailsService.loadUserByUsername(email);
 
-                if (jwtService.esTokenValido(token, usuario)) {
+                if (jwtService.esTokenValido(token, usuario)
+                        && usuario instanceof CustomUserDetails detalles) {
+
+                    UsuarioAutenticado principal = new UsuarioAutenticado(
+                            detalles.getId(),
+                            detalles.getEmail(),
+                            detalles.getRol()
+                    );
 
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(
-                                    usuario,
+                                    principal,
                                     null,
                                     usuario.getAuthorities()
                             );

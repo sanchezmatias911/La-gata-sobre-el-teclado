@@ -4,6 +4,9 @@ import com.malb.gimnasio.controller.REST.ClaseProgramadaREST;
 import com.malb.gimnasio.modelo.*;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.modelo.usuario.Profesor;
+import com.malb.gimnasio.security.CustomUserDetailsService;
+import com.malb.gimnasio.security.JwtService;
+import com.malb.gimnasio.security.WithUsuarioAutenticado;
 import com.malb.gimnasio.service.ActividadService;
 import com.malb.gimnasio.service.ClaseProgramadaService;
 import com.malb.gimnasio.service.InscripcionService;
@@ -18,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -26,8 +30,8 @@ import java.util.NoSuchElementException;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 @WebMvcTest(ClaseProgramadaREST.class)
+@WithUsuarioAutenticado
 class ClaseProgramadaRESTTest {
 
     @Autowired
@@ -47,6 +51,11 @@ class ClaseProgramadaRESTTest {
 
     @MockBean
     private ClienteService clienteService;
+    @MockBean
+    private JwtService jwtService;
+
+    @MockBean
+    private CustomUserDetailsService customUserDetailsService;
 
     @Test
     void recuperarTodos_devuelve200() throws Exception {
@@ -99,7 +108,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases")
+        mockMvc.perform(post("/clases").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isOk());
@@ -107,7 +116,7 @@ class ClaseProgramadaRESTTest {
 
     @Test
     void crear_jsonInvalido_devuelve400() throws Exception {
-        mockMvc.perform(post("/clases")
+        mockMvc.perform(post("/clases").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isBadRequest());
@@ -115,7 +124,7 @@ class ClaseProgramadaRESTTest {
 
     @Test
     void eliminar_devuelve200() throws Exception {
-        mockMvc.perform(delete("/clases/1"))
+        mockMvc.perform(delete("/clases/1").with(csrf()))
                 .andExpect(status().isOk());
 
         verify(claseProgramadaService).eliminar(1L);
@@ -123,7 +132,7 @@ class ClaseProgramadaRESTTest {
 
     @Test
     void metodoNoPermitido_devuelve405() throws Exception {
-        mockMvc.perform(put("/clases/1"))
+        mockMvc.perform(put("/clases/1").with(csrf()))
                 .andExpect(status().isMethodNotAllowed());
     }
 
@@ -180,7 +189,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/10/suscripcion")
+        mockMvc.perform(post("/clases/10/suscripcion").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNoContent());
@@ -193,7 +202,7 @@ class ClaseProgramadaRESTTest {
     // CASO MALO: el JSON no contiene el idCliente requerido.
     @Test
     void suscribir_sinIdCliente_devuelve400() throws Exception {
-        mockMvc.perform(post("/clases/10/suscripcion")
+        mockMvc.perform(post("/clases/10/suscripcion").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isBadRequest());
@@ -204,7 +213,7 @@ class ClaseProgramadaRESTTest {
     // CASO MALO: el JSON está mal formado.
     @Test
     void suscribir_jsonMalFormado_devuelve400() throws Exception {
-        mockMvc.perform(post("/clases/10/suscripcion")
+        mockMvc.perform(post("/clases/10/suscripcion").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                             {
@@ -227,7 +236,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/10/suscripcion")
+        mockMvc.perform(post("/clases/10/suscripcion").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNotFound());
@@ -249,7 +258,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/999/suscripcion")
+        mockMvc.perform(post("/clases/999/suscripcion").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNotFound());
@@ -277,7 +286,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/10/suscripcion")
+        mockMvc.perform(post("/clases/10/suscripcion").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isConflict());
@@ -304,7 +313,7 @@ class ClaseProgramadaRESTTest {
             }
             """;
 
-        mockMvc.perform(post("/clases/10/suscripcion")
+        mockMvc.perform(post("/clases/10/suscripcion").with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isConflict());
@@ -347,7 +356,7 @@ class ClaseProgramadaRESTTest {
 
         when(claseProgramadaService.recuperar(20L)).thenReturn(clase);
 
-        mockMvc.perform(delete("/clases/20/desuscribir/1"))
+        mockMvc.perform(delete("/clases/20/desuscribir/1").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(20L));
 
@@ -365,7 +374,7 @@ class ClaseProgramadaRESTTest {
                 .thenThrow(new RecursoNoEncontradoException(
                         "Inscripción no encontrada"));
 
-        mockMvc.perform(delete("/clases/20/desuscribir/1"))
+        mockMvc.perform(delete("/clases/20/desuscribir/1").with(csrf()))
                 .andExpect(status().isNotFound());
 
         verify(claseProgramadaService)
@@ -389,7 +398,7 @@ class ClaseProgramadaRESTTest {
                 .when(clienteService)
                 .eliminarSuscripcion(999L, 10L, 20L);
 
-        mockMvc.perform(delete("/clases/20/desuscribir/999"))
+        mockMvc.perform(delete("/clases/20/desuscribir/999").with(csrf()))
                 .andExpect(status().isNotFound());
 
         verify(claseProgramadaService)
