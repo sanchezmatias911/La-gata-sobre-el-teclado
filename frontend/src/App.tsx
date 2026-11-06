@@ -1,16 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
-import Navbar from './components/navbar/Navbar';
 import "react-toastify/dist/ReactToastify.css";
 import {
     Home,
+    Navbar,
+    Register,
     Schedule,
     ClassProfile,
     ActividadForm,
     ProfesorForm,
     ClaseForm
 } from "./components/"; 
-import { Register } from './components/register/Register';
 
 const App = () => {
     return (

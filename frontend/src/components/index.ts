@@ -1,4 +1,6 @@
 export { default as Home } from "./home/Home.tsx"
+export { default as Navbar } from "./register/Register.tsx"
+export { default as Register } from "./navbar/Navbar.tsx"
 export { default as Schedule } from "./schedule/Schedule.tsx";
 export { default as ClassProfile } from "./classProfile/ClassProfile.tsx";
 export { default as ActividadForm } from "./actividadForm/ActividadForm.tsx";
