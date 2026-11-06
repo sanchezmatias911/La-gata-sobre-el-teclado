@@ -84,23 +84,30 @@ export interface RegistroBody  {
   dni: number;
 }
 
-export interface LoginBody  {
-  mail: string;
-  contraseña: string;
+export interface LoginBody {
+    email: string;
+    password: string; 
 }
 
-
+export type RolUsuario = 'CLIENTE' | 'ADMIN';
 // 1. Definimos los tipos de datos
 export interface UserInfo {
     id: number;
     nombre: string;
     email: string;
-    rol: string;
+    rol: RolUsuario; 
+}
+
+export interface LoginResponse {
+    token: string;
+    tipo: string;
+    vencimiento: number; 
+    usuario: UserInfo;
 }
 
 export interface AuthContextType {
     user: UserInfo | null;
     isAuthenticated: boolean;
-    loginContext: (token: string, usuario: UserInfo) => void;
+    loginContext: (data: LoginResponse) => void; 
     logoutContext: () => void;
 }

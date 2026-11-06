@@ -17,8 +17,8 @@ export const Login = () => {
     const [loading, setLoading] = useState(false);
     
     const [formData, setFormData] = useState<LoginBody>({
-        mail: '',
-        contraseña: ''
+        email: '',
+        password: '' 
     });
 
     // 3. Estado para guardar los errores
@@ -57,7 +57,7 @@ export const Login = () => {
             return; // Cortamos la ejecución si hay errores
         }
 
-        setErrors({}); // Limpiamos errores si Zod da luz verde
+        setErrors({}); 
 
         try {
             setLoading(true);
@@ -82,30 +82,28 @@ export const Login = () => {
                         <label>Email</label>
                         <input 
                             type="email" 
-                            name="mail" 
-                            value={formData.mail} 
+                            name="email" // Mapeado al contrato exacto
+                            value={formData.email} 
                             onChange={handleChange} 
                             placeholder="correo@ejemplo.com"
                             disabled={loading}
-                            className={errors.mail ? 'input-error' : ''} // Clase de error
+                            className={errors.email ? 'input-error' : ''} 
                         />
-                        {/* Mensaje de error de Zod */}
-                        {errors.mail && <span className="error-message">{errors.mail}</span>}
+                        {errors.email && <span className="error-message">{errors.email}</span>}
                     </div>
 
                     <div className="form-group">
                         <label>Contraseña</label>
                         <input 
                             type="password" 
-                            name="contraseña" 
-                            value={formData.contraseña} 
+                            name="password" // Mapeado al contrato exacto
+                            value={formData.password} // Mapeado a formData.password
                             onChange={handleChange} 
                             placeholder="********"
                             disabled={loading}
-                            className={errors.contraseña ? 'input-error' : ''} // Clase de error
+                            className={errors.password ? 'input-error' : ''} 
                         />
-                        {/* Mensaje de error de Zod */}
-                        {errors.contraseña && <span className="error-message">{errors.contraseña}</span>}
+                        {errors.password && <span className="error-message">{errors.password}</span>}
                     </div>
                     
                     <div className="login-actions">
