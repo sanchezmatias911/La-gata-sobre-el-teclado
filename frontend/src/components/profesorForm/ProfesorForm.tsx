@@ -152,4 +152,4 @@ export const ProfesorForm = () => {
   );
 };
 
-export default ProfesorForm
+export default ProfesorForm;

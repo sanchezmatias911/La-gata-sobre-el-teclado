@@ -1,8 +1,108 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import './Home.css';
+
+interface Actividad {
+    id: number;
+    nombre: string;
+    descripcion: string;
+}
 
 export const Home = () => {
+    const [actividades, setActividades] = useState<Actividad[]>([]);
 
-    return (<div></div>
+    useEffect(() => {
+        const fetchActividadesMock = async () => {
+            const mockData: Actividad[] = [
+                { id: 1, nombre: "Funcional", descripcion: "Fuerza, agilidad y resistencia con ejercicios que imitan movimientos cotidianos. Dinamismo total." },
+                { id: 2, nombre: "Fitcombat", descripcion: "Alta intensidad combinando boxeo y muay thai con coreografías. Superá tus límites." },
+                { id: 3, nombre: "Yoga", descripcion: "Equilibrio y flexibilidad mediante posturas y meditación. Un espacio de paz para todos." },
+                { id: 4, nombre: "Stretching", descripcion: "Elongación profunda y corrección postural. El complemento perfecto para prevenir lesiones." },
+                { id: 5, nombre: "Zumba", descripcion: "Baile latino y ritmos aeróbicos para un cardio divertido. Tonificá mientras liberás endorfinas." },
+                { id: 6, nombre: "Full Local", descripcion: "Trabajo localizado en piernas, glúteos y abdomen con series dinámicas al ritmo de la música." }
+            ];
+            setActividades(mockData);
+        };
 
+        fetchActividadesMock();
+    }, []);
+
+    return (
+        <div className="home-layout">
+            <header className="hero">
+                <div className="hero-background"></div>
+                <div className="hero-content">
+                    <span className="hero-badge">Tu entrenamiento, tus reglas</span>
+                    <h1 className="hero-title">La gata sobre el teclado</h1>
+                    <p className="hero-subtitle">
+                        Gestioná tus clases de manera fácil, rápida y ordenada.
+                        Dejá atrás el papel y tomá el control total de tu rutina.
+                    </p>
+                    <Link to="/clases" className="btn-primary">
+                        Ver Calendario Semanal
+                    </Link>
+                </div>
+            </header>
+
+            <section className="features-section">
+                <div className="container">
+                    <h2 className="section-heading">¿Por qué elegirnos?</h2>
+                    <div className="features-grid">
+                        <div className="feature-card">
+                            <div className="feature-icon">⚡</div>
+                            <h3>Gestión Rápida</h3>
+                            <p>Inscribite y organizá tus clases en segundos. Una interfaz pensada para optimizar tu tiempo.</p>
+                        </div>
+                        <div className="feature-card">
+                            <div className="feature-icon">🎯</div>
+                            <h3>Control Total</h3>
+                            <p>Elegí tus horarios y profesores favoritos. Tenés el dominio absoluto de tu plan de entrenamiento.</p>
+                        </div>
+                        <div className="feature-card">
+                            <div className="feature-icon">💪</div>
+                            <h3>Para Deportistas</h3>
+                            <p>Diseñado para quienes buscan resultados sin fricciones tecnológicas. Entrá, reservá y entrená.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="activities-section">
+                <div className="container">
+                    <h2 className="section-heading">Nuestras Actividades</h2>
+                    <div className="activities-grid">
+                        {actividades.map(act => (
+                            <article key={act.id} className="activity-card">
+                                <h3>{act.nombre}</h3>
+                                <p>{act.descripcion}</p>
+                                <div className="card-accent"></div>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <footer className="footer">
+                <div className="container footer-grid">
+                    <div className="footer-brand">
+                        <h4>La gata sobre el teclado</h4>
+                        <p>El gimnasio que se adapta a tu ritmo.</p>
+                    </div>
+                    <div className="footer-info">
+                        <h4>Sede Central</h4>
+                        <p>Roque Sáenz Peña 352, Bernal</p>
+                        <p>Buenos Aires, Argentina</p>
+                    </div>
+                    <div className="footer-info">
+                        <h4>Horarios</h4>
+                        <p>Lunes a Sábados: 08:00 - 22:00</p>
+                    </div>
+                </div>
+                <div className="footer-bottom">
+                    <p>&copy; {new Date().getFullYear()} La gata sobre el teclado. Todos los derechos reservados.</p>
+                </div>
+            </footer>
+        </div>
     );
 };
 

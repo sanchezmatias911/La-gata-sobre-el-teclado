@@ -106,4 +106,4 @@ export const ActividadForm = () => {
   );
 };
 
-export default ActividadForm
+export default ActividadForm;
