@@ -16,8 +16,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.usuarioDAO = usuarioDAO;
     }
 
+
     @Override
-    public UserDetails loadUserByUsername(String email)
+    public CustomUserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
         Usuario usuario = usuarioDAO.findByEmailIgnoreCase(email)
