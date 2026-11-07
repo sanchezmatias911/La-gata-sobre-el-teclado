@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import type { RegistroBody } from '../../services/types/types';
 import { registroSchema } from '../../services/validations/registro.schema';
-import '../ClaseForm/ClaseForm.css'; 
+import '../claseForm/ClaseForm.css';
 import { createCliente } from '../../services/api/cliente.service';
 
 

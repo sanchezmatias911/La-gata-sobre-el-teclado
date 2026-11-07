@@ -5,7 +5,6 @@ import type { ClaseProgramadaBody, LocalTime } from "../../services/types/types"
 import { DAYS, HOURS, START_HOUR } from '../../data/scheduleMockData'
 import './Schedule.css';
 
-
 export const Schedule = () => {
     const navigate = useNavigate();
     const [clases, setClases] = useState<ClaseProgramadaBody[]>([]);
@@ -30,7 +29,6 @@ export const Schedule = () => {
         navigate(`/clases/${id_clase}`);
     };
 
-    // Helper para normalizar strings quitando tildes y mayúsculas
     const normalizeString = (str: string) => {
         if (!str) return '';
         return str
@@ -39,7 +37,6 @@ export const Schedule = () => {
             .replace(/[\u0300-\u036f]/g, "");
     };
 
-    // Helper para parsear la hora independientemente de si viene como String ("08:00:00") o como Objeto LocalTime
     const parseTime = (time: LocalTime | string | any) => {
         if (typeof time === 'string') {
             const [h, m] = time.split(':').map(Number);

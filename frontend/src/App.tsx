@@ -1,21 +1,23 @@
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
-import Navbar from './components/navbar/Navbar';
 import "react-toastify/dist/ReactToastify.css";
-import { 
-  Schedule,
-  ClassProfile,
-  ActividadForm,
-  ProfesorForm,
-  ClaseForm
+import {
+    Home,
+    Navbar,
+    Register,
+    Schedule,
+    ClassProfile,
+    ActividadForm,
+    ProfesorForm,
+    ClaseForm
 } from "./components/"; 
-import { Register } from './components/Register/Register';
 
 const App = () => {
     return (
         <>
             <Navbar />
             <Routes>
+                <Route path="/" element={<Home />} />
                 <Route path='/clases' element={<Schedule />} />
                 <Route path='/clases/:id_clase' element={<ClassProfile />} />
                 <Route path='/registrar/clase' element={<ClaseForm />} />

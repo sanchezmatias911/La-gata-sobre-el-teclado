@@ -167,4 +167,4 @@ export const ClaseForm = () => {
   );
 };
 
-export default ClaseForm
+export default ClaseForm;
