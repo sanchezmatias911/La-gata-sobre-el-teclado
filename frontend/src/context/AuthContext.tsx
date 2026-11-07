@@ -9,7 +9,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<UserInfo | null>(() => {
         const savedUser = localStorage.getItem(USER_KEY);
-        // Si el token ya venció, no cargamos el usuario
         if (!isTokenValid()) {
             clearStorage();
             return null;

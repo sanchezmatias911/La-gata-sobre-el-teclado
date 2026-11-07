@@ -75,11 +75,11 @@ export interface SubscribirClaseBody {
 }
 
 
-export interface RegistroBody  {
+export interface RegistroBody {
   nombre: string;
   apellido: string;
   mail: string;
-  contraseña: string;
+  password: string; 
   telefono: string;
   dni: number;
 }

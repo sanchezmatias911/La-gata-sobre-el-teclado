@@ -40,7 +40,8 @@ export const Login = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
-        // 4. Validación con Zod
+        
+        // Validación con Zod
         const validacion = loginSchema.safeParse(formData);
         
         if (!validacion.success) {
@@ -51,10 +52,10 @@ export const Login = () => {
                     newErrors[fieldName] = issue.message;
                 }
             });
-
+            
             setErrors(newErrors);
             toast.warning("Por favor, revisá los campos ingresados.");
-            return; // Cortamos la ejecución si hay errores
+            return; 
         }
 
         setErrors({}); 
@@ -62,7 +63,8 @@ export const Login = () => {
         try {
             setLoading(true);
             const response = await login(formData);
-            loginContext(response.token, response.usuario);
+            
+            loginContext(response);
             toast.success("¡Bienvenido/a de vuelta! A entrenar se ha dicho.");
             navigate('/clases');
         } catch (error) {
@@ -77,12 +79,12 @@ export const Login = () => {
             <div className="form-content login-box">
                 <h2 className="form-title">Iniciar Sesión</h2>
                 
-                <form onSubmit={handleSubmit} className="custom-form">
+                <form onSubmit={handleSubmit} className="custom-form" noValidate>
                     <div className="form-group">
                         <label>Email</label>
                         <input 
                             type="email" 
-                            name="email" // Mapeado al contrato exacto
+                            name="email" 
                             value={formData.email} 
                             onChange={handleChange} 
                             placeholder="correo@ejemplo.com"
@@ -96,8 +98,8 @@ export const Login = () => {
                         <label>Contraseña</label>
                         <input 
                             type="password" 
-                            name="password" // Mapeado al contrato exacto
-                            value={formData.password} // Mapeado a formData.password
+                            name="password" 
+                            value={formData.password} 
                             onChange={handleChange} 
                             placeholder="********"
                             disabled={loading}

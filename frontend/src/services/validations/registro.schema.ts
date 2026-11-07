@@ -24,7 +24,7 @@ export const registroSchema = z.object({
     .min(1, "El email es obligatorio")
     .email("Debe ser un email válido"),
     
-  contraseña: z
+  password: z
     .string()
     .min(8, "La contraseña debe tener un mínimo de 8 caracteres"),
     

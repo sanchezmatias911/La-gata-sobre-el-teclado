@@ -9,16 +9,17 @@ import './ClassProfile.css';
 import { getActivityById } from '../../services/api/actividad.service';
 import { getProfesorById } from '../../services/api/profesor.service';
 import type { ActividadResponseBody,ProfesorResponseBody } from '../../services/types/types';
-
+import { useAuth } from '../../context/AuthContext'; 
 
 export const ClassProfile = () => {
     const { id_clase } = useParams();
+    const { user } = useAuth(); 
+    
     const [claseData, setClaseData] = useState<ClaseProgramadaBody | null>(null);
     const [actividad, setActividad] = useState<ActividadResponseBody | null>(null);
     const [profesor, setProfesor] = useState<ProfesorResponseBody | null>(null);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false); 
-    const [userIdInput, setUserIdInput] = useState<number | string>(1);
     const [cancelling, setCancelling] = useState(false);
 
     const fetchData = async () => {
@@ -26,11 +27,9 @@ export const ClassProfile = () => {
         try {
             setLoading(true);
             
-            // 1. Obtener la clase programada
             const clase = await getClassById(Number(id_clase));
             setClaseData(clase);
 
-            // 2. Obtener la actividad y el profesor en paralelo usando sus IDs
             const [actividadData, profesorData] = await Promise.all([
                 getActivityById(clase.idActividad),
                 getProfesorById(clase.idProfesor)
@@ -52,20 +51,16 @@ export const ClassProfile = () => {
     const handleSubscribe = async () => {
         if (!id_clase) return;
 
-        if (!userIdInput) {
-            toast.warn("Por favor, ingresa un ID de usuario válido.");
+        // 3. Validamos que exista el ID del usuario en el contexto
+        if (!user?.id) {
+            toast.warn("Debes iniciar sesión para inscribirte.");
             return;
         }
 
-        // CON CARTEL DEL TOAST PARA CUANDO SE QUIERE INSCRIBIR Y NO HAY MAS CUPOS 
-        // if (enrolled >= capacity) {
-        //     toast.error("No hay más cupos en esta clase");
-        //     return;
-        // }
-
         try {
             setSubmitting(true);
-            await subscribeClass(Number(id_clase), { idCliente: Number(userIdInput) });
+            // Mandamos el ID del contexto
+            await subscribeClass(Number(id_clase), { idCliente: user.id }); 
             toast.success("¡Te has inscripto correctamente a la clase!");
             await fetchData(); 
         } catch (error) {
@@ -75,11 +70,18 @@ export const ClassProfile = () => {
         }
     };
 
-        const handleCancelSubscription = async () => {
+    const handleCancelSubscription = async () => {
         if (!id_clase) return;
+        
+        if (!user?.id) {
+            toast.error("No se pudo identificar tu usuario.");
+            return;
+        }
+
         try {
             setCancelling(true);
-            await desuscribeClass(Number(id_clase), Number(userIdInput));
+            // Mandamos el ID del contexto
+            await desuscribeClass(Number(id_clase), user.id); 
             toast.success("Inscripción cancelada correctamente.");
             await fetchData(); 
         } catch (error) {
@@ -103,23 +105,18 @@ export const ClassProfile = () => {
     const occupancyPercentage = Math.min((enrolled / capacity) * 100, 100);
 
     const formatTime = (time: any) => {
-    if (!time) return '';
-    
-    // Maneja strings del tipo "08:00:00" o "08:00"
-    if (typeof time === 'string') {
-        const [h, m] = time.split(':');
-        return `${h.padStart(2, '0')}:${m.padStart(2, '0')}`;
-    }
-    
-    // Maneja objetos { hour: 8, minute: 0 }
-    if (typeof time === 'object' && 'hour' in time) {
-        const h = String(time.hour).padStart(2, '0');
-        const m = String(time.minute).padStart(2, '0');
-        return `${h}:${m}`;
-    }
-
-    return String(time);
-};
+        if (!time) return '';
+        if (typeof time === 'string') {
+            const [h, m] = time.split(':');
+            return `${h.padStart(2, '0')}:${m.padStart(2, '0')}`;
+        }
+        if (typeof time === 'object' && 'hour' in time) {
+            const h = String(time.hour).padStart(2, '0');
+            const m = String(time.minute).padStart(2, '0');
+            return `${h}:${m}`;
+        }
+        return String(time);
+    };
 
     return (
         <div className="class-container">
@@ -153,30 +150,13 @@ export const ClassProfile = () => {
                         </div>
                     </div>
 
-                    <div className="class-section" style={{ marginTop: '1rem' }}>
-                        <label style={{ color: 'white', display: 'block', marginBottom: '0.5rem' }}>
-                            ID del usuario a inscribir (Modo Prueba):
-                        </label>
-                        <input
-                            type="number"
-                            value={userIdInput}
-                            onChange={(e) => setUserIdInput(e.target.value)}
-                            placeholder="Ej: 1"
-                            style={{
-                                padding: '0.5rem',
-                                borderRadius: '6px',
-                                border: '1px solid #ccc',
-                                width: '100%',
-                                maxWidth: '200px'
-                            }}
-                        />
-                    </div>
+                    {/* 4. Borramos el input manual que estaba acá */}
 
                     <div className="class-actions">
                         <button 
                             className="btn btn-enroll"
                             onClick={handleSubscribe}
-                            disabled={submitting || enrolled>=capacity}
+                            disabled={submitting || enrolled >= capacity}
                         >
                             {submitting ? 'Inscribiendo...' : 'Inscribirse a la clase'}
                         </button>
