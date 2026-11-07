@@ -28,7 +28,7 @@ export const registroSchema = z.object({
     .string()
     .min(8, "La contraseña debe tener un mínimo de 8 caracteres"),
     
-  telefono: z // Corrigo tilde para coincidir exactamente con el DTO en Java
+  telefono: z 
     .string()
     .min(1, "El teléfono es obligatorio")
     .regex(telefonoArgRegex, "Formato inválido. Ejemplo: +54 9 11 1234-5678"),

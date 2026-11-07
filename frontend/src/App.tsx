@@ -14,15 +14,18 @@ import { Register } from './components/Register/Register';
 
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
+import SwaggerRedirect from './services/api/SwaggerRedirect';
 
 const App = () => {
     return (
         <AuthProvider>
             <Navbar />
             <Routes>
+                <Route path='/' element={<Schedule />} />
                 <Route path='/clases' element={<Schedule />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/registrar/cliente' element={<Register />} />
+                <Route path="/docs" element={<SwaggerRedirect />} />
                 <Route path='/clases/:id_clase' element={<ClassProfile />} />
                 <Route element={<ProtectedRoute />}>
                     <Route path='/registrar/clase' element={<ClaseForm />} />

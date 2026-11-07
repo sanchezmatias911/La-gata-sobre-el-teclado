@@ -18,7 +18,7 @@ export const Register = () => {
     nombre: '',
     apellido: '',
     mail: '',
-    password: '', // Mapeado al nuevo contrato
+    password: '', 
     telefono: '',
     dni: 0
   });
