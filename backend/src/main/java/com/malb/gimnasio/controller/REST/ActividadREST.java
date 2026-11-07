@@ -4,6 +4,7 @@ import com.malb.gimnasio.controller.DTO.request.CrearActividadDTO;
 import com.malb.gimnasio.controller.DTO.response.ActividadDTO;
 import com.malb.gimnasio.modelo.Actividad;
 import com.malb.gimnasio.service.ActividadService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 final public class ActividadREST {
     private final ActividadService actividadService;
 
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping()
     public ResponseEntity<ActividadDTO> crear(@Valid @RequestBody CrearActividadDTO dto) {
         Actividad actividad = dto.aModelo();
@@ -37,7 +39,7 @@ final public class ActividadREST {
         List<ActividadDTO> actividadDTO = actividades.stream().map(ActividadDTO::desdeModelo).toList();
         return ResponseEntity.ok((actividadDTO));
     }
-
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Long id){
         actividadService.eliminar(id);

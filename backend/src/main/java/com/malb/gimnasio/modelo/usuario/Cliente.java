@@ -18,8 +18,8 @@ import java.util.List;
 @NoArgsConstructor @Getter @Setter
 
 public class Cliente extends Usuario {
-    @NotBlank(message = "La contraseña no puede estar vacía.")
-    @Size(min = 8, message = "La contraseña debe tener al menos  8 caracteres.")
+    @NotBlank(message = "La password no puede estar vacía.")
+    @Size(min = 8, message = "La password debe tener al menos  8 caracteres.")
     private String password;
 
     private LocalDateTime fechaDeRegistro;

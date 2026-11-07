@@ -82,9 +82,10 @@ public class GlobalExceptionHandler {
     }
 
     // 401
-    @ExceptionHandler(BadCredentialsException.class) //TODO VER QUE SEA PERSONALIZADO
+    @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ApiError> manejarCredenciales(BadCredentialsException ex) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiError(401, ex.getMessage()));
+        // Mensaje fijo del contrato: no revela si falló el mail o la contraseña.
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiError(401, "Mail o contraseña incorrectos."));
     }
 
     // 403
