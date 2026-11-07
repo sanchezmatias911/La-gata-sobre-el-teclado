@@ -7,8 +7,7 @@ import { imageUrl } from '../../data/classByIdMockData'
 import { toast } from 'react-toastify';
 import './ClassProfile.css';
 import { getActivityById } from '../../services/api/actividad.service';
-import { getProfesorById } from '../../services/api/profesor.service';
-import type { ActividadResponseBody,ProfesorResponseBody } from '../../services/types/types';
+import type { ActividadResponseBody} from '../../services/types/types';
 import { useAuth } from '../../context/AuthContext'; 
 
 export const ClassProfile = () => {
@@ -17,7 +16,7 @@ export const ClassProfile = () => {
     
     const [claseData, setClaseData] = useState<ClaseProgramadaBody | null>(null);
     const [actividad, setActividad] = useState<ActividadResponseBody | null>(null);
-    const [profesor, setProfesor] = useState<ProfesorResponseBody | null>(null);
+  /*  const [profesor, setProfesor] = useState<ProfesorResponseBody | null>(null);*/
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false); 
     const [cancelling, setCancelling] = useState(false);
@@ -30,13 +29,13 @@ export const ClassProfile = () => {
             const clase = await getClassById(Number(id_clase));
             setClaseData(clase);
 
-            const [actividadData, profesorData] = await Promise.all([
+            const [actividadData] = await Promise.all([
                 getActivityById(clase.idActividad),
-                getProfesorById(clase.idProfesor)
+              /*  getProfesorById(clase.idProfesor)*/
             ]);
 
             setActividad(actividadData);
-            setProfesor(profesorData);
+            // setProfesor(profesorData);
         } catch (error) {
             toast.error("Error al cargar los datos de la clase");
         } finally {
@@ -95,7 +94,7 @@ export const ClassProfile = () => {
         return <div style={{ color: 'white', textAlign: 'center', marginTop: '3rem' }}>Cargando información de la clase...</div>;
     }
 
-    if (!claseData || !actividad || !profesor) {
+    if (!claseData || !actividad || !claseData.profesorResponse) {
         return <div style={{ color: 'white', textAlign: 'center', marginTop: '3rem' }}>No se encontró la clase solicitada.</div>;
     }
 
@@ -125,7 +124,7 @@ export const ClassProfile = () => {
                     <img src={imageUrl} alt={actividad.nombre} className="class-hero-img" />
                     <div className="class-hero-overlay">
                         <h1 className="class-name">{actividad.nombre}</h1>
-                        <p className="class-professor">Profesor: {profesor.nombre}</p>
+                        <p className="class-professor">Profesor: {claseData.profesorResponse.nombre}</p>
                     </div>
                 </div>
 
