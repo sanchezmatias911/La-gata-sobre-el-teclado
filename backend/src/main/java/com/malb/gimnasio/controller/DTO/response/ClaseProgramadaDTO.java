@@ -1,8 +1,6 @@
 package com.malb.gimnasio.controller.DTO.response;
 
 import com.malb.gimnasio.modelo.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalTime;
 
@@ -12,7 +10,7 @@ public record ClaseProgramadaDTO(
         LocalTime horaInicio,
         LocalTime horaFin,
         EstadoClaseProgramada estado,
-        Long idProfesor,
+        ProfesorResponse profesorResponse,
         Long idActividad,
         String nombreActividad,
         int cantidadInscriptos
@@ -26,7 +24,7 @@ public record ClaseProgramadaDTO(
                 clase.getHoraInicio(),
                 clase.getHoraFin(),
                 clase.getEstado(),
-                clase.getProfesor().getId(),
+                ProfesorResponse.desdeModelo(clase.getProfesor()),
                 clase.getActividad().getId(),
                 clase.getActividad().getNombre(),
                 clase.cantidadInscriptos()

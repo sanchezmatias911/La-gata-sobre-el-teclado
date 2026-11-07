@@ -177,7 +177,7 @@ class GimnasioIntegracionTest {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.dia").value("LUNES"))
 				.andExpect(jsonPath("$.estado").value("ACTIVA"))
-				.andExpect(jsonPath("$.idProfesor").value(idProfesor.intValue()))
+				.andExpect(jsonPath("$.profesorResponse.id").value(idProfesor.intValue()))
 				.andExpect(jsonPath("$.idActividad").value(idActividad.intValue()));
 
 		suscribir(idClase, idCliente)
