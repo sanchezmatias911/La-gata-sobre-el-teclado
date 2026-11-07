@@ -22,13 +22,6 @@ final public class ClienteREST {
     private final ClienteService clienteService;
 
     @SecurityRequirement(name = "bearerAuth")
-    @PostMapping()
-    public ResponseEntity<ClienteDTO> crear(@Valid @RequestBody CrearClienteDTO dto) {
-        Cliente cliente = dto.aModelo();
-        clienteService.crear(cliente);
-        return ResponseEntity.ok(ClienteDTO.desdeModelo(cliente));
-    }
-    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/{id}")
     public ResponseEntity<ClienteDTO> recuperar(
             @PathVariable Long id,
