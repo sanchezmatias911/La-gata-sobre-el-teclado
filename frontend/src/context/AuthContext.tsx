@@ -17,11 +17,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
    const loginContext = (data: LoginResponse) => {
-        setToken(data.token); 
-        setExpiration(data.vencimiento);
-        localStorage.setItem(USER_KEY, JSON.stringify(data.usuario)); 
-        setUser(data.usuario);
-    };
+    setToken(data.token); 
+    
+    // Calculamos el tiempo futuro exacto sumando la duración en milisegundos al momento actual
+    const tiempoExpiracionMs = Date.now() + (data.vencimiento * 1000);
+    setExpiration(tiempoExpiracionMs);
+    
+    localStorage.setItem(USER_KEY, JSON.stringify(data.usuario)); 
+    setUser(data.usuario);
+};
    
     const logoutContext = () => {
         clearStorage();

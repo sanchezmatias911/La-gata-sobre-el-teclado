@@ -15,6 +15,7 @@ import { Register } from './components/Register/Register';
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 import SwaggerRedirect from './services/api/SwaggerRedirect';
+import { AdminRoute } from './components/ProtectedRoute/AdminRoute';
 
 const App = () => {
     return (
@@ -26,8 +27,12 @@ const App = () => {
                 <Route path='/login' element={<Login />} />
                 <Route path='/registrar/cliente' element={<Register />} />
                 <Route path="/docs" element={<SwaggerRedirect />} />
-                <Route path='/clases/:id_clase' element={<ClassProfile />} />
+                
                 <Route element={<ProtectedRoute />}>
+                    <Route path='/clases/:id_clase' element={<ClassProfile />} />
+                </Route>
+
+                <Route element={<AdminRoute />}>
                     <Route path='/registrar/clase' element={<ClaseForm />} />
                     <Route path='/registrar/profesor' element={<ProfesorForm />} />
                      <Route path='/registrar/actividad' element={<ActividadForm />} />

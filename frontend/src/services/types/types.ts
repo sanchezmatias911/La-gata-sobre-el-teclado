@@ -26,22 +26,18 @@ export interface ClaseProgramadaBody {
   dia: string; 
   horaInicio: LocalTime;
   horaFin: LocalTime;
-  profesorResponse: ProfesorResponseCLase; 
+  profesorResponse: SimpleProfesor; 
   idActividad: number;
   estado: string; 
   nombreActividad:string;
   cantidadInscriptos: number;
 }
 
-export interface ProfesorResponseCLase{
-    id:number,
-    nombre: string
-}
+
 
 export interface ProfesorBody {
   dni: number;
   email: string;
-  password?: string;
   nombre: string;
   telefono: string;
   biografia: string;
