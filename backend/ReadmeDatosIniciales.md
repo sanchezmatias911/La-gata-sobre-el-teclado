@@ -28,7 +28,8 @@ Al iniciar el backend, se crean datos de prueba para las siguientes entidades:
 
 - **Actividades:** Musculación, Funcional y Yoga.
 - **Profesores:** tres profesores con sus datos de contacto y especialidades.
-- **Clientes:** tres clientes con sus datos de prueba.
+- **Administrador:** un usuario ADMIN para desarrollo (ver sección 7).
+- **Clientes:** tres clientes con sus datos de prueba y contraseña encriptada (BCrypt).
 - **Clases programadas:** tres clases distribuidas en distintos días y horarios.
 - **Inscripciones:** tres inscripciones asociadas a los clientes y las clases correspondientes.
 
@@ -91,6 +92,8 @@ La limpieza intenta eliminar los datos creados por esa instancia, respetando el 
 
 Esto evita, en condiciones normales, conflictos con las claves foráneas y elimina únicamente los registros cuyos identificadores fueron registrados durante la carga.
 
+El **administrador no se borra** al apagar: si ya existe, no se vuelve a crear en el siguiente arranque.
+
 **Importante:** la limpieza no está garantizada si la aplicación se cierra abruptamente, el proceso es forzado o se produce un corte de energía. En esos casos, algunos datos podrían permanecer en la base de datos.
 
 Si quedan datos de una ejecución anterior, puede ser necesario revisar la base de datos antes de volver a iniciar el backend.
@@ -125,3 +128,66 @@ Desactivar la propiedad evita nuevas cargas, pero no elimina los datos que ya ha
 `DatosIniciales` permite levantar un entorno de desarrollo con datos de prueba de forma automática. El frontend puede consumirlos mediante la API sin tener que cargarlos manualmente.
 
 Para usarlo, basta con activar `cargar.datos.dummy=true` e iniciar el backend. Al apagar la aplicación normalmente, la clase intentará eliminar los registros que creó.
+
+## 7. Credenciales de prueba por rol
+
+Con `cargar.datos.dummy=true` se crean estos usuarios. Las contraseñas se guardan encriptadas (BCrypt); acá figuran en texto plano solo para que el frontend pueda iniciar sesión.
+
+| Rol | Email | Contraseña |
+|---|---|---|
+| ADMIN | `admin@gimnasio.com` | `Admin123456` |
+| CLIENTE | `maria.gonzalez@gmail.com` | `password123` |
+| CLIENTE | `pedro.rodriguez@gmail.com` | `password123` |
+| CLIENTE | `sofia.martinez@gmail.com` | `password123` |
+
+Los profesores no tienen contraseña ni inician sesión.
+
+El ADMIN es el único que puede registrar clases, profesores y actividades (`POST /clases`, `POST /actividades`, `POST /profesores`).
+
+### Iniciar sesión
+
+```http
+POST /auth/login
+```
+
+```json
+{
+  "email": "admin@gimnasio.com",
+  "password": "Admin123456"
+}
+```
+
+La respuesta incluye el token, el rol y el vencimiento **en segundos**:
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9...",
+  "tipo": "Bearer",
+  "vencimiento": 3600,
+  "usuario": { "id": 1, "nombre": "Administrador", "email": "admin@gimnasio.com", "rol": "ADMIN" }
+}
+```
+
+El token se envía en cada request protegido: `Authorization: Bearer <token>`.
+
+La duración se configura con la variable de entorno `JWT_EXPIRACION_MINUTOS` (por defecto 60). No hay refresh token: al vencer, el usuario vuelve a iniciar sesión.
+
+En Swagger (`/swagger-ui.html`) se pega el token en el botón **Authorize**.
+
+Errores 401: `Mail o contraseña incorrectos.` (login), `Necesitás iniciar sesión...` (sin token), `Tu sesión venció...` (token vencido) y `Token inválido.`.
+
+## 8. Administrador en otros ambientes (sin datos de prueba)
+
+`DatosIniciales` solo corre con `cargar.datos.dummy=true`. Para tener un administrador sin datos de prueba, se definen estas variables de entorno (el administrador se crea solo si no existe ese email):
+
+| Variable | Descripción |
+|---|---|
+| `ADMIN_EMAIL` | Email del administrador |
+| `ADMIN_PASSWORD` | Contraseña inicial (mínimo 8 caracteres) |
+| `ADMIN_DNI` | DNI del administrador |
+| `ADMIN_NOMBRE` | Nombre (opcional) |
+| `ADMIN_TELEFONO` | Teléfono (opcional) |
+
+Si no están definidas, la aplicación arranca igual y no crea ningún administrador.
+
+**Importante:** las credenciales de la sección 7 son solo para desarrollo. No se deben subir contraseñas reales al repositorio.

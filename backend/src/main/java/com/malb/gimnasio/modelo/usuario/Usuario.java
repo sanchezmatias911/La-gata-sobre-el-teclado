@@ -22,20 +22,15 @@ public abstract class Usuario{
     @NotBlank (message = "El email no puede estar vacío.")
     private String email;
 
-    @NotBlank (message = "La contraseña no puede estar vacía.")
-    @Size(min = 8, message = "La contraseña debe tener al menos  8 caracteres.")
-    private String password;
-
     @NotBlank (message = "El nombre no puede estar vacío.")
     private String nombre;
 
     @Size(min = 10, message = "El número de teléfono está incompleto.")
     private String telefono;
 
-    public Usuario (@NonNull Long dni, @NonNull String email, @NonNull String password, @NonNull String nombre, @NonNull String telefono){
+    public Usuario (@NonNull Long dni, @NonNull String email, @NonNull String nombre, @NonNull String telefono){
         this.dni = dni;
         this.email = email;
-        this.password = password;
         this.nombre = nombre;
         this.telefono = telefono;
     }

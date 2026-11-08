@@ -1,11 +1,13 @@
 
 package com.malb.gimnasio;
 
+import com.malb.gimnasio.dao.UsuarioDAO;
 import com.malb.gimnasio.modelo.Actividad;
 import com.malb.gimnasio.modelo.ClaseProgramada;
 import com.malb.gimnasio.modelo.Dia;
 import com.malb.gimnasio.modelo.EstadoClaseProgramada;
 import com.malb.gimnasio.modelo.Inscripcion;
+import com.malb.gimnasio.modelo.usuario.Administrador;
 import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.modelo.usuario.Profesor;
 import com.malb.gimnasio.service.*;
@@ -15,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
@@ -36,10 +39,23 @@ public class DatosIniciales implements ApplicationRunner {
     private final ClaseProgramadaService claseProgramadaService;
     private final InscripcionService inscripcionService;
     private final LimpiezaBaseDeDatosService limpiezaBaseDeDatosService;
+    private final UsuarioDAO usuarioDAO;
+    private final PasswordEncoder passwordEncoder;
+
+    // Credenciales del administrador de DESARROLLO. Están documentadas en
+    // ReadmeDatosIniciales.md para que el frontend pueda iniciar sesión.
+    // Esta clase solo corre con cargar.datos.dummy=true: nunca en producción.
+    private static final String ADMIN_EMAIL = "admin@gimnasio.com";
+    private static final String ADMIN_PASSWORD = "Admin123456";
+    private static final Long ADMIN_DNI = 20111222L;
 
     @Override
     public void run(ApplicationArguments args) {
         log.info("Cargando datos iniciales de prueba...");
+
+        // 0. ADMINISTRADOR (único usuario que puede registrar clases, profesores y actividades)
+
+        crearAdministradorDeDesarrollo();
 
         // 1. ACTIVIDADES
 
@@ -70,7 +86,6 @@ public class DatosIniciales implements ApplicationRunner {
         Profesor profesor1 = new Profesor(
                 30111222L,
                 "juan.perez@gimnasio.com",
-                "password123",
                 "Juan Perez",
                 "1123456789",
                 "Profesor especializado en entrenamiento de fuerza",
@@ -80,7 +95,6 @@ public class DatosIniciales implements ApplicationRunner {
         Profesor profesor2 = new Profesor(
                 30222333L,
                 "ana.garcia@gimnasio.com",
-                "password123",
                 "Ana Garcia",
                 "1134567890",
                 "Profesora especializada en entrenamiento funcional",
@@ -90,7 +104,6 @@ public class DatosIniciales implements ApplicationRunner {
         Profesor profesor3 = new Profesor(
                 30333444L,
                 "lucas.lopez@gimnasio.com",
-                "password123",
                 "Lucas Lopez",
                 "1145678901",
                 "Profesor especializado en yoga",
@@ -186,6 +199,25 @@ public class DatosIniciales implements ApplicationRunner {
         log.info("Datos de prueba cargados correctamente.");
     }
 
+    private void crearAdministradorDeDesarrollo() {
+        if (usuarioDAO.existsByEmailIgnoreCase(ADMIN_EMAIL)) {
+            log.info("El administrador de desarrollo ya existe. No se crea otro.");
+            return;
+        }
+
+        usuarioDAO.save(new Administrador(
+                ADMIN_DNI,
+                ADMIN_EMAIL,
+                passwordEncoder.encode(ADMIN_PASSWORD),
+                "Administrador",
+                "1100000000"
+        ));
+
+        log.info("Administrador de desarrollo creado: {}", ADMIN_EMAIL);
+    }
+
+    // El administrador NO se borra acá: puede venir de ADMIN_EMAIL/ADMIN_PASSWORD
+    // y tiene que sobrevivir al apagado. Si ya existe, no se vuelve a crear.
     @PreDestroy
     public void eliminarDatosIniciales() {
         log.info("Solicitando limpieza de la base de datos al cerrar la aplicación...");
