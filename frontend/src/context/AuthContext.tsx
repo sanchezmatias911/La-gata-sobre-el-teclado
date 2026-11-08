@@ -1,8 +1,7 @@
-// src/context/AuthContext.tsx
 import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 import { setToken, USER_KEY,isTokenValid,clearStorage,setExpiration } from '../services/storage/storage';
-import type {LoginResponse, UserInfo, AuthContextType } from '../services/types/types';
+import type { LoginResponse, UserInfo, AuthContextType } from '../services/types/types';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -10,13 +10,12 @@ import {
     ActividadForm,
     ProfesorForm,
     ClaseForm,
+    ProtectedRoute,
+    AdminRoute,
     Login
-} from "./components/"; 
-
-import { AuthProvider } from './context/AuthContext';
-import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
-import SwaggerRedirect from './services/api/SwaggerRedirect';
-import { AdminRoute } from './components/ProtectedRoute/AdminRoute';
+} from "./components/";
+import { AuthProvider } from "./context/AuthContext.tsx";
+import SwaggerRedirect from "./services/api/SwaggerRedirect";
 
 const App = () => {
     return (
