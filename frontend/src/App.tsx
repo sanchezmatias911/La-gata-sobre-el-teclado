@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
-import Navbar from './components/navbar/Navbar';
 import "react-toastify/dist/ReactToastify.css";
+<<<<<<< HEAD
 import { 
   Schedule,
   ClassProfile,
@@ -9,8 +9,18 @@ import {
   ProfesorForm,
   ClaseForm,
   Login
+=======
+import {
+    Home,
+    Navbar,
+    Register,
+    Schedule,
+    ClassProfile,
+    ActividadForm,
+    ProfesorForm,
+    ClaseForm
+>>>>>>> develop
 } from "./components/"; 
-import { Register } from './components/Register/Register';
 
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
@@ -22,7 +32,11 @@ const App = () => {
         <AuthProvider>
             <Navbar />
             <Routes>
+<<<<<<< HEAD
                 <Route path='/' element={<Schedule />} />
+=======
+                <Route path="/" element={<Home />} />
+>>>>>>> develop
                 <Route path='/clases' element={<Schedule />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/registrar/cliente' element={<Register />} />

@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import type { RegistroBody } from '../../services/types/types';
 import { registroSchema } from '../../services/validations/registro.schema';
-import '../ClaseForm/ClaseForm.css'; 
-import {register} from '../../services/api/auth.service';
-
+import '../claseForm/ClaseForm.css';
+import { register } from '../../services/api/auth.service';
 
 
 type FormErrors = Partial<Record<keyof RegistroBody, string>>;

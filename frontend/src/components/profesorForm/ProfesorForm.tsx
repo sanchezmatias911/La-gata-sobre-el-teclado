@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { createProfesor } from '../../services/api/profesor.service';
 import type { ProfesorBody } from '../../services/types/types';
-import '../ClaseForm/ClaseForm.css';
+import '../claseForm/ClaseForm.css';
 
 
 
