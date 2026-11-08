@@ -1,5 +1,6 @@
 {"scripts":{
   "appgym":"concurrently \"npm run dev --prefix frontend\" \"cd backend && ./gradlew bootRun\"",
+  "appgymMati": "npm run bd:iniciar && concurrently \"npm run dev --prefix frontend\" \"cd backend && ./gradlew bootRun\"",
   "rebuild:backend":"./backend/gradlew -p backend clean build -x test",
   "install:frontend":"npm install --prefix frontend",
   "bd:iniciar":"sudo systemctl start postgresql",

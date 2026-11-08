@@ -1,0 +1,41 @@
+/* src/components/Login/Login.css */
+
+/* Hacemos la caja más angosta específicamente para el login */
+.login-box {
+    max-width: 400px;
+}
+
+/* Contenedor para centrar los botones en columna */
+.login-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Botón principal blanco (sobrescribe los colores por defecto) */
+.btn-ingresar {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+    max-width: 200px;
+}
+
+.btn-ingresar:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+}
+
+/* Ajuste de ancho para el botón secundario */
+.btn-crear-cuenta {
+    width: 100%;
+    max-width: 200px;
+}

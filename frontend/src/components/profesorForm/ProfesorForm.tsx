@@ -12,7 +12,6 @@ export const ProfesorForm = () => {
   const [formData, setFormData] = useState({
     dni: '',
     email: '',
-    password: '',
     nombre: '',
     telefono: '',
     biografia: '',
@@ -29,25 +28,23 @@ export const ProfesorForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.dni || !formData.nombre || !formData.email || !formData.password) {
-      toast.warning("DNI, Nombre, Email y Contraseña son obligatorios.");
+    // Ahora validamos TODOS los campos del DTO
+    if (!formData.dni || !formData.nombre || !formData.email || 
+        !formData.telefono || !formData.biografia || !formData.especialidades) {
+      toast.warning("Todos los campos son obligatorios para registrar un profesor.");
       return;
     }
 
     try {
-    
       const nuevoProfesor: ProfesorBody = {
-
         dni: Number(formData.dni),
         email: formData.email,
-        password: formData.password,
         nombre: formData.nombre,
         telefono: formData.telefono,
         biografia: formData.biografia,
         especialidades: formData.especialidades
       };
       
-      // Ahora lo pasamos directamente al servicio
       await createProfesor(nuevoProfesor);
       
       toast.success("¡Profesor registrado exitosamente!");
@@ -96,16 +93,6 @@ export const ProfesorForm = () => {
           </div>
 
           <div className="form-group">
-            <label>Contraseña *</label>
-            <input 
-              type="password" 
-              name="password" 
-              value={formData.password} 
-              onChange={handleChange} 
-            />
-          </div>
-
-          <div className="form-group">
             <label>Teléfono</label>
             <input 
               type="text" 
@@ -134,7 +121,6 @@ export const ProfesorForm = () => {
               onChange={handleChange} 
               placeholder="Breve descripción del profesor..."
               rows={4}
-              
             />
           </div>
 

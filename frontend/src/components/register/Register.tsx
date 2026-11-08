@@ -5,10 +5,11 @@ import { toast } from 'react-toastify';
 import type { RegistroBody } from '../../services/types/types';
 import { registroSchema } from '../../services/validations/registro.schema';
 import '../claseForm/ClaseForm.css';
-import { createCliente } from '../../services/api/cliente.service';
+import { register } from '../../services/api/auth.service';
 
 
 type FormErrors = Partial<Record<keyof RegistroBody, string>>;
+
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export const Register = () => {
     nombre: '',
     apellido: '',
     mail: '',
-    contraseña: '',
+    password: '', 
     telefono: '',
     dni: 0
   });
@@ -58,7 +59,8 @@ export const Register = () => {
     setErrors({});
 
     try {
-      await createCliente(formData);
+      // NUEVO: Usamos el servicio register
+      await register(formData);
       toast.success("¡Bienvenido al Gimnasio la gata sobre el teclado!");
       setTimeout(() => navigate('/clases/'), 1500); 
     } catch (error) {
@@ -115,13 +117,13 @@ export const Register = () => {
             <label>Contraseña</label>
             <input 
               type="password" 
-              name="contraseña" 
-              value={formData.contraseña} 
+              name="password" 
+              value={formData.password} 
               onChange={handleChange} 
               placeholder="********"
-              className={errors.contraseña ? 'input-error' : ''}
+              className={errors.password ? 'input-error' : ''}
             />
-            {errors.contraseña && <span className="error-message">{errors.contraseña}</span>}
+            {errors.password && <span className="error-message">{errors.password}</span>}
           </div>
           
           <div className="form-row">

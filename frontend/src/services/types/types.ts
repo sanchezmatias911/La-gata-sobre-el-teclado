@@ -26,17 +26,18 @@ export interface ClaseProgramadaBody {
   dia: string; 
   horaInicio: LocalTime;
   horaFin: LocalTime;
-  idProfesor: number; 
+  profesorResponse: SimpleProfesor; 
   idActividad: number;
   estado: string; 
   nombreActividad:string;
   cantidadInscriptos: number;
 }
 
+
+
 export interface ProfesorBody {
   dni: number;
   email: string;
-  password?: string;
   nombre: string;
   telefono: string;
   biografia: string;
@@ -75,11 +76,39 @@ export interface SubscribirClaseBody {
 }
 
 
-export interface RegistroBody  {
+export interface RegistroBody {
   nombre: string;
   apellido: string;
   mail: string;
-  contraseña: string;
+  password: string; 
   telefono: string;
   dni: number;
+}
+
+export interface LoginBody {
+    email: string;
+    password: string; 
+}
+
+export type RolUsuario = 'CLIENTE' | 'ADMIN';
+// 1. Definimos los tipos de datos
+export interface UserInfo {
+    id: number;
+    nombre: string;
+    email: string;
+    rol: RolUsuario; 
+}
+
+export interface LoginResponse {
+    token: string;
+    tipo: string;
+    vencimiento: number; 
+    usuario: UserInfo;
+}
+
+export interface AuthContextType {
+    user: UserInfo | null;
+    isAuthenticated: boolean;
+    loginContext: (data: LoginResponse) => void; 
+    logoutContext: () => void;
 }
