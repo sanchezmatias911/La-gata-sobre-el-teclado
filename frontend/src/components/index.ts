@@ -8,3 +8,5 @@ export { default as ActividadForm } from "./actividadForm/ActividadForm.tsx";
 export { default as ClaseForm } from "./claseForm/ClaseForm.tsx";
 export { default as ProfesorForm } from "./profesorForm/ProfesorForm.tsx";
 export { default as Login } from "./login/Login.tsx";
+export { default as ProtectedRoute } from "./protectedRoute/ProtectedRoute.tsx"
+export { default as AdminRoute } from "./protectedRoute/AdminRoute.tsx"

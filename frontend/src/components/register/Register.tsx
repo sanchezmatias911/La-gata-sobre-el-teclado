@@ -59,7 +59,6 @@ export const Register = () => {
     setErrors({});
 
     try {
-      // NUEVO: Usamos el servicio register
       await register(formData);
       toast.success("¡Bienvenido al Gimnasio la gata sobre el teclado!");
       setTimeout(() => navigate('/clases/'), 1500); 

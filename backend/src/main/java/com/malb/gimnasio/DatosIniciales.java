@@ -59,27 +59,72 @@ public class DatosIniciales implements ApplicationRunner {
 
         // 1. ACTIVIDADES
 
-        Actividad musculacion = new Actividad(
-                "Musculación",
-                "Entrenamiento de fuerza",
-                20
-        );
-
         Actividad funcional = new Actividad(
                 "Funcional",
-                "Entrenamiento funcional de alta intensidad",
+                """
+                    Desarrollá fuerza, agilidad y resistencia con ejercicios que imitan movimientos cotidianos.
+                    Clase dinámica con pesas, sogas y peso corporal para quemar calorías y tonificar todo el cuerpo,
+                    mejorando tu condición física sin importar tu nivel.
+                """,
                 15
+        );
+
+        Actividad fitcombat = new Actividad(
+                "Fit Combat",
+                """
+                    Disciplina de alta intensidad que combina técnicas de boxeo y muay thai con coreografías
+                    musicales. Quemá calorías mientras ganás potencia, velocidad y resistencia cardiovascular
+                    en un ambiente motivador. ¡Golpeá, pateá y superá tus límites!
+                """,
+                20
         );
 
         Actividad yoga = new Actividad(
                 "Yoga",
-                "Clase de yoga y relajación",
-                10
+                """
+                    Encontrá tu equilibrio y mejorá tu flexibilidad mediante posturas, respiración consciente y
+                    meditación. Ideal para reducir estrés, corregir la postura, aliviar tensiones y recargar
+                    energías. Un espacio de paz apto para todos los niveles.
+                """,
+                25
         );
 
-        actividadService.crear(musculacion);
+        Actividad stretching = new Actividad(
+                "Stretching",
+                """
+                    Clase enfocada en la elongación profunda, liberación miofascial y corrección postural.
+                    Complemento perfecto para cualquier rutina: previene lesiones, disminuye la rigidez corporal,
+                    mejora el rango de movimiento y brinda bienestar absoluto.
+                """,
+                20
+        );
+
+        Actividad zumba = new Actividad(
+                "Zumba",
+                """
+                    Combiná pasos de baile latino e internacional con ritmos aeróbicos para una sesión de cardio
+                    muy divertida. Tonificá piernas, abdomen y glúteos mientras mejorás tu coordinación y liberás
+                    endorfinas. ¡No se requiere experiencia previa!
+                """,
+                15
+        );
+
+        Actividad fulllocal = new Actividad(
+                "Full Local",
+                """
+                    Clase diseñada para trabajar de forma localizada piernas, glúteos y abdomen. Con series
+                    dinámicas usando mancuernas, bandas y tu peso corporal, vas a quemar calorías, mejorar tu
+                    resistencia y definir cada músculo al ritmo de la música.
+                """,
+                20
+        );
+
         actividadService.crear(funcional);
+        actividadService.crear(fitcombat);
         actividadService.crear(yoga);
+        actividadService.crear(stretching);
+        actividadService.crear(zumba);
+        actividadService.crear(fulllocal);
 
         // 2. PROFESORES
 
@@ -88,8 +133,8 @@ public class DatosIniciales implements ApplicationRunner {
                 "juan.perez@gimnasio.com",
                 "Juan Perez",
                 "1123456789",
-                "Profesor especializado en entrenamiento de fuerza",
-                "Musculación"
+                "Profesor especializado en entrenamiento Funcional",
+                "Funcional"
         );
 
         Profesor profesor2 = new Profesor(
@@ -97,8 +142,8 @@ public class DatosIniciales implements ApplicationRunner {
                 "ana.garcia@gimnasio.com",
                 "Ana Garcia",
                 "1134567890",
-                "Profesora especializada en entrenamiento funcional",
-                "Funcional"
+                "Profesora especializada en Fit Combat",
+                "Fit Combat"
         );
 
         Profesor profesor3 = new Profesor(
@@ -106,7 +151,7 @@ public class DatosIniciales implements ApplicationRunner {
                 "lucas.lopez@gimnasio.com",
                 "Lucas Lopez",
                 "1145678901",
-                "Profesor especializado en yoga",
+                "Profesor especializado en Yoga",
                 "Yoga"
         );
 
@@ -157,26 +202,26 @@ public class DatosIniciales implements ApplicationRunner {
 
         ClaseProgramada clase1 = new ClaseProgramada(
                 Dia.LUNES,
-                LocalTime.of(18, 0),
-                LocalTime.of(19, 0),
+                LocalTime.of(9, 0),
+                LocalTime.of(10, 30),
                 profesor1,
-                musculacion,
+                funcional,
                 EstadoClaseProgramada.ACTIVA
         );
 
         ClaseProgramada clase2 = new ClaseProgramada(
                 Dia.MIERCOLES,
-                LocalTime.of(19, 0),
-                LocalTime.of(20, 0),
+                LocalTime.of(12, 0),
+                LocalTime.of(15, 0),
                 profesor2,
-                funcional,
+                fitcombat,
                 EstadoClaseProgramada.ACTIVA
         );
 
         ClaseProgramada clase3 = new ClaseProgramada(
                 Dia.VIERNES,
-                LocalTime.of(17, 0),
-                LocalTime.of(18, 0),
+                LocalTime.of(19, 30),
+                LocalTime.of(21, 0),
                 profesor3,
                 yoga,
                 EstadoClaseProgramada.ACTIVA
