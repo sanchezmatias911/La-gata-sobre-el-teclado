@@ -1,15 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-<<<<<<< HEAD
-import { 
-  Schedule,
-  ClassProfile,
-  ActividadForm,
-  ProfesorForm,
-  ClaseForm,
-  Login
-=======
 import {
     Home,
     Navbar,
@@ -18,8 +9,8 @@ import {
     ClassProfile,
     ActividadForm,
     ProfesorForm,
-    ClaseForm
->>>>>>> develop
+    ClaseForm,
+    Login
 } from "./components/"; 
 
 import { AuthProvider } from './context/AuthContext';
@@ -32,11 +23,7 @@ const App = () => {
         <AuthProvider>
             <Navbar />
             <Routes>
-<<<<<<< HEAD
-                <Route path='/' element={<Schedule />} />
-=======
                 <Route path="/" element={<Home />} />
->>>>>>> develop
                 <Route path='/clases' element={<Schedule />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/registrar/cliente' element={<Register />} />

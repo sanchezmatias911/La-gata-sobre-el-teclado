@@ -6,7 +6,7 @@ import { login } from '../../services/api/auth.service';
 import { useAuth } from '../../context/AuthContext';
 import  type {LoginBody} from '../../services/types/types';
 import {toast} from 'react-toastify';
-import '../ClaseForm/ClaseForm.css'; 
+import '../claseForm/ClaseForm.css'; 
 import './Login.css';
 import {loginSchema}  from '../../services/validations/login.schema';
 type FormErrors = Partial<Record<keyof LoginBody, string>>;
