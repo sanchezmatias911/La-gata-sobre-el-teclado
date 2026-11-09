@@ -1,14 +1,12 @@
-
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { login } from '../../services/api/auth.service';
 import { useAuth } from '../../context/AuthContext';
-import  type {LoginBody} from '../../services/types/types';
-import {toast} from 'react-toastify';
-import '../claseForm/ClaseForm.css'; 
+import  type { LoginBody } from '../../services/types/types';
+import '../claseForm/ClaseForm.css';
 import './Login.css';
-import {loginSchema}  from '../../services/validations/login.schema';
+import { loginSchema }  from '../../services/validations/login.schema';
 type FormErrors = Partial<Record<keyof LoginBody, string>>;
 
 export const Login = () => {
@@ -21,7 +19,6 @@ export const Login = () => {
         password: '' 
     });
 
-    // 3. Estado para guardar los errores
     const [errors, setErrors] = useState<FormErrors>({});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +28,6 @@ export const Login = () => {
             [name]: value
         }));
 
-        // Limpiamos el error del campo específico cuando el usuario empieza a escribir
         if (errors[name as keyof LoginBody]) {
             setErrors(prev => ({ ...prev, [name]: undefined }));
         }
@@ -39,11 +35,9 @@ export const Login = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
-        
-        // Validación con Zod
+
         const validacion = loginSchema.safeParse(formData);
-        
+
         if (!validacion.success) {
             const newErrors: FormErrors = {};
             validacion.error.issues.forEach((issue) => {

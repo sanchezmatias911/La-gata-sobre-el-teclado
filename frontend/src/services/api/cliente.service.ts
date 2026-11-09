@@ -31,7 +31,6 @@ export const getClienteById = async (dni:number) => {
     }
 };
 
-
 export const deleteCliente = async (dni:number) => {
     const respuesta = await axiosInstance.delete(`/clientes/${dni}`);
     return respuesta.data;

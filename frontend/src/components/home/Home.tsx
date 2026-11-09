@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Home.css';
-import { ActividadCard } from "../";
 import { getAllActivities } from "../../services/api/actividad.service.ts";
+import { ActividadCard } from "../";
+import './Home.css';
 
 export interface Actividad {
     id: number;
