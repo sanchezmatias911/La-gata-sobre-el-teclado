@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import type { ClaseProgramadaBody } from "../../services/types/types";
-import { getClassById } from '../../services/api/clase.services';
-import { subscribeClass, desuscribeClass } from '../../services/api/clase.services';
-import { imageUrl } from '../../data/classByIdMockData'
 import { toast } from 'react-toastify';
-import './ClassProfile.css';
+import type { ClaseProgramadaBody, ActividadResponseBody } from "../../services/types/types";
+import { getClassById, subscribeClass, desuscribeClass } from '../../services/api/clase.services';
 import { getActivityById } from '../../services/api/actividad.service';
-import type { ActividadResponseBody} from '../../services/types/types';
-import { useAuth } from '../../context/AuthContext'; 
+import { useAuth } from '../../context/AuthContext';
+import { imageUrl } from "../../constants/data.ts"
+import './ClassProfile.css';
 
 export const ClassProfile = () => {
     const { id_clase } = useParams();
@@ -16,7 +14,6 @@ export const ClassProfile = () => {
     
     const [claseData, setClaseData] = useState<ClaseProgramadaBody | null>(null);
     const [actividad, setActividad] = useState<ActividadResponseBody | null>(null);
-  /*  const [profesor, setProfesor] = useState<ProfesorResponseBody | null>(null);*/
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false); 
     const [cancelling, setCancelling] = useState(false);
@@ -31,11 +28,9 @@ export const ClassProfile = () => {
 
             const [actividadData] = await Promise.all([
                 getActivityById(clase.idActividad),
-              /*  getProfesorById(clase.idProfesor)*/
             ]);
 
             setActividad(actividadData);
-            // setProfesor(profesorData);
         } catch (error) {
             toast.error("Error al cargar los datos de la clase");
         } finally {
@@ -50,7 +45,6 @@ export const ClassProfile = () => {
     const handleSubscribe = async () => {
         if (!id_clase) return;
 
-        // 3. Validamos que exista el ID del usuario en el contexto
         if (!user?.id) {
             toast.warn("Debes iniciar sesión para inscribirte.");
             return;
@@ -58,8 +52,7 @@ export const ClassProfile = () => {
 
         try {
             setSubmitting(true);
-            // Mandamos el ID del contexto
-            await subscribeClass(Number(id_clase), { idCliente: user.id }); 
+            await subscribeClass(Number(id_clase), { idCliente: user.id });
             toast.success("¡Te has inscripto correctamente a la clase!");
             await fetchData(); 
         } catch (error) {
@@ -79,8 +72,7 @@ export const ClassProfile = () => {
 
         try {
             setCancelling(true);
-            // Mandamos el ID del contexto
-            await desuscribeClass(Number(id_clase), user.id); 
+            await desuscribeClass(Number(id_clase), user.id);
             toast.success("Inscripción cancelada correctamente.");
             await fetchData(); 
         } catch (error) {
@@ -148,8 +140,6 @@ export const ClassProfile = () => {
                             <div className="progress-fill" style={{ width: `${occupancyPercentage}%` }}></div>
                         </div>
                     </div>
-
-                    {/* 4. Borramos el input manual que estaba acá */}
 
                     <div className="class-actions">
                         <button 

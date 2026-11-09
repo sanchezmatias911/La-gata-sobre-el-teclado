@@ -155,7 +155,7 @@ export const Register = () => {
           </div>
 
           <div className="form-actions">
-            <button type="button" className="btn-cancelar" onClick={() => navigate('/clases/')}>
+            <button type="button" className="btn-cancelar" onClick={() => navigate(-1)}>
               Volver
             </button>
             <button type="submit" className="btn-guardar">
