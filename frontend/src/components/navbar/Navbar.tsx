@@ -7,6 +7,7 @@ function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const { isAuthenticated, user, logoutContext } = useAuth();
+
     const navigate = useNavigate();
 
     const toggleDropdown = () => {
@@ -28,6 +29,8 @@ function Navbar() {
         setIsDropdownOpen(false);
         navigate('/');
     };
+
+    const isAdmin = user?.rol === 'ADMIN';
 
     return (
         <nav className="custom-navbar">
@@ -52,6 +55,36 @@ function Navbar() {
 
                             {isDropdownOpen && (
                                 <div className="dropdown-menu">
+
+                                    {isAdmin && (
+                                        <>
+                                            <Link
+                                                to="/registrar/actividad"
+                                                className="dropdown-item"
+                                                onClick={() => setIsDropdownOpen(false)}
+                                            >
+                                                Registrar Actividad
+                                            </Link>
+                                            <div className="dropdown-divider"></div>
+                                            <Link
+                                                to="/registrar/profesor"
+                                                className="dropdown-item"
+                                                onClick={() => setIsDropdownOpen(false)}
+                                            >
+                                                Registrar Profesor
+                                            </Link>
+                                            <div className="dropdown-divider"></div>
+                                            <Link
+                                                to="/registrar/clase"
+                                                className="dropdown-item"
+                                                onClick={() => setIsDropdownOpen(false)}
+                                            >
+                                                Registrar Clase
+                                            </Link>
+                                            <div className="dropdown-divider"></div>
+                                        </>
+                                    )}
+
                                     <Link
                                         to="/perfil"
                                         className="dropdown-item"
