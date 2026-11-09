@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllClases } from '../../services/api/clase.services';
 import type { ClaseProgramadaBody, LocalTime } from "../../services/types/types";
-import { DAYS, HOURS, START_HOUR } from '../../data/scheduleMockData'
+import { DAYS, START_HOUR, HOURS } from "../../constants/data.ts";
 import './Schedule.css';
 
 export const Schedule = () => {

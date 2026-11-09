@@ -33,8 +33,6 @@ export interface ClaseProgramadaBody {
   cantidadInscriptos: number;
 }
 
-
-
 export interface ProfesorBody {
   dni: number;
   email: string;
@@ -61,8 +59,6 @@ export interface Actividad {id:number}            //provisional
 export interface SimpleCliente {id:number}        //provisional
 export interface SimpleClaseProgramada{id:number} //provisional
 
-
-
 export interface LocalTime {
   hour: number;
   minute: number;
@@ -70,11 +66,9 @@ export interface LocalTime {
   nano: number;
 }
 
-
 export interface SubscribirClaseBody {
    idCliente: number
 }
-
 
 export interface RegistroBody {
   nombre: string;
@@ -91,7 +85,7 @@ export interface LoginBody {
 }
 
 export type RolUsuario = 'CLIENTE' | 'ADMIN';
-// 1. Definimos los tipos de datos
+
 export interface UserInfo {
     id: number;
     nombre: string;
