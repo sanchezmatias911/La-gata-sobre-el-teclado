@@ -66,7 +66,7 @@ export const Home = () => {
                 <div className="container">
                     <h2 className="section-heading">Nuestras Actividades</h2>
                     <div className="activities-grid">
-                        {actividades.map(act => (
+                        {actividades.slice(0, 6).map(act => (
                             <ActividadCard key={act.id} act={act} />
                         ))}
                     </div>

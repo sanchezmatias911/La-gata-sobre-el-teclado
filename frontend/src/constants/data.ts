@@ -1,4 +1,4 @@
-export const imageUrl = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop";
+export const imageUrl_profile = "https://images.unsplash.com/photo-1689877020200-403d8542d95d?auto=format&fit=crop&q=80&w=800";
 
 export const DAYS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
