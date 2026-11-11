@@ -1,7 +1,7 @@
 .custom-navbar {
     background-color: #0e0e0e;
     width: 100%;
-    padding: 15px 35px;
+    padding: 20px 35px;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -86,7 +86,7 @@
     top: 100%;
     left: -1px;
     right: -1px;
-    height: 15px;
+    height: 20px;
     background-color: #121212;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
     border-right: 1px solid rgba(255, 255, 255, 0.1);
@@ -104,7 +104,7 @@
 
 .dropdown-menu {
     position: absolute;
-    top: calc(100% + 15px);
+    top: calc(100% + 20px);
     left: 0;
     width: 100%;
     background-color: #121212;
