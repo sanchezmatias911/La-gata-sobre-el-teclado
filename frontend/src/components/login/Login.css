@@ -1,41 +1,163 @@
-/* src/components/Login/Login.css */
+.login-page-wrapper {
+    display: flex;
+    min-height: calc(100vh - 82px);
+    background-color: #191919;
+    font-family: 'Inter', system-ui, sans-serif;
+    box-sizing: border-box;
+}
 
-/* Hacemos la caja más angosta específicamente para el login */
-.login-box {
+.login-welcome-panel {
+    flex: 1;
+    background: linear-gradient(90deg, #101010 35%, #191919 90%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem;
+}
+
+.welcome-title {
+    color: #ffffff;
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.welcome-text {
+    color: #a0a0a0;
+    font-size: 1.1rem;
+    line-height: 1.6;
     max-width: 400px;
 }
 
-/* Contenedor para centrar los botones en columna */
-.login-actions {
+.login-form-panel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form-container {
+    padding: 4rem;
+    border: 1px solid #333333;
+    background-color: #191919;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 650px;
+}
+
+.login-form-title {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.login-form-subtitle {
+    color: #737373;
+    font-size: 0.95rem;
+    margin-bottom: 3rem;
+}
+
+.login-form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 3rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.form-group label {
+    color: #a0a0a0;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group input {
+    background-color: #151515;
+    border: 1px solid #333333;
+    color: #ffffff;
+    padding: 0.7rem 0.8rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.form-group input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-group input::placeholder {
+    color: #555555;
+}
+
+.form-group input:focus:not(:disabled) {
+    outline: none;
+    border-color: #ffffff;
+    background-color: #202020;
+}
+
+.input-error {
+    border-color: #ef4444 !important;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+    display: block;
+    font-weight: 500;
+}
+
+.login-actions {
+    display: flex;
     gap: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 0.5rem;
 }
 
-/* Botón principal blanco (sobrescribe los colores por defecto) */
-.btn-ingresar {
-    background-color: #ffffff;
-    color: #000000;
-    border: none;
-    padding: 0.7rem 1.5rem;
-    border-radius: 20px;
+.btn-modern {
+    padding: 0.85rem;
+    border-radius: 8px;
     font-size: 0.95rem;
-    font-weight: 700;
+    font-weight: 800;
+    text-align: center;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    width: 100%;
-    max-width: 200px;
+    transition: all 0.2s ease;
+    flex: 1;
+    border: none;
 }
 
-.btn-ingresar:hover {
-    background-color: #e0e0e0;
-    transform: scale(1.05);
+.btn-modern:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
-/* Ajuste de ancho para el botón secundario */
-.btn-crear-cuenta {
-    width: 100%;
-    max-width: 200px;
+.btn-primary {
+    background-color: #e4e4e4;
+    color: #000000;
+}
+
+.btn-primary:not(:disabled):hover {
+    background-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #262626;
+    color: #ffffff;
+    border: 1px solid #333333;
+}
+
+.btn-secondary:not(:disabled):hover {
+    background-color: #333333;
+    transform: translateY(-2px);
 }

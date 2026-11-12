@@ -4,19 +4,19 @@ import { toast } from 'react-toastify';
 import { login } from '../../services/api/auth.service';
 import { useAuth } from '../../context/AuthContext';
 import  type { LoginBody } from '../../services/types/types';
-import '../claseForm/ClaseForm.css';
-import './Login.css';
 import { loginSchema }  from '../../services/validations/login.schema';
+import './Login.css';
+
 type FormErrors = Partial<Record<keyof LoginBody, string>>;
 
 export const Login = () => {
     const navigate = useNavigate();
     const { loginContext } = useAuth();
     const [loading, setLoading] = useState(false);
-    
+
     const [formData, setFormData] = useState<LoginBody>({
         email: '',
-        password: '' 
+        password: ''
     });
 
     const [errors, setErrors] = useState<FormErrors>({});
@@ -46,18 +46,18 @@ export const Login = () => {
                     newErrors[fieldName] = issue.message;
                 }
             });
-            
+
             setErrors(newErrors);
             toast.warning("Por favor, revisá los campos ingresados.");
-            return; 
+            return;
         }
 
-        setErrors({}); 
+        setErrors({});
 
         try {
             setLoading(true);
             const response = await login(formData);
-            
+
             loginContext(response);
             toast.success("¡Bienvenido/a de vuelta! A entrenar se ha dicho.");
             navigate('/clases');
@@ -69,57 +69,68 @@ export const Login = () => {
     };
 
     return (
-        <div className="form-page-container">
-            <div className="form-content login-box">
-                <h2 className="form-title">Iniciar Sesión</h2>
-                
-                <form onSubmit={handleSubmit} className="custom-form" noValidate>
-                    <div className="form-group">
-                        <label>Email</label>
-                        <input 
-                            type="email" 
-                            name="email" 
-                            value={formData.email} 
-                            onChange={handleChange} 
-                            placeholder="correo@ejemplo.com"
-                            disabled={loading}
-                            className={errors.email ? 'input-error' : ''} 
-                        />
-                        {errors.email && <span className="error-message">{errors.email}</span>}
-                    </div>
+        <div className="login-page-wrapper">
 
-                    <div className="form-group">
-                        <label>Contraseña</label>
-                        <input 
-                            type="password" 
-                            name="password" 
-                            value={formData.password} 
-                            onChange={handleChange} 
-                            placeholder="********"
-                            disabled={loading}
-                            className={errors.password ? 'input-error' : ''} 
-                        />
-                        {errors.password && <span className="error-message">{errors.password}</span>}
-                    </div>
-                    
-                    <div className="login-actions">
-                        <button 
-                            type="submit" 
-                            className="btn-ingresar" 
-                            disabled={loading}
-                        >
-                            {loading ? 'Ingresando...' : 'Ingresar'}
-                        </button>
-                        
-                        <button 
-                            type="button" 
-                            className="btn-cancelar btn-crear-cuenta" 
-                            onClick={() => navigate('/registrar/cliente')}
-                        >
-                            Creá tu cuenta
-                        </button>
-                    </div>
-                </form>
+            <div className="login-welcome-panel">
+                <h1 className="welcome-title">Bienvenido/a<br/>de nuevo al<br/>gimnasio.</h1>
+                <p className="welcome-text">Retomá tu rutina. <br/> Ingresá para ver tus clases, administrar tus inscripciones y seguir superándote.</p>
+            </div>
+
+            <div className="login-form-panel">
+                <div className="login-form-container">
+                    <h2 className="login-form-title">INICIAR SESIÓN</h2>
+                    <p className="login-form-subtitle">Ingresá tus credenciales para continuar.</p>
+
+                    <form onSubmit={handleSubmit} className="login-form" noValidate>
+                        <div className="form-group">
+                            <label>Email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                placeholder="correo@ejemplo.com"
+                                disabled={loading}
+                                className={errors.email ? 'input-error' : ''}
+                            />
+                            {errors.email && <span className="error-message">{errors.email}</span>}
+                        </div>
+
+                        <div className="form-group">
+                            <label>Contraseña</label>
+                            <input
+                                type="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                placeholder="********"
+                                disabled={loading}
+                                className={errors.password ? 'input-error' : ''}
+                            />
+                            {errors.password && <span className="error-message">{errors.password}</span>}
+                        </div>
+
+                        <div className="login-actions">
+                            <button
+                                type="button"
+                                className="btn-modern btn-secondary"
+                                onClick={() => navigate('/registrar/cliente')}
+                                disabled={loading}
+                            >
+                                Creá tu cuenta
+                            </button>
+
+                            <button
+                                type="submit"
+                                className="btn-modern btn-primary"
+                                disabled={loading}
+                            >
+                                {loading ? 'Ingresando...' : 'Ingresar'}
+                            </button>
+
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
