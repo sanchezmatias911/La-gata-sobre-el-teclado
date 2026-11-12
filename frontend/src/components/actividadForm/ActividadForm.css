@@ -126,6 +126,18 @@
     background-color: #202020;
 }
 
+.input-error-actividad-form {
+    border-color: #ef4444 !important;
+}
+
+.error-message-actividad-form {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+    display: block;
+    font-weight: 500;
+}
+
 .form-actions-actividad-form {
     display: flex;
     gap: 1rem;

@@ -6,6 +6,8 @@ import { createActivity } from '../../services/api/actividad.service';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle.ts';
 import './ActividadForm.css';
 
+type FormErrors = Partial<Record<keyof ActividadBody, string>>;
+
 export const ActividadForm = () => {
     useDocumentTitle('Registrar Actividad');
     const navigate = useNavigate();
@@ -15,33 +17,50 @@ export const ActividadForm = () => {
         cupo: 1
     });
 
+    const [errors, setErrors] = useState<FormErrors>({});
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.type === 'number' ? Number(e.target.value) : e.target.value
-        });
+        const { name, value, type } = e.target;
+
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === 'number' ? (value === '' ? 0 : Number(value)) : value
+        }));
+
+        if (errors[name as keyof ActividadBody]) {
+            setErrors((prev) => ({ ...prev, [name]: undefined }));
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!formData.nombre) {
-            toast.warning("El nombre de la actividad es obligatorio.");
-            return;
+        const newErrors: FormErrors = {};
+
+        if (!formData.nombre.trim()) {
+            newErrors.nombre = "El nombre de la actividad es obligatorio.";
+        }
+
+        if (!formData.descripcion.trim()) {
+            newErrors.descripcion = "La descripción de la actividad es obligatoria.";
         }
 
         if (formData.cupo === undefined || formData.cupo === null || isNaN(formData.cupo)) {
-            toast.warning("El cupo máximo es obligatorio.");
+            newErrors.cupo = "El cupo máximo es obligatorio.";
+        } else if (formData.cupo <= 0) {
+            newErrors.cupo = "El cupo máximo debe ser mayor que cero.";
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            toast.error("Por favor, revisa los campos ingresados.");
             return;
         }
 
-        if (formData.cupo <= 0) {
-            toast.error("El cupo máximo debe ser mayor que cero.");
-            return;
-        }
+        setErrors({});
 
         try {
-            console.log(formData)
+            console.log(formData);
             await createActivity(formData as ActividadBody);
             toast.success("¡Actividad registrada exitosamente!");
             setTimeout(() => navigate('/clases'), 1500);
@@ -64,7 +83,7 @@ export const ActividadForm = () => {
                         <h2 className="actividad-form-title-actividad-form">Nueva Actividad</h2>
                         <p className="actividad-form-subtitle-actividad-form">Definí los detalles de la nueva disciplina.</p>
 
-                        <form onSubmit={handleSubmit} className="actividad-form-actividad-form">
+                        <form onSubmit={handleSubmit} className="actividad-form-actividad-form" noValidate>
 
                             <div className="form-group-actividad-form">
                                 <label>Nombre de la Actividad *</label>
@@ -74,18 +93,22 @@ export const ActividadForm = () => {
                                     value={formData.nombre}
                                     onChange={handleChange}
                                     placeholder="Ej: Musculación, Funcional..."
+                                    className={errors.nombre ? 'input-error-actividad-form' : ''}
                                 />
+                                {errors.nombre && <span className="error-message-actividad-form">{errors.nombre}</span>}
                             </div>
 
                             <div className="form-group-actividad-form">
-                                <label>Descripción</label>
+                                <label>Descripción *</label>
                                 <textarea
                                     name="descripcion"
                                     value={formData.descripcion}
                                     onChange={handleChange}
                                     placeholder="Breve descripción de la actividad..."
                                     rows={4}
+                                    className={errors.descripcion ? 'input-error-actividad-form' : ''}
                                 />
+                                {errors.descripcion && <span className="error-message-actividad-form">{errors.descripcion}</span>}
                             </div>
 
                             <div className="form-group-actividad-form">
@@ -93,11 +116,13 @@ export const ActividadForm = () => {
                                 <input
                                     type="number"
                                     name="cupo"
-                                    value={formData.cupo}
+                                    value={formData.cupo === 0 ? '' : formData.cupo}
                                     onChange={handleChange}
                                     placeholder="Capacidad máxima"
                                     min="1"
+                                    className={errors.cupo ? 'input-error-actividad-form' : ''}
                                 />
+                                {errors.cupo && <span className="error-message-actividad-form">{errors.cupo}</span>}
                             </div>
 
                             <div className="form-actions-actividad-form">
