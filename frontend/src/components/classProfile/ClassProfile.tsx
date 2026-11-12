@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import type { ClaseProgramadaBody, ActividadResponseBody } from "../../services/types/types";
 import { getClassById, subscribeClass, desuscribeClass } from '../../services/api/clase.services';
 import { getActivityById } from '../../services/api/actividad.service';
+import {useDocumentTitle} from "../../hooks/useDocumentTitle.ts";
 import { useAuth } from '../../context/AuthContext';
 import { imageUrl_profile } from "../../constants/data.ts"
 import './ClassProfile.css';
@@ -17,6 +18,8 @@ export const ClassProfile = () => {
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     const [cancelling, setCancelling] = useState(false);
+
+    useDocumentTitle(actividad ? actividad.nombre : 'Cargando clase...');
 
     const fetchData = async () => {
         if (!id_clase) return;
@@ -42,7 +45,7 @@ export const ClassProfile = () => {
     const handleSubscribe = async () => {
         if (!id_clase) return;
         if (!user?.id) {
-            toast.warn("Debes iniciar sesión para inscribirte.");
+            toast.error("Debes iniciar sesión para inscribirte.");
             return;
         }
         try {

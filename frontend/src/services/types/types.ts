@@ -29,7 +29,7 @@ export interface ClaseProgramadaBody {
   profesorResponse: SimpleProfesor; 
   idActividad: number;
   estado: string; 
-  nombreActividad:string;
+  nombreActividad: string;
   cantidadInscriptos: number;
 }
 

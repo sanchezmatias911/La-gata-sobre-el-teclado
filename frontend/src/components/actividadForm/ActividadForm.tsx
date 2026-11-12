@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import type { ActividadBody } from '../../services/types/types';
 import { createActivity } from '../../services/api/actividad.service';
-import '../claseForm/ClaseForm.css';
-
+import { useDocumentTitle } from '../../hooks/useDocumentTitle.ts';
+import './ActividadForm.css';
 
 export const ActividadForm = () => {
+    useDocumentTitle('Registrar Actividad');
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         nombre: '',
@@ -50,54 +51,73 @@ export const ActividadForm = () => {
     };
 
     return (
-        <div className="form-page-container">
-            <div className="form-content">
-                <h2 className="form-title">Registrar Nueva Actividad</h2>
+        <div className="actividad-form-page-wrapper-actividad-form">
+            <div className="actividad-form-content-wrapper-actividad-form">
 
-                <form onSubmit={handleSubmit} className="custom-form">
-                    <div className="form-group">
-                        <label>Nombre de la Actividad *</label>
-                        <input
-                            type="text"
-                            name="nombre"
-                            value={formData.nombre}
-                            onChange={handleChange}
-                            placeholder="Ej: Musculación, Funcional..."
-                        />
-                    </div>
+                <div className="actividad-form-welcome-panel-actividad-form">
+                    <h1 className="welcome-title-actividad-form">Ampliá la<br/>oferta de<br/>entrenamiento.</h1>
+                    <p className="welcome-text-actividad-form">Renová las opciones de tu gimnasio. <br/> Creá nuevas actividades, definí sus cupos y ofreceles a tus clientes más alternativas para superarse.</p>
+                </div>
 
-                    <div className="form-group">
-                        <label>Descripción</label>
-                        <input
-                            type="text"
-                            name="descripcion"
-                            value={formData.descripcion}
-                            onChange={handleChange}
-                            placeholder="Breve descripción de la actividad"
-                        />
-                    </div>
+                <div className="actividad-form-panel-actividad-form">
+                    <div className="actividad-form-container-actividad-form">
+                        <h2 className="actividad-form-title-actividad-form">Nueva Actividad</h2>
+                        <p className="actividad-form-subtitle-actividad-form">Definí los detalles de la nueva disciplina.</p>
 
-                    <div className="form-group">
-                        <label>Cupo</label>
-                        <input
-                            type="number"
-                            name="cupo"
-                            value={formData.cupo}
-                            onChange={handleChange}
-                            placeholder="Capacidad máxima"
-                            min="1"
-                        />
-                    </div>
+                        <form onSubmit={handleSubmit} className="actividad-form-actividad-form">
 
-                    <div className="form-actions">
-                        <button type="button" className="btn-cancelar" onClick={() => navigate('/clases')}>
-                            Cancelar
-                        </button>
-                        <button type="submit" className="btn-guardar">
-                            Guardar Actividad
-                        </button>
+                            <div className="form-group-actividad-form">
+                                <label>Nombre de la Actividad *</label>
+                                <input
+                                    type="text"
+                                    name="nombre"
+                                    value={formData.nombre}
+                                    onChange={handleChange}
+                                    placeholder="Ej: Musculación, Funcional..."
+                                />
+                            </div>
+
+                            <div className="form-group-actividad-form">
+                                <label>Descripción</label>
+                                <textarea
+                                    name="descripcion"
+                                    value={formData.descripcion}
+                                    onChange={handleChange}
+                                    placeholder="Breve descripción de la actividad..."
+                                    rows={4}
+                                />
+                            </div>
+
+                            <div className="form-group-actividad-form">
+                                <label>Cupo *</label>
+                                <input
+                                    type="number"
+                                    name="cupo"
+                                    value={formData.cupo}
+                                    onChange={handleChange}
+                                    placeholder="Capacidad máxima"
+                                    min="1"
+                                />
+                            </div>
+
+                            <div className="form-actions-actividad-form">
+                                <button
+                                    type="button"
+                                    className="btn-modern-actividad-form btn-secondary-actividad-form"
+                                    onClick={() => navigate('/clases')}
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="btn-modern-actividad-form btn-primary-actividad-form"
+                                >
+                                    Guardar Actividad
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllActivities } from "../../services/api/actividad.service.ts";
 import { ActividadCard } from "../";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle.ts";
 import './Home.css';
 
 export interface Actividad {
@@ -11,6 +12,7 @@ export interface Actividad {
 }
 
 export const Home = () => {
+    useDocumentTitle('Inicio');
     const [actividades, setActividades] = useState<Actividad[]>([]);
 
     useEffect(() => {

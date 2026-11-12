@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { getAllClases } from '../../services/api/clase.services';
 import type { ClaseProgramadaBody, LocalTime } from "../../services/types/types";
 import { DAYS, START_HOUR, HOURS } from "../../constants/data.ts";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle.ts";
 import './Schedule.css';
 
 export const Schedule = () => {
+    useDocumentTitle('Clases');
     const navigate = useNavigate();
     const [clases, setClases] = useState<ClaseProgramadaBody[]>([]);
     const [loading, setLoading] = useState(true);

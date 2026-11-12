@@ -4,11 +4,13 @@ import { toast } from 'react-toastify';
 import type { RegistroBody } from '../../services/types/types';
 import { registroSchema } from '../../services/validations/registro.schema';
 import { register } from '../../services/api/auth.service';
+import { useDocumentTitle } from "../../hooks/useDocumentTitle.ts";
 import './Register.css';
 
 type FormErrors = Partial<Record<keyof RegistroBody, string>>;
 
 export const Register = () => {
+    useDocumentTitle('Registrarse');
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState<RegistroBody>({

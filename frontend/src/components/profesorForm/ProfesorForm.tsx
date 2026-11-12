@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { createProfesor } from '../../services/api/profesor.service';
 import type { ProfesorBody } from '../../services/types/types';
+import { useDocumentTitle } from "../../hooks/useDocumentTitle.ts";
 import './ProfesorForm.css';
 
 export const ProfesorForm = () => {
+    useDocumentTitle('Registrar Profesor');
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         dni: '',

@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import  type { LoginBody } from '../../services/types/types';
 import { login } from '../../services/api/auth.service';
 import { useAuth } from '../../context/AuthContext';
-import  type { LoginBody } from '../../services/types/types';
 import { loginSchema }  from '../../services/validations/login.schema';
+import { useDocumentTitle } from "../../hooks/useDocumentTitle.ts";
 import './Login.css';
 
 type FormErrors = Partial<Record<keyof LoginBody, string>>;
 
 export const Login = () => {
+    useDocumentTitle('Iniciar Sesión');
     const navigate = useNavigate();
     const { loginContext } = useAuth();
     const [loading, setLoading] = useState(false);

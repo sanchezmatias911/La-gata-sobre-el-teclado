@@ -5,8 +5,10 @@ import { getAllActivities } from '../../services/api/actividad.service';
 import { getAllProfesores } from '../../services/api/profesor.service';
 import { createClass } from '../../services/api/clase.services';
 import './ClaseForm.css';
+import {useDocumentTitle} from "../../hooks/useDocumentTitle.ts";
 
 export const ClaseForm = () => {
+    useDocumentTitle('Registrar Clase');
     const navigate = useNavigate();
     const [actividades, setActividades] = useState<any[]>([]);
     const [profesores, setProfesores] = useState<any[]>([]);
