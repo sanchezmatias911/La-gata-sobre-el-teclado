@@ -6,21 +6,21 @@ export const ActivityCard = ( { act }: { act: Actividad }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <article className="activity-card">
+        <article className="activity-card-actividad-card">
             <h3>{act.nombre}</h3>
 
-            <p className={`activity-text ${isExpanded ? "text-expanded" : "text-clamped"}`}>
+            <p className={`activity-text-actividad-card ${isExpanded ? "text-expanded-actividad-card" : "text-clamped-actividad-card"}`}>
                 {act.descripcion}
             </p>
 
             <button
-                className="btn-mostrar-mas"
+                className="btn-mostrar-mas-actividad-card"
                 onClick={() => setIsExpanded(!isExpanded)}
             >
                 {isExpanded ? "Mostrar menos" : "Mostrar más"}
             </button>
 
-            <div className="card-accent"></div>
+            <div className="card-accent-actividad-card"></div>
         </article>
     );
 };

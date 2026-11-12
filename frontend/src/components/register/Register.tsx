@@ -69,7 +69,7 @@ export const Register = () => {
 
             <div className="register-welcome-panel">
                 <h1 className="welcome-title">Creá tu cuenta<br/>y empezá a<br/>entrenar.</h1>
-                <p className="welcome-text">Unite a La gata sobre el teclado. <br/> Gestioná tus clases, llevá el control de tu rutina y alcanzá tus metas con nosotros.</p>
+                <p className="welcome-text">Unite a La Gata Sobre el Teclado. <br/> Gestioná tus clases, llevá el control de tu rutina y alcanzá tus metas con nosotros.</p>
             </div>
 
             <div className="register-form-panel">
