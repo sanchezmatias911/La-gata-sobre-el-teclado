@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { createProfesor } from '../../services/api/profesor.service';
 import type { ProfesorBody } from '../../services/types/types';
-import '../claseForm/ClaseForm.css';
+import './ProfesorForm.css';
 
 export const ProfesorForm = () => {
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ export const ProfesorForm = () => {
 
         if (!formData.dni || !formData.nombre || !formData.email ||
             !formData.telefono || !formData.biografia || !formData.especialidades) {
-            toast.warning("Todos los campos son obligatorios para registrar un profesor.");
+            toast.error("Todos los campos son obligatorios para registrar un profesor.");
             return;
         }
 
@@ -52,84 +52,109 @@ export const ProfesorForm = () => {
     };
 
     return (
-        <div className="form-page-container">
-            <div className="form-content">
-                <h2 className="form-title">Registrar Nuevo Profesor</h2>
+        <div className="profesor-form-page-wrapper-profesor-form">
+            <div className="profesor-form-content-wrapper-profesor-form">
 
-                <form onSubmit={handleSubmit} className="custom-form">
-                    <div className="form-group">
-                        <label>DNI *</label>
-                        <input
-                            type="number"
-                            name="dni"
-                            value={formData.dni}
-                            onChange={handleChange}
-                            placeholder="Sin puntos ni espacios"
-                        />
-                    </div>
+                <div className="profesor-form-welcome-panel-profesor-form">
+                    <h1 className="welcome-title-profesor-form">Sumá talento<br/>a tu equipo.</h1>
+                    <p className="welcome-text-profesor-form">Hacé crecer tu staff. <br/> Registrá nuevos profesores, definí sus especialidades y sumalos a las actividades del gimnasio.</p>
+                </div>
 
-                    <div className="form-group">
-                        <label>Nombre *</label>
-                        <input
-                            type="text"
-                            name="nombre"
-                            value={formData.nombre}
-                            onChange={handleChange}
-                        />
-                    </div>
+                <div className="profesor-form-panel-profesor-form">
+                    <div className="profesor-form-container-profesor-form">
+                        <h2 className="profesor-form-title-profesor-form">Nuevo Profesor</h2>
+                        <p className="profesor-form-subtitle-profesor-form">Completá los datos del nuevo integrante.</p>
 
-                    <div className="form-group">
-                        <label>Email *</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            placeholder="correo@ejemplo.com"
-                        />
-                    </div>
+                        <form onSubmit={handleSubmit} className="profesor-form-profesor-form">
 
-                    <div className="form-group">
-                        <label>Teléfono</label>
-                        <input
-                            type="text"
-                            name="telefono"
-                            value={formData.telefono}
-                            onChange={handleChange}
-                        />
-                    </div>
+                            <div className="form-row-profesor-form">
+                                <div className="form-group-profesor-form">
+                                    <label>DNI *</label>
+                                    <input
+                                        type="number"
+                                        name="dni"
+                                        value={formData.dni}
+                                        onChange={handleChange}
+                                        placeholder="Sin puntos ni espacios"
+                                    />
+                                </div>
 
-                    <div className="form-group">
-                        <label>Especialidades</label>
-                        <input
-                            type="text"
-                            name="especialidades"
-                            value={formData.especialidades}
-                            onChange={handleChange}
-                            placeholder="Ej: Yoga, Pilates"
-                        />
-                    </div>
+                                <div className="form-group-profesor-form">
+                                    <label>Teléfono</label>
+                                    <input
+                                        type="text"
+                                        name="telefono"
+                                        value={formData.telefono}
+                                        onChange={handleChange}
+                                        placeholder="+54 9 11 1234-5678"
+                                    />
+                                </div>
+                            </div>
 
-                    <div className="form-group">
-                        <label>Biografía</label>
-                        <textarea
-                            name="biografia"
-                            value={formData.biografia}
-                            onChange={handleChange}
-                            placeholder="Breve descripción del profesor..."
-                            rows={4}
-                        />
-                    </div>
+                            <div className="form-row-profesor-form">
+                                <div className="form-group-profesor-form">
+                                    <label>Nombre *</label>
+                                    <input
+                                        type="text"
+                                        name="nombre"
+                                        value={formData.nombre}
+                                        onChange={handleChange}
+                                        placeholder="Ej: Juan Pérez"
+                                    />
+                                </div>
 
-                    <div className="form-actions">
-                        <button type="button" className="btn-cancelar" onClick={() => navigate('/clases')}>
-                            Cancelar
-                        </button>
-                        <button type="submit" className="btn-guardar">
-                            Guardar Profesor
-                        </button>
+                                <div className="form-group-profesor-form">
+                                    <label>Email *</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        placeholder="correo@ejemplo.com"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="form-group-profesor-form">
+                                <label>Especialidades</label>
+                                <input
+                                    type="text"
+                                    name="especialidades"
+                                    value={formData.especialidades}
+                                    onChange={handleChange}
+                                    placeholder="Ej: Yoga, Pilates, Musculación"
+                                />
+                            </div>
+
+                            <div className="form-group-profesor-form">
+                                <label>Biografía</label>
+                                <textarea
+                                    name="biografia"
+                                    value={formData.biografia}
+                                    onChange={handleChange}
+                                    placeholder="Breve descripción de la trayectoria del profesor..."
+                                    rows={4}
+                                />
+                            </div>
+
+                            <div className="form-actions-profesor-form">
+                                <button
+                                    type="button"
+                                    className="btn-modern-profesor-form btn-secondary-profesor-form"
+                                    onClick={() => navigate('/clases')}
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="btn-modern-profesor-form btn-primary-profesor-form"
+                                >
+                                    Guardar Profesor
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );
