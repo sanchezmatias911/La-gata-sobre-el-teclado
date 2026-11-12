@@ -31,7 +31,6 @@ export const getInscipcionById = async (id:number) => {
     }
 };
 
-
 export const deleteInscipcion = async (id:number) => {
     const respuesta = await axiosInstance.delete(`/inscripciones/${id}`);
     return respuesta.data;

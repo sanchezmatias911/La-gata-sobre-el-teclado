@@ -1,41 +1,214 @@
-/* src/components/Login/Login.css */
+.login-page-wrapper-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 82px);
+    background: linear-gradient(90deg, #101010 40%, #191919 70%);
+    font-family: 'Inter', system-ui, sans-serif;
+    box-sizing: border-box;
+    padding: 2rem;
+}
 
-/* Hacemos la caja más angosta específicamente para el login */
-.login-box {
+.login-content-wrapper-login {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+}
+
+.login-welcome-panel-login {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem;
+}
+
+.welcome-title-login {
+    color: #ffffff;
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.welcome-text-login {
+    color: #a0a0a0;
+    font-size: 1.1rem;
+    line-height: 1.6;
     max-width: 400px;
 }
 
-/* Contenedor para centrar los botones en columna */
-.login-actions {
+.login-form-panel-login {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form-container-login {
+    padding: 4rem;
+    border: 1px solid #333333;
+    background-color: #191919;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 650px;
+}
+
+.login-form-title-login {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.login-form-subtitle-login {
+    color: #737373;
+    font-size: 0.95rem;
+    margin-bottom: 3rem;
+}
+
+.login-form-login {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.form-group-login {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.form-group-login label {
+    color: #a0a0a0;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group-login input {
+    background-color: #151515;
+    border: 1px solid #4a4a4a;
+    color: #ffffff;
+    padding: 0.7rem 0.8rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group-login input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-group-login input::placeholder {
+    color: #7a7a7a;
+}
+
+.form-group-login input:focus:not(:disabled) {
+    outline: none;
+    border-color: #ffffff;
+    background-color: #202020;
+}
+
+.password-input-wrapper-login {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-input-wrapper-login input {
+    padding-right: 3rem;
+}
+
+.password-toggle-btn-login {
+    position: absolute;
+    right: 0.8rem;
+    background: transparent;
+    border: none;
+    color: #7a7a7a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: color 0.2s ease;
+}
+
+.password-toggle-btn-login:hover {
+    color: #ffffff;
+}
+
+.input-error-login {
+    border-color: #ef4444 !important;
+}
+
+.error-message-login {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+    display: block;
+    font-weight: 500;
+}
+
+.login-actions-login {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    margin-top: 1.5rem;
+    gap: 1.5rem;
 }
 
-/* Botón principal blanco (sobrescribe los colores por defecto) */
-.btn-ingresar {
-    background-color: #ffffff;
-    color: #000000;
-    border: none;
-    padding: 0.7rem 1.5rem;
-    border-radius: 20px;
+.btn-modern-login {
+    padding: 0.85rem;
+    border-radius: 8px;
     font-size: 0.95rem;
-    font-weight: 700;
+    font-weight: 800;
+    text-align: center;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease;
     width: 100%;
-    max-width: 200px;
+    border: none;
 }
 
-.btn-ingresar:hover {
-    background-color: #e0e0e0;
-    transform: scale(1.05);
+.btn-modern-login:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
-/* Ajuste de ancho para el botón secundario */
-.btn-crear-cuenta {
-    width: 100%;
-    max-width: 200px;
+.btn-primary-login {
+    background-color: #e4e4e4;
+    color: #000000;
+}
+
+.btn-primary-login:not(:disabled):hover {
+    background-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.register-link-container-login {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+}
+
+.register-link-login {
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 0.4rem;
+    text-decoration: underline;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.register-link-login:hover {
+    color: #e4e4e4;
 }

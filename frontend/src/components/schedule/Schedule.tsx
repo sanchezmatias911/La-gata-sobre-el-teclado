@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { getAllClases } from '../../services/api/clase.services';
 import type { ClaseProgramadaBody, LocalTime } from "../../services/types/types";
 import { DAYS, START_HOUR, HOURS } from "../../constants/data.ts";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle.ts";
 import './Schedule.css';
 
 export const Schedule = () => {
+    useDocumentTitle('Clases');
     const navigate = useNavigate();
     const [clases, setClases] = useState<ClaseProgramadaBody[]>([]);
     const [loading, setLoading] = useState(true);
@@ -75,49 +77,49 @@ export const Schedule = () => {
 
     const getActivityBadgeClass = (estado: string) => {
         const estadoUpper = estado?.toUpperCase();
-        if (estadoUpper === 'ACTIVA') return 'class-pill-grid pill-active';
-        if (estadoUpper === 'CANCELADA') return 'class-pill-grid pill-cancelled';
-        if (estadoUpper === 'LLENA') return 'class-pill-grid pill-completa'
-        return 'class-pill-grid';
+        if (estadoUpper === 'ACTIVA') return 'class-pill-grid-schedule pill-active-schedule';
+        if (estadoUpper === 'CANCELADA') return 'class-pill-grid-schedule pill-cancelled-schedule';
+        if (estadoUpper === 'LLENA') return 'class-pill-grid-schedule pill-completa-schedule'
+        return 'class-pill-grid-schedule';
     };
 
     if (loading) return <div>Cargando calendario...</div>;
 
     return (
-        <div className="schedule-container">
-            <div className="schedule-content">
+        <div className="schedule-container-schedule">
+            <div className="schedule-content-schedule">
 
-                <div className="schedule-legend">
-                    <div className="legend-item">
-                        <span className="class-pill-grid pill-active legend-pill">Activa</span>
+                <div className="schedule-legend-schedule">
+                    <div className="legend-item-schedule">
+                        <span className="class-pill-grid-schedule pill-active-schedule legend-pill-schedule">Activa</span>
                     </div>
-                    <div className="legend-item">
-                        <span className="class-pill-grid pill-cancelled legend-pill">Cancelada</span>
+                    <div className="legend-item-schedule">
+                        <span className="class-pill-grid-schedule pill-cancelled-schedule legend-pill-schedule">Cancelada</span>
                     </div>
-                    <div className="legend-item">
-                        <span className="class-pill-grid pill-completa legend-pill">Completa</span>
+                    <div className="legend-item-schedule">
+                        <span className="class-pill-grid-schedule pill-completa-schedule legend-pill-schedule">Completa</span>
                     </div>
                 </div>
 
-                <div className="table-responsive">
-                    <div className="schedule-grid">
+                <div className="table-responsive-schedule">
+                    <div className="schedule-grid-schedule">
 
-                        <div className="grid-header time-col">Hora</div>
+                        <div className="grid-header-schedule time-col-schedule">Hora</div>
                         {DAYS.map((day) => (
-                            <div key={day} className="grid-header">{day}</div>
+                            <div key={day} className="grid-header-schedule">{day}</div>
                         ))}
 
                         {HOURS.map((hour) => {
                             const row = getRowForTime({ hour, minute: 0, second: 0, nano: 0 });
                             return (
-                                <div key={`bg-${hour}`} className="grid-row-group" style={{ gridRow: `${row} / span 2`, gridColumn: '1 / -1' }}></div>
+                                <div key={`bg-${hour}`} className="grid-row-group-schedule" style={{ gridRow: `${row} / span 2`, gridColumn: '1 / -1' }}></div>
                             );
                         })}
 
                         {HOURS.map((hour) => {
                             const row = getRowForTime({ hour, minute: 0, second: 0, nano: 0 });
                             return (
-                                <div key={`time-${hour}`} className="grid-time-label" style={{ gridRow: `${row} / span 2`, gridColumn: 1 }}>
+                                <div key={`time-${hour}`} className="grid-time-label-schedule" style={{ gridRow: `${row} / span 2`, gridColumn: 1 }}>
                                     {hour < 10 ? `0${hour}:00` : `${hour}:00`}
                                 </div>
                             );

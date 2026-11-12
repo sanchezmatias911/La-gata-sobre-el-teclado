@@ -1,11 +1,9 @@
-// axios.ts
 import axios from "axios";
 import { clearStorage, getToken } from "../storage/storage";
 
 const axiosInstance = axios.create({ 
     baseURL: "http://localhost:8080/" 
 });
-
 
 axiosInstance.interceptors.request.use(
     (config) => {
@@ -17,7 +15,6 @@ axiosInstance.interceptors.request.use(
     },
     (error) => Promise.reject(error)
 );
-
 
 axiosInstance.interceptors.response.use(
     (response) => response,

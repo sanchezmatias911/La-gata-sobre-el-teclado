@@ -1,12 +1,13 @@
-import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
-import { setToken, USER_KEY,isTokenValid,clearStorage,setExpiration } from '../services/storage/storage';
+import { createContext, useContext, useState } from 'react';
 import type { LoginResponse, UserInfo, AuthContextType } from '../services/types/types';
+import { setToken, USER_KEY, isTokenValid, clearStorage, setExpiration } from '../services/storage/storage';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<UserInfo | null>(() => {
+
         const savedUser = localStorage.getItem(USER_KEY);
         if (!isTokenValid()) {
             clearStorage();
@@ -18,7 +19,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    const loginContext = (data: LoginResponse) => {
     setToken(data.token); 
     
-    // Calculamos el tiempo futuro exacto sumando la duración en milisegundos al momento actual
     const tiempoExpiracionMs = Date.now() + (data.vencimiento * 1000);
     setExpiration(tiempoExpiracionMs);
     

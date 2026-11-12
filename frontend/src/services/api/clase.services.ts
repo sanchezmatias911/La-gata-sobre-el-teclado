@@ -40,9 +40,9 @@ export const deleteClass= async (id:number) => {
 export const subscribeClass = async (id: number, subscripcion: SubscribirClaseBody) => {
     const respuesta = await axiosInstance.post(`/clases/${id}/suscripcion`, subscripcion);
     return respuesta.data;
-}
+};
 
 export const desuscribeClass = async (idClase: number, idCliente: number ) => {
     const respuesta = await axiosInstance.delete(`/clases/${idClase}/desuscribir/${idCliente}`);
     return respuesta.data;
-}
+};

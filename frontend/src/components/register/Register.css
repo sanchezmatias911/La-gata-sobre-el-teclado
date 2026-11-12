@@ -1,0 +1,220 @@
+.register-page-wrapper-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 82px);
+    background: linear-gradient(90deg, #101010 40%, #191919 70%);
+    font-family: 'Inter', system-ui, sans-serif;
+    box-sizing: border-box;
+    padding: 1rem 2rem;
+}
+
+.register-content-wrapper-register {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+}
+
+.register-welcome-panel-register {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem;
+}
+
+.welcome-title-register {
+    color: #ffffff;
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.welcome-text-register {
+    color: #a0a0a0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 400px;
+}
+
+.register-form-panel-register {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-form-container-register {
+    padding: 3rem 4rem;
+    border: 1px solid #333333;
+    background-color: #191919;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 650px;
+}
+
+.register-form-title-register {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.register-form-subtitle-register {
+    color: #737373;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+.register-form-register {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-row-register {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.form-group-register {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.form-group-register label {
+    color: #a0a0a0;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group-register input {
+    background-color: #151515;
+    border: 1px solid #4a4a4a;
+    color: #ffffff;
+    padding: 0.65rem 0.9rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group-register input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-group-register input::placeholder {
+    color: #7a7a7a;
+}
+
+.form-group-register input:focus:not(:disabled) {
+    outline: none;
+    border-color: #ffffff;
+    background-color: #202020;
+}
+
+.password-input-wrapper-register {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-input-wrapper-register input {
+    padding-right: 3rem;
+}
+
+.password-toggle-btn-register {
+    position: absolute;
+    right: 0.8rem;
+    background: transparent;
+    border: none;
+    color: #7a7a7a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: color 0.2s ease;
+}
+
+.password-toggle-btn-register:hover {
+    color: #ffffff;
+}
+
+.input-error-register {
+    border-color: #ef4444 !important;
+}
+
+.error-message-register {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+    display: block;
+    font-weight: 500;
+}
+
+.register-actions-register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn-modern-register {
+    padding: 0.85rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    border: none;
+}
+
+.btn-modern-register:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-primary-register {
+    background-color: #e4e4e4;
+    color: #000000;
+}
+
+.btn-primary-register:not(:disabled):hover {
+    background-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.login-link-container-register {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+}
+
+.login-link-register {
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 0.4rem;
+    text-decoration: underline;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.login-link-register:hover {
+    color: #e4e4e4;
+}

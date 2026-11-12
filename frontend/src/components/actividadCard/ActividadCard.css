@@ -1,5 +1,5 @@
-.activity-card {
-    background-color: var(--bg-surface);
+.activity-card-actividad-card {
+    background-color: #262626;
     padding: 2rem;
     border-radius: 16px;
     position: relative;
@@ -10,18 +10,19 @@
     justify-content: flex-start;
 }
 
-.activity-card:hover {
-    background-color: var(--bg-card);
+.activity-card-actividad-card:hover {
+    background-color: #292929;
 }
 
-.activity-card h3 {
+.activity-card-actividad-card h3 {
     font-size: 1.25rem;
     margin-bottom: 0.75rem;
     z-index: 1;
+    text-transform: uppercase;
 }
 
-.activity-text {
-    color: var(--text-muted);
+.activity-text-actividad-card {
+    color: #b9b9b9;
     font-size: 0.95rem;
     line-height: 1.6;
     margin: 0;
@@ -32,17 +33,17 @@
     transition: height 0.4s ease-in-out;
 }
 
-.text-clamped {
+.text-clamped-actividad-card {
     height: 4.8rem;
     -webkit-line-clamp: 3;
 }
 
-.text-expanded {
+.text-expanded-actividad-card {
     height: 11rem;
     -webkit-line-clamp: 50;
 }
 
-.btn-mostrar-mas {
+.btn-mostrar-mas-actividad-card {
     margin-top: 1rem;
     padding-top: 1rem;
     background: transparent;
@@ -60,21 +61,21 @@
     transition: opacity 0.2s ease, color 0.2s ease;
 }
 
-.btn-mostrar-mas:hover {
+.btn-mostrar-mas-actividad-card:hover {
     opacity: 1;
     color: #b9b9b9;
 }
 
-.card-accent {
+.card-accent-actividad-card {
     position: absolute;
     top: 0;
     left: 0;
     width: 4px;
     height: 100%;
-    background: var(--accent-gradient);
+    background: linear-gradient(135deg, #ededed 0%, rgb(187 187 187 / 0.88) 100%);
     transition: width 0.3s ease;
 }
 
-.activity-card:hover .card-accent {
+.activity-card-actividad-card:hover .card-accent-actividad-card {
     width: 6px;
 }

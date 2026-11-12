@@ -40,5 +40,4 @@ export const registroSchema = z.object({
     .positive("El DNI debe ser mayor a 0")
 });
 
-// Tipo inferido directamente del esquema
 export type RegistroBody = z.infer<typeof registroSchema>;

@@ -1,0 +1,178 @@
+.profesor-form-page-wrapper-profesor-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 82px);
+    background: linear-gradient(90deg, #101010 40%, #191919 70%);
+    font-family: 'Inter', system-ui, sans-serif;
+    box-sizing: border-box;
+    padding: 2rem;
+}
+
+.profesor-form-content-wrapper-profesor-form {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+}
+
+.profesor-form-welcome-panel-profesor-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem;
+}
+
+.welcome-title-profesor-form {
+    color: #ffffff;
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.welcome-text-profesor-form {
+    color: #a0a0a0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 400px;
+}
+
+.profesor-form-panel-profesor-form {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profesor-form-container-profesor-form {
+    padding: 3.5rem;
+    border: 1px solid #333333;
+    background-color: #191919;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 650px;
+}
+
+.profesor-form-title-profesor-form {
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.profesor-form-subtitle-profesor-form {
+    color: #737373;
+    font-size: 0.95rem;
+    margin-bottom: 3rem;
+}
+
+.profesor-form-profesor-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-row-profesor-form {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.form-group-profesor-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.form-group-profesor-form label {
+    color: #a0a0a0;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group-profesor-form input,
+.form-group-profesor-form textarea {
+    background-color: #151515;
+    border: 1px solid #4a4a4a;
+    color: #ffffff;
+    padding: 0.7rem 0.8rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group-profesor-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group-profesor-form input:disabled,
+.form-group-profesor-form textarea:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-group-profesor-form input::placeholder,
+.form-group-profesor-form textarea::placeholder {
+    color: #7a7a7a;
+}
+
+.form-group-profesor-form input:focus:not(:disabled),
+.form-group-profesor-form textarea:focus:not(:disabled) {
+    outline: none;
+    border-color: #ffffff;
+    background-color: #202020;
+}
+
+.form-actions-profesor-form {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-modern-profesor-form {
+    padding: 0.85rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    border: 1px solid transparent;
+    flex: 1;
+}
+
+.btn-modern-profesor-form:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-primary-profesor-form {
+    background-color: #e4e4e4;
+    color: #000000;
+}
+
+.btn-primary-profesor-form:not(:disabled):hover {
+    background-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.btn-secondary-profesor-form {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid #4a4a4a;
+}
+
+.btn-secondary-profesor-form:not(:disabled):hover {
+    background-color: #202020;
+    border-color: #ffffff;
+    transform: translateY(-2px);
+}
