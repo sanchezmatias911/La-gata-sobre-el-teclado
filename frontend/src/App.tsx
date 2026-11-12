@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -12,7 +12,10 @@ import {
     ClaseForm,
     ProtectedRoute,
     AdminRoute,
-    Login
+    Login,
+    PerfilPage,
+    DatosPersonales,
+    MisInscripciones
 } from "./components/";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import SwaggerRedirect from "./services/api/SwaggerRedirect";
@@ -30,6 +33,12 @@ const App = () => {
                 
                 <Route element={<ProtectedRoute />}>
                     <Route path='/clases/:id_clase' element={<ClassProfile />} />
+                    <Route path="/perfil" element={<PerfilPage />}>
+                        
+                        <Route index element={<Navigate to="/perfil/inscripciones" replace />} />
+                        <Route path="datos" element={<DatosPersonales />} />
+                        <Route path="inscripciones" element={<MisInscripciones />} />
+                    </Route>
                 </Route>
 
                 <Route element={<AdminRoute />}>

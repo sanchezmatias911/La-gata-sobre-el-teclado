@@ -106,3 +106,19 @@ export interface AuthContextType {
     loginContext: (data: LoginResponse) => void; 
     logoutContext: () => void;
 }
+
+
+export interface ClienteData {
+    id: number;
+    dni: number;
+    email: string;
+    nombre: string;
+    telefono: string;
+}
+
+export interface InscripcionDTO {
+    id: number;
+    fechaDeInscripcion: string;
+    idClaseProgramada: number;
+    dniCliente: number;
+}
