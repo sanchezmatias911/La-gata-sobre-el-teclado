@@ -133,6 +133,18 @@
     cursor: pointer;
 }
 
+.input-error-clase-form {
+    border-color: #ef4444 !important;
+}
+
+.error-message-clase-form {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+    display: block;
+    font-weight: 500;
+}
+
 .form-actions-clase-form {
     display: flex;
     gap: 1rem;
