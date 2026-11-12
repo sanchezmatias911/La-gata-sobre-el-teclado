@@ -76,11 +76,11 @@ export const ClassProfile = () => {
     };
 
     if (loading) {
-        return <div className="class-container-loading"><div className="loader"></div>Cargando clase...</div>;
+        return <div className="class-container-loading-class-profile"><div className="loader-class-profile"></div>Cargando clase...</div>;
     }
 
     if (!claseData || !actividad || !claseData.profesorResponse) {
-        return <div className="class-container-loading">No se encontró la clase solicitada.</div>;
+        return <div className="class-container-loading-class-profile">No se encontró la clase solicitada.</div>;
     }
 
     const { dia, horaInicio, horaFin } = claseData;
@@ -104,48 +104,48 @@ export const ClassProfile = () => {
     };
 
     return (
-        <div className="class-page-wrapper">
-            <div className="class-card-modern">
-                <div className="class-image-column">
-                    <img src={imageUrl_profile} alt={actividad.nombre} className="class-img" />
-                    <div className="img-gradient"></div>
+        <div className="class-page-wrapper-class-profile">
+            <div className="class-card-modern-class-profile">
+                <div className="class-image-column-class-profile">
+                    <img src={imageUrl_profile} alt={actividad.nombre} className="class-img-class-profile" />
+                    <div className="img-gradient-class-profile"></div>
                 </div>
 
-                <div className="class-info-column">
-                    <div className="class-header">
-                        <span className="class-badge">Clase Presencial</span>
-                        <h1 className="class-title">{actividad.nombre}</h1>
-                        <p className="class-instructor">
-                            <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                <div className="class-info-column-class-profile">
+                    <div className="class-header-class-profile">
+                        <span className="class-badge-class-profile">Clase Presencial</span>
+                        <h1 className="class-title-class-profile">{actividad.nombre}</h1>
+                        <p className="class-instructor-class-profile">
+                            <svg className="icon-class-profile" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                             {claseData.profesorResponse.nombre}
                         </p>
                     </div>
 
-                    <div className="class-details">
-                        <div className="detail-item">
-                            <div className="detail-icon-box">
-                                <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <div className="class-details-class-profile">
+                        <div className="detail-item-class-profile">
+                            <div className="detail-icon-box-class-profile">
+                                <svg className="icon-class-profile" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             </div>
-                            <div className="detail-content">
+                            <div className="detail-content-class-profile">
                                 <h4>Horario</h4>
                                 <p>{dia} • {formatTime(horaInicio)} - {formatTime(horaFin)}</p>
                             </div>
                         </div>
 
-                        <div className="detail-item">
-                            <div className="detail-icon-box">
-                                <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        <div className="detail-item-class-profile">
+                            <div className="detail-icon-box-class-profile">
+                                <svg className="icon-class-profile" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                             </div>
-                            <div className="detail-content w-full">
-                                <div className="capacity-flex">
+                            <div className="detail-content-class-profile w-full-class-profile">
+                                <div className="capacity-flex-class-profile">
                                     <h4>Disponibilidad</h4>
-                                    <span className={isFull ? 'text-danger' : 'text-success'}>
+                                    <span className={isFull ? 'text-danger-class-profile' : 'text-success-class-profile'}>
                                         {enrolled} / {capacity}
                                     </span>
                                 </div>
-                                <div className="progress-bar-bg">
+                                <div className="progress-bar-bg-class-profile">
                                     <div
-                                        className={`progress-bar-fill ${isFull ? 'bg-danger' : ''}`}
+                                        className={`progress-bar-fill-class-profile ${isFull ? 'bg-danger-class-profile' : ''}`}
                                         style={{ width: `${occupancyPercentage}%` }}
                                     ></div>
                                 </div>
@@ -153,18 +153,17 @@ export const ClassProfile = () => {
                         </div>
                     </div>
 
-                    <div className="class-actions-modern">
+                    <div className="class-actions-modern-class-profile">
                         <button
-                            className="btn-modern btn-enroll"
+                            className="btn-modern-class-profile btn-enroll-class-profile"
                             onClick={handleSubscribe}
                             disabled={submitting || isFull}
                         >
                             {submitting ? 'Inscribiendo...' : isFull ? 'Clase Llena' : 'Confirmar Inscripción'}
                         </button>
 
-                        {/* Asumimos que podes cancelar si estás inscripto (esto depende de tu lógica de negocio) */}
                         <button
-                            className="btn-modern btn-cancel"
+                            className="btn-modern-class-profile btn-cancel-class-profile"
                             onClick={handleCancelSubscription}
                             disabled={cancelling}
                         >
