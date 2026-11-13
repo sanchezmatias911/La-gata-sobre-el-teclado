@@ -97,4 +97,74 @@ public class ClaseProgramadaTest {
         );
     }
 
+    @Test
+    void crearClaseConHorarioDentroDelRango() {
+        assertDoesNotThrow(() ->
+                new ClaseProgramada(
+                        Dia.LUNES,
+                        LocalTime.of(10, 0),
+                        LocalTime.of(11, 0),
+                        profesor,
+                        actividad,
+                        EstadoClaseProgramada.ACTIVA
+                )
+        );
+    }
+
+    @Test
+    void crearClaseQueEmpiezaAntesDeLas8() {
+        assertThrows(HorarioInvalido.class, () ->
+                new ClaseProgramada(
+                        Dia.LUNES,
+                        LocalTime.of(7, 59),
+                        LocalTime.of(9, 0),
+                        profesor,
+                        actividad,
+                        EstadoClaseProgramada.ACTIVA
+                )
+        );
+    }
+
+    @Test
+    void crearClaseQueTerminaDespuesDeLas21() {
+        assertThrows(HorarioInvalido.class, () ->
+                new ClaseProgramada(
+                        Dia.LUNES,
+                        LocalTime.of(19, 0),
+                        LocalTime.of(21, 1),
+                        profesor,
+                        actividad,
+                        EstadoClaseProgramada.ACTIVA
+                )
+        );
+    }
+
+    @Test
+    void crearClaseQueEmpiezaExactamenteALas8() {
+        assertDoesNotThrow(() ->
+                new ClaseProgramada(
+                        Dia.LUNES,
+                        LocalTime.of(8, 0),
+                        LocalTime.of(9, 0),
+                        profesor,
+                        actividad,
+                        EstadoClaseProgramada.ACTIVA
+                )
+        );
+    }
+
+    @Test
+    void crearClaseQueTerminaExactamenteALas21() {
+        assertDoesNotThrow(() ->
+                new ClaseProgramada(
+                        Dia.LUNES,
+                        LocalTime.of(19, 0),
+                        LocalTime.of(21, 0),
+                        profesor,
+                        actividad,
+                        EstadoClaseProgramada.ACTIVA
+                )
+        );
+    }
+
 }

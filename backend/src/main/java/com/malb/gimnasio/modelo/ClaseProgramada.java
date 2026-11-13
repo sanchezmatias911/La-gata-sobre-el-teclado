@@ -50,6 +50,12 @@ public class ClaseProgramada {
     }
 
     private void validarHorario(LocalTime inicio, LocalTime fin) {
+        if (inicio.isBefore(LocalTime.of(8, 0)) ||
+                fin.isAfter(LocalTime.of(21, 0))) {
+            throw new HorarioInvalido(
+                    "Las clases deben realizarse entre las 08:00 y las 20:00."
+            );
+        }
         if (!inicio.isBefore(fin)) {
             throw new HorarioInvalido("La hora de inicio debe ser anterior a la hora de fin.");
         }
