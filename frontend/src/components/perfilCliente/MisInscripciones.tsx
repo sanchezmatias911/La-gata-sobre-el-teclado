@@ -45,13 +45,11 @@ export const MisInscripciones = () => {
     const formatHora = (time: any) => {
         if (!time) return '--:--';
         
-        // 1. Si viene como String (ej: "08:00:00")
         if (typeof time === 'string') {
             const [h, m] = time.split(':');
             return `${h.padStart(2, '0')}:${m.padStart(2, '0')}`;
         }
         
-        // 2. Si viene como Objeto de Java (ej: { hour: 8, minute: 0 })
         if (typeof time === 'object' && 'hour' in time) {
             const h = String(time.hour).padStart(2, '0');
             const m = String(time.minute).padStart(2, '0');
@@ -83,7 +81,6 @@ export const MisInscripciones = () => {
                     <div className="perfil-card" key={clase.id}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
                             
-                            {/* Info de la clase */}
                             <div>
                                 <h5 style={{ margin: '0 0 0.5rem 0', color: '#fff', fontSize: '1.2rem', fontWeight: 'bold' }}>
                                     {clase.nombreActividad}
@@ -102,7 +99,6 @@ export const MisInscripciones = () => {
                                 </div>
                             </div>
 
-                            {/* Botón para ir a la clase */}
                             <Link to={`/clases/${clase.id}`} className="btn-perfil-action">
                                 Ver clase
                             </Link>

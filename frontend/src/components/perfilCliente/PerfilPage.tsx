@@ -14,7 +14,6 @@ export const PerfilPage = () => {
         <div className="perfil-page-wrapper">
             <div className="perfil-content-wrapper">
                 
-                {/* Panel Izquierdo: Título de bienvenida */}
                 <div className="perfil-welcome-panel">
                     <h1 className="perfil-welcome-title">
                         Mi <br /> Perfil
@@ -24,7 +23,6 @@ export const PerfilPage = () => {
                     </p>
                 </div>
 
-                {/* Panel Derecho: Tabs y Contenido */}
                 <div className="perfil-main-panel">
                     <div className="perfil-tabs">
                         <NavLink 
@@ -41,7 +39,6 @@ export const PerfilPage = () => {
                         </NavLink>
                     </div>
 
-                    {/* Acá se renderizan los hijos */}
                     <div className="perfil-outlet-container">
                         <Outlet />
                     </div>
