@@ -34,27 +34,29 @@ export const DatosPersonales = () => {
     if (!cliente) return <div className="text-white p-4">No se encontraron datos.</div>;
 
     return (
-        <div className="card bg-dark text-white border-secondary p-4" style={{ maxWidth: '600px' }}>
-            <h4 className="mb-4">Datos Personales</h4>
+         <div>
+            <h3 style={{ color: '#fff', marginBottom: '1.5rem', fontSize: '1.2rem' }}>
+                Información Personal
+            </h3>
             
-            <div className="mb-3 border-bottom border-secondary pb-2">
-                <label className="form-label text-muted mb-0">Nombre Completo</label>
-                <p className="fs-5 mb-0">{cliente.nombre}</p>
+            <div className="data-row">
+                <span className="data-label">Nombre Completo</span>
+                <span className="data-value">{cliente.nombre}</span>
             </div>
-
-            <div className="mb-3 border-bottom border-secondary pb-2">
-                <label className="form-label text-muted mb-0">Email</label>
-                <p className="fs-5 mb-0">{cliente.email}</p>
+            
+            <div className="data-row">
+                <span className="data-label">Email</span>
+                <span className="data-value">{cliente.email}</span>
             </div>
-
-            <div className="mb-3 border-bottom border-secondary pb-2">
-                <label className="form-label text-muted mb-0">DNI</label>
-                <p className="fs-5 mb-0">{cliente.dni}</p>
+            
+            <div className="data-row">
+                <span className="data-label">DNI</span>
+                <span className="data-value">{cliente.dni}</span>
             </div>
-
-            <div className="mb-3 border-bottom border-secondary pb-2">
-                <label className="form-label text-muted mb-0">Teléfono</label>
-                <p className="fs-5 mb-0">{cliente.telefono || 'No registrado'}</p>
+            
+            <div className="data-row">
+                <span className="data-label">Teléfono</span>
+                <span className="data-value">{cliente.telefono || 'No registrado'}</span>
             </div>
         </div>
     );

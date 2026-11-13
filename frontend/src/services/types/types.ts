@@ -122,3 +122,12 @@ export interface InscripcionDTO {
     idClaseProgramada: number;
     dniCliente: number;
 }
+
+export interface ClaseDetalle {
+    id: number;
+    dia: string;
+    horaInicio: { hour: number; minute: number };
+    horaFin: { hour: number; minute: number };
+    profesorResponse: { nombre: string };
+    nombreActividad: string;
+}

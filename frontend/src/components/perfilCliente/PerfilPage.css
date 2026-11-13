@@ -1,26 +1,166 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Inter:wght@400;500;600&display=swap');
+
+.perfil-page-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 82px);
+    background: linear-gradient(90deg, #101010 40%, #191919 70%);
+    font-family: 'Inter', system-ui, sans-serif;
+    padding: 4rem 2rem;
+    box-sizing: border-box;
+}
+
+.perfil-content-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    gap: 4rem;
+    align-items: flex-start;
+}
+
+/* Panel Izquierdo (Bienvenida) */
+.perfil-welcome-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+}
+
+.perfil-welcome-title {
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.perfil-welcome-text {
+    color: #a0a0a0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 400px;
+}
+
+/* Panel Derecho (Contenido) */
+.perfil-main-panel {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    background-color: #191919;
+    border: 1px solid #333333;
+    border-radius: 1rem;
+    padding: 3rem;
+    min-height: 500px;
+}
+
+/* Tabs de navegación */
 .perfil-tabs {
     display: flex;
-    gap: 15px;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
     border-bottom: 1px solid #333;
-    padding-bottom: 10px;
+    padding-bottom: 1rem;
 }
 
 .perfil-tab {
-    background-color: #222;
-    color: #ccc;
-    padding: 10px 20px;
+    background: transparent;
+    color: #737373;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     border-radius: 8px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s;
 }
 
 .perfil-tab:hover {
-    background-color: #444;
-    color: white;
+    color: #e4e4e4;
 }
 
 .perfil-tab.active {
-    background-color: #e50914; /* Un rojo tipo gym, cambialo a tu color */
-    color: white;
+    color: #ffffff;
+    background-color: #262626;
+    /* Un toque de rojo si querés mantener la línea de los botones */
+    border-left: 3px solid #e50914; 
+}
+
+/* Tarjetas de datos / inscripciones */
+.perfil-card {
+    background-color: #202020;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease;
+}
+
+.perfil-card:hover {
+    border-color: #555;
+    transform: translateY(-2px);
+}
+
+.perfil-card h5 {
+    color: #ffffff;
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.perfil-card p {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* Botón de "Ver clase" dentro de las tarjetas */
+.btn-perfil-action {
+    background-color: transparent;
+    color: #e4e4e4;
+    border: 1px solid #4a4a4a;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-perfil-action:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Lista de datos personales */
+.data-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid #333;
+}
+
+.data-row:last-child {
+    border-bottom: none;
+}
+
+.data-label {
+    color: #737373;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.data-value {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
 }
