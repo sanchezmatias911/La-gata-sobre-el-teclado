@@ -2,6 +2,8 @@ package com.malb.gimnasio.modelo;
 
 import com.malb.gimnasio.modelo.exception.HorarioInvalido;
 import com.malb.gimnasio.modelo.exception.InscripcionNoPermitidaException;
+import com.malb.gimnasio.modelo.exception.RecursoDuplicadoException;
+import com.malb.gimnasio.modelo.usuario.Cliente;
 import com.malb.gimnasio.modelo.usuario.Profesor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -95,6 +97,179 @@ public class ClaseProgramadaTest {
                 () -> assertThrows(NullPointerException.class,
                         () -> new ClaseProgramada(Dia.LUNES, INICIO, FIN, profesor, actividad, null), "estado")
         );
+    }
+
+
+    @Test
+    void eliminarInscripcion_actualizaEstadoAActiva() {
+        Actividad actividadUnCupo =
+                new Actividad("Musculación", "Entrenamiento", 1);
+
+        ClaseProgramada claseUnCupo = new ClaseProgramada(
+                Dia.LUNES,
+                INICIO,
+                FIN,
+                profesor,
+                actividadUnCupo,
+                EstadoClaseProgramada.ACTIVA
+        );
+
+        Inscripcion inscripcion = new Inscripcion();
+        claseUnCupo.agregarInscripcion(inscripcion);
+
+        assertEquals(LLENA, claseUnCupo.getEstado());
+
+        claseUnCupo.eliminarInscripcion(inscripcion);
+
+        assertEquals(EstadoClaseProgramada.ACTIVA, claseUnCupo.getEstado());
+    }
+
+    @Test
+    void actualizarEstado_conCupoCompleto_cambiaEstadoALlena() {
+        Actividad actividadUnCupo =
+                new Actividad("Musculación", "Entrenamiento", 1);
+
+        ClaseProgramada claseUnCupo = new ClaseProgramada(
+                Dia.LUNES,
+                INICIO,
+                FIN,
+                profesor,
+                actividadUnCupo,
+                EstadoClaseProgramada.ACTIVA
+        );
+
+        claseUnCupo.agregarInscripcion(new Inscripcion());
+
+        assertEquals(LLENA, claseUnCupo.getEstado());
+    }
+
+    @Test
+    void noPermiteInscribirDosVecesAlMismoCliente() {
+        Cliente cliente = new Cliente(
+                12345678L,
+                "cliente@test.com",
+                "password123",
+                "Cliente Test",
+                "1100000000"
+        );
+        cliente.setId(1L);
+
+        Inscripcion primera = new Inscripcion(cliente, clase);
+        Inscripcion segunda = new Inscripcion(cliente, clase);
+
+        clase.agregarInscripcion(primera);
+
+        assertThrows(
+                RecursoDuplicadoException.class,
+                () -> clase.agregarInscripcion(segunda)
+        );
+
+        assertEquals(1, clase.cantidadInscriptos());
+    }
+
+    @Test
+    void actualizarEstado_cuandoHayMenosInscriptosQueCupo_activaClase() {
+        Actividad actividad = new Actividad(
+                "Yoga", "Relajación", 5
+        );
+
+        ClaseProgramada clase = new ClaseProgramada(
+                Dia.LUNES,
+                INICIO,
+                FIN,
+                profesor,
+                actividad,
+                EstadoClaseProgramada.INACTIVA
+        );
+
+        clase.actualizarEstado();
+
+        assertEquals(EstadoClaseProgramada.ACTIVA, clase.getEstado());
+    }
+
+    @Test
+    void actualizarEstado_cuandoAlcanzaElCupo_llenaClase() {
+        Actividad actividad = new Actividad(
+                "Yoga", "Relajación", 1
+        );
+
+        ClaseProgramada clase = new ClaseProgramada(
+                Dia.LUNES,
+                INICIO,
+                FIN,
+                profesor,
+                actividad,
+                EstadoClaseProgramada.ACTIVA
+        );
+
+        clase.agregarInscripcion(new Inscripcion());
+
+        assertEquals(EstadoClaseProgramada.LLENA, clase.getEstado());
+    }
+
+    @Test
+    void noPermiteInscripcionCuandoEstadoEsInactivo() {
+        clase.setEstado(EstadoClaseProgramada.INACTIVA);
+
+        assertThrows(
+                InscripcionNoPermitidaException.class,
+                () -> clase.agregarInscripcion(new Inscripcion())
+        );
+
+        assertEquals(0, clase.cantidadInscriptos());
+    }
+
+    @Test
+    void noPermiteInscripcionCuandoElCupoEstaCompletoAunqueEstadoSeaActivo() {
+        Actividad actividad = new Actividad(
+                "Yoga", "Relajación", 1
+        );
+
+        ClaseProgramada clase = new ClaseProgramada(
+                Dia.LUNES,
+                INICIO,
+                FIN,
+                profesor,
+                actividad,
+                EstadoClaseProgramada.ACTIVA
+        );
+
+        clase.agregarInscripcion(new Inscripcion());
+
+        // Forzamos el estado para evaluar específicamente la condición del cupo.
+        clase.setEstado(EstadoClaseProgramada.ACTIVA);
+
+        assertThrows(
+                InscripcionNoPermitidaException.class,
+                () -> clase.agregarInscripcion(new Inscripcion())
+        );
+    }
+
+    @Test
+    void eliminarInscripcion_actualizaEstadoDeClaseLlenaAActiva() {
+        Actividad actividad = new Actividad(
+                "Yoga", "Relajación", 1
+        );
+
+        ClaseProgramada clase = new ClaseProgramada(
+                Dia.LUNES,
+                INICIO,
+                FIN,
+                profesor,
+                actividad,
+                EstadoClaseProgramada.ACTIVA
+        );
+
+        Inscripcion inscripcion = new Inscripcion();
+
+        clase.agregarInscripcion(inscripcion);
+
+        assertEquals(EstadoClaseProgramada.LLENA, clase.getEstado());
+
+        clase.eliminarInscripcion(inscripcion);
+
+        assertEquals(EstadoClaseProgramada.ACTIVA, clase.getEstado());
+        assertEquals(0, clase.cantidadInscriptos());
     }
 
 }
