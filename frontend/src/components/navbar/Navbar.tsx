@@ -85,14 +85,18 @@ function Navbar() {
                                         </>
                                     )}
 
-                                    <Link
-                                        to="/perfil"
-                                        className="dropdown-item"
-                                        onClick={() => setIsDropdownOpen(false)}
-                                    >
-                                        Mi Perfil
-                                    </Link>
-                                    <div className="dropdown-divider"></div>
+                                    {!isAdmin && (
+                                        <>
+                                            <Link
+                                                to="/perfil"
+                                                className="dropdown-item"
+                                                onClick={() => setIsDropdownOpen(false)}
+                                            >
+                                                Mi Perfil
+                                            </Link>
+                                            <div className="dropdown-divider"></div>
+                                        </>
+                                    )}
                                     <button
                                         className="dropdown-item text-danger"
                                         onClick={handleLogout}
