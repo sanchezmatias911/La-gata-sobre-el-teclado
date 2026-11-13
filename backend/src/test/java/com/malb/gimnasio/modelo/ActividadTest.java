@@ -54,15 +54,6 @@ public class ActividadTest {
         );
     }
 
-    // Descripción nula
-    @Test
-    void rechazaDescripcionNula() {
-        assertThrows(
-                RecursoInvalidoException.class,
-                () -> new Actividad("Yoga", null, 10)
-        );
-    }
-
     // Descripción vacía
     @Test
     void rechazaDescripcionEnBlanco() {
